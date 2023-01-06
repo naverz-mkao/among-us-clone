@@ -16,5 +16,12 @@ declare module "ZEPETO.Multiplay.Schema" {
 		characterState: number;
 		position: Vector3Schema;
 		sessionId: string;
+		team: Team;
+	}
+	class Team extends Schema {
+		teamId: number;
+	}
+	class GameState extends Schema {
+		stateId: number;
 	}
 }

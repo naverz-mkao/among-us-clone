@@ -1,9 +1,10 @@
 import { ZepetoScriptBehaviour } from 'ZEPETO.Script'
-import { GameObject } from 'UnityEngine';
+import { GameObject, Transform } from 'UnityEngine';
 import CharacterController from './Character/CharacterController';
 import GameManager from './Game Management/GameManager';
 import UIManager from './UI/UIManager';
 import ClientStarter from './Game Management/ClientStarter';
+import LobbySystem from './Game Management/LobbySystem';
 
 export default class Main extends ZepetoScriptBehaviour {
     public static instance: Main;
@@ -11,7 +12,10 @@ export default class Main extends ZepetoScriptBehaviour {
     public characterController: CharacterController;
     public gameMgr: GameManager;
     public uiMgr: UIManager;
+    public lobby: LobbySystem;
     public client: ClientStarter;
+
+    private spawnedIds: string[];
 
     public static GetInstance(): Main
     {
@@ -27,21 +31,58 @@ export default class Main extends ZepetoScriptBehaviour {
         Main.instance = this;
         this.gameMgr = this.GetComponentInChildren<GameManager>();
         this.uiMgr = this.GetComponentInChildren<UIManager>();
-        this.characterController = this.GetComponentInChildren<CharacterController>();
         this.client = this.GetComponentInChildren<ClientStarter>();
+        this.lobby = this.GetComponentInChildren<LobbySystem>();
     }
 
     public Start()
     {
+        this.spawnedIds = new Array<string>();
         this.InitializeAll();
+
+        
     }
 
     public InitializeAll()  
     {
-        this.gameMgr.Init();
-        this.uiMgr.Init();
-        this.characterController.Init();
-        this.client.Init();
+        this.gameMgr?.Init();
+        this.uiMgr?.Init();
+        this.characterController?.Init();
+        this.client?.Init();
+        this.lobby?.Init();
+    }
+
+    public AddSpawn(userId: string)
+    {
+        if (this.spawnedIds.includes(userId)) { return; }
+
+        this.spawnedIds.push(userId);
+        if (this.gameMgr)
+            this.gameMgr.AddSpawn();
+        if (this.lobby)
+            this.lobby.AddSpawn();
+    }
+
+    public RemoveSpawn(userId: string)
+    {
+        if (!this.spawnedIds.includes(userId)) { return; }
+
+        let index = this.spawnedIds.indexOf(userId);
+        this.spawnedIds.splice(index, 1);
+        if (this.gameMgr)
+            this.gameMgr.RemoveSpawn();
+        if (this.lobby)
+            this.lobby.RemoveSpawn();
+    }
+
+    public GetSpawnTransform(): Transform
+    {
+        if (this.gameMgr)
+            return this.gameMgr.GetSpawnTransform();
+        else if (this.lobby)
+            return this.lobby.GetSpawnTransform();
+        else 
+            return new Transform();
     }
 
 }

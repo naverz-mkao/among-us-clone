@@ -1,5 +1,7 @@
 {
 "State" : {"players" : {"map" : "Player"}},
 "Vector3Schema" : {"x" : "number","y" : "number","z" : "number"},
-"Player" : {"userId" : "string","characterState" : "number","position" : "Vector3Schema","sessionId" : "string"}
+"Player" : {"userId" : "string","characterState" : "number","position" : "Vector3Schema","sessionId" : "string","team" : "Team"},
+"Team" : {"teamId" : "number"},
+"GameState" : {"stateId" : "number"}
 }

@@ -1,0 +1,30 @@
+fileFormatVersion: 2
+guid: 548020f13bb9f5b4581932e6124fe91b
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nclass
+    LobbySystem extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    Start() {\r\n   
+    }\r\n    Init() {\r\n    }\r\n    GetSpawnTransform() {\r\n        return this.spawnLocations[this.spawnCount];\r\n   
+    }\r\n    AddSpawn() {\r\n        this.spawnCount++;\r\n    }\r\n    RemoveSpawn()
+    {\r\n        this.spawnCount--;\r\n    }\r\n}\r\nexports.default = LobbySystem;\r\n//#
+    sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiTG9iYnlTeXN0ZW0uanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJMb2JieVN5c3RlbS50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOztBQUNBLGlEQUFxRDtBQUVyRCxNQUFxQixXQUFZLFNBQVEscUNBQXFCO0lBSzFELEtBQUs7SUFFTCxDQUFDO0lBRU0sSUFBSTtJQUdYLENBQUM7SUFFTSxpQkFBaUI7UUFFcEIsT0FBTyxJQUFJLENBQUMsY0FBYyxDQUFDLElBQUksQ0FBQyxVQUFVLENBQUMsQ0FBQztJQUNoRCxDQUFDO0lBRU0sUUFBUTtRQUVYLElBQUksQ0FBQyxVQUFVLEVBQUUsQ0FBQztJQUN0QixDQUFDO0lBRU0sV0FBVztRQUVkLElBQUksQ0FBQyxVQUFVLEVBQUUsQ0FBQztJQUN0QixDQUFDO0NBQ0o7QUE1QkQsOEJBNEJDIn0=","assetPath":"Assets/03_Scripts/Game
+    Management/LobbySystem.ts","manifest":{"properties":[{"assembly":"UnityEngine.CoreModule","name":"spawnLocations","type":"UnityEngine.Transform[]","isArray":true,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]}],"name":"LobbySystem","description":""},"isCompiled":true}'
+  typescriptHash: 4799f7779f5ae5b79d2d5367d3ef508a
+  onlyWriteTrigger: 0

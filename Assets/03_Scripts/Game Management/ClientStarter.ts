@@ -45,9 +45,7 @@ export default class ClientScript extends ZepetoScriptBehaviour {
     public multiplayRoom: Room;
 
     //Map of the players coming from the multiplay server. 
-    private multiplayPlayers: Map<string, Player> = new Map<string, Player>();
-
-    public spawnLocation: GameObject;
+    public multiplayPlayers: Map<string, Player> = new Map<string, Player>();
 
     public objZepetoPlayers: ZepetoPlayers;
 
@@ -62,6 +60,8 @@ export default class ClientScript extends ZepetoScriptBehaviour {
             //Called each time the room state variables are altered
             room.OnStateChange += this.OnStateChange;
         }
+
+        GameObject.DontDestroyOnLoad(this.gameObject);
     }
 
     public Init()
@@ -89,12 +89,24 @@ export default class ClientScript extends ZepetoScriptBehaviour {
         // Cache the player to our map 
         this.multiplayPlayers.set(userId, player);
 
-        Main.instance.gameMgr.SpawnPlayer(userId);
+        //Create spawn info for our new character. 
+        const spawnInfo = new SpawnInfo();
+        const transform : Transform = Main.instance.GetSpawnTransform();
+        spawnInfo.position = transform.position;
+        spawnInfo.rotation = transform.rotation;
+
+        // If the added player id matches the world service id, we know this is the local player. 
+        const isLocal = WorldService.userId === userId;
+        
+        Main.instance.AddSpawn(userId);
+        // Instantiate character with the above settings. 
+        ZepetoPlayers.instance.CreatePlayerWithUserId(userId, userId, spawnInfo, isLocal);
     }
 
     private OnPlayerRemove(player: Player, userId: string) {
         if (!this.multiplayPlayers.has(userId)) return;
         ZepetoPlayers.instance.RemovePlayer(userId);
+        Main.instance.RemoveSpawn(userId);
     }
 
     private InitializeCharacter(state: State) {
