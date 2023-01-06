@@ -40,7 +40,7 @@ export default class Main extends ZepetoScriptBehaviour {
         this.spawnedIds = new Array<string>();
         this.InitializeAll();
 
-        
+
     }
 
     public InitializeAll()  
@@ -77,9 +77,9 @@ export default class Main extends ZepetoScriptBehaviour {
 
     public GetSpawnTransform(): Transform
     {
-        if (this.gameMgr)
+        if (this.gameMgr != undefined)
             return this.gameMgr.GetSpawnTransform();
-        else if (this.lobby)
+        else if (this.lobby != undefined)
             return this.lobby.GetSpawnTransform();
         else 
             return new Transform();

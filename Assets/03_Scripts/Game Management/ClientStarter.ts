@@ -91,9 +91,10 @@ export default class ClientScript extends ZepetoScriptBehaviour {
 
         //Create spawn info for our new character. 
         const spawnInfo = new SpawnInfo();
-        const transform : Transform = Main.instance.GetSpawnTransform();
-        spawnInfo.position = transform.position;
-        spawnInfo.rotation = transform.rotation;
+        const transformInfo : Transform = Main.instance.GetSpawnTransform();
+        console.log(transformInfo.gameObject.name);
+        spawnInfo.position = transformInfo.position;
+        spawnInfo.rotation = transformInfo.rotation;
 
         // If the added player id matches the world service id, we know this is the local player. 
         const isLocal = WorldService.userId === userId;

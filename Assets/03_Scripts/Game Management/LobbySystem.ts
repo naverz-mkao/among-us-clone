@@ -1,10 +1,10 @@
-import { Transform } from 'UnityEngine';
+import { GameObject, Transform } from 'UnityEngine';
 import { ZepetoScriptBehaviour } from 'ZEPETO.Script'
 
 export default class LobbySystem extends ZepetoScriptBehaviour {
     public spawnLocations: Transform[];
 
-    private spawnCount: number;
+    private spawnCount: number = 0;
 
     Start() {    
 
@@ -17,6 +17,7 @@ export default class LobbySystem extends ZepetoScriptBehaviour {
 
     public GetSpawnTransform() : Transform
     {
+        console.log(`${this.spawnCount}`);
         return this.spawnLocations[this.spawnCount];
     }
 
