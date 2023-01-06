@@ -1,0 +1,39 @@
+fileFormatVersion: 2
+guid: 8910df2ef789be4459472107e9d4ab2c
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst UnityEngine_1 = require(\"UnityEngine\");\r\nconst
+    ZEPETO_Character_Controller_1 = require(\"ZEPETO.Character.Controller\");\r\nconst
+    ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst ZEPETO_World_1 = require(\"ZEPETO.World\");\r\nclass
+    GameManager extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    constructor()
+    {\r\n        super(...arguments);\r\n        this.playerCount = 0;\r\n    }\r\n   
+    Init() {\r\n    }\r\n    SpawnPlayer(userId) {\r\n        //Create spawn info
+    for our new character. \r\n        const spawnInfo = new ZEPETO_Character_Controller_1.SpawnInfo();\r\n       
+    const position = this.spawnLocations[this.playerCount].transform.position;\r\n       
+    spawnInfo.position = position;\r\n        spawnInfo.rotation = UnityEngine_1.Quaternion.identity;\r\n       
+    // If the added player id matches the world service id, we know this is the local
+    player. \r\n        const isLocal = ZEPETO_World_1.WorldService.userId === userId;\r\n       
+    // Instantiate character with the above settings. \r\n        $extension(\"ZEPETO.Character.Controller.ZepetoPlayersExtension\").CreatePlayerWithUserId(ZEPETO_Character_Controller_1.ZepetoPlayers.instance,
+    userId, userId, spawnInfo, isLocal);\r\n        //Potential Sync Timing Issue
+    on failed client connect.\r\n        this.playerCount++;\r\n    }\r\n}\r\nexports.default
+    = GameManager;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiR2FtZU1hbmFnZXIuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJHYW1lTWFuYWdlci50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOztBQUFBLDZDQUFxRDtBQUNyRCw2RUFBdUU7QUFDdkUsaURBQXFEO0FBQ3JELCtDQUE0QztBQUU1QyxNQUFxQixXQUFZLFNBQVEscUNBQXFCO0lBQTlEOztRQUdZLGdCQUFXLEdBQUcsQ0FBQyxDQUFDO0lBd0I1QixDQUFDO0lBdEJVLElBQUk7SUFHWCxDQUFDO0lBRU0sV0FBVyxDQUFDLE1BQWM7UUFFN0IsMkNBQTJDO1FBQzNDLE1BQU0sU0FBUyxHQUFHLElBQUksdUNBQVMsRUFBRSxDQUFDO1FBQ2xDLE1BQU0sUUFBUSxHQUFHLElBQUksQ0FBQyxjQUFjLENBQUMsSUFBSSxDQUFDLFdBQVcsQ0FBQyxDQUFDLFNBQVMsQ0FBQyxRQUFRLENBQUM7UUFDMUUsU0FBUyxDQUFDLFFBQVEsR0FBRyxRQUFRLENBQUM7UUFDOUIsU0FBUyxDQUFDLFFBQVEsR0FBRyx3QkFBVSxDQUFDLFFBQVEsQ0FBQztRQUV6QywwRkFBMEY7UUFDMUYsTUFBTSxPQUFPLEdBQUcsMkJBQVksQ0FBQyxNQUFNLEtBQUssTUFBTSxDQUFDO1FBRS9DLGtEQUFrRDtRQUNsRCxpRUFBdUIsc0JBQXNCLENBQTdDLDJDQUFhLENBQUMsUUFBUSxFQUF3QixNQUFNLEVBQUUsTUFBTSxFQUFFLFNBQVMsRUFBRSxPQUFPLEVBQUU7UUFFbEYsdURBQXVEO1FBQ3ZELElBQUksQ0FBQyxXQUFXLEVBQUUsQ0FBQztJQUN2QixDQUFDO0NBQ0o7QUEzQkQsOEJBMkJDIn0=","assetPath":"Assets/03_Scripts/Game
+    Management/GameManager.ts","manifest":{"properties":[{"assembly":"UnityEngine.CoreModule","name":"spawnLocations","type":"UnityEngine.GameObject[]","isArray":true,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]}],"name":"GameManager","description":""},"isCompiled":true}'
+  typescriptHash: 71b2fa6f450fb89295c4a51ab6ee9679
+  onlyWriteTrigger: 0
