@@ -8,23 +8,32 @@ enum MultiplayMessageType {
 
     // For Animation states
     CharacterState = "CharacterState",
-}
+
+    // Initialize When the Game Starts
+    InitializeGame = "InitializeGame"
+};
 
 //Transform position data
 type MultiplayMessageCharacterTransform = {
     positionX: number,
     positionY: number,
     positionZ: number,
-}
+};
 
 //Character state data
 type MultiplayMessageCharacterState = {
 
     //state id number for translation to enum. 
     characterState: number
+};
+
+type MultiplayMessageVirusInfo = {
+    virusId: number,
+    clientCount: number
 }
 
 export default class extends Sandbox {
+    
     onCreate(options: SandboxOptions) {
         // Position Sync Message
         this.onMessage(MultiplayMessageType.CharacterTransform, (client, message: MultiplayMessageCharacterTransform) => {
@@ -47,6 +56,15 @@ export default class extends Sandbox {
         this.onMessage(MultiplayMessageType.CharacterState, (client, message: MultiplayMessageCharacterState) => {
             const player = this.state.players.get(client.userId);
             player.characterState = message.characterState;
+        });
+        
+        this.onMessage<MultiplayMessageVirusInfo>(MultiplayMessageType.InitializeGame, (client, message: MultiplayMessageVirusInfo) => {
+            let info : MultiplayMessageVirusInfo = {
+                virusId: Math.floor(Math.random() * message.clientCount),
+                clientCount: message.clientCount
+            }
+            
+            this.broadcast(MultiplayMessageType.InitializeGame, info); 
         });
     }
 
@@ -73,5 +91,5 @@ export default class extends Sandbox {
         // Delete the player data
         this.state.players.delete(client.userId);
     }
-
+    
 }

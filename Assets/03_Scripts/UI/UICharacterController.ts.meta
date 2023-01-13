@@ -1,0 +1,28 @@
+fileFormatVersion: 2
+guid: 22858a3379648aa4a97784e0f5bfb9ec
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nclass
+    UICharacterController extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n   
+    OnDrag() {\r\n    }\r\n    TestInvoke(v2) {\r\n        console.log(`Invoke Success:
+    (${v2.x}, ${v2.y})`);\r\n    }\r\n}\r\nexports.default = UICharacterController;\r\n//#
+    sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiVUlDaGFyYWN0ZXJDb250cm9sbGVyLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiVUlDaGFyYWN0ZXJDb250cm9sbGVyLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBQ0EsaURBQXFEO0FBR3JELE1BQXFCLHFCQUFzQixTQUFRLHFDQUFxQjtJQUU3RCxNQUFNO0lBR2IsQ0FBQztJQUVNLFVBQVUsQ0FBQyxFQUFXO1FBRXpCLE9BQU8sQ0FBQyxHQUFHLENBQUMsb0JBQW9CLEVBQUUsQ0FBQyxDQUFDLEtBQUssRUFBRSxDQUFDLENBQUMsR0FBRyxDQUFDLENBQUM7SUFDdEQsQ0FBQztDQUNKO0FBWEQsd0NBV0MifQ==","assetPath":"Assets/03_Scripts/UI/UICharacterController.ts","manifest":{"properties":[],"name":"UICharacterController","description":""},"isCompiled":true}'
+  typescriptHash: 24fcd730bc76a6fd8cb41f3d6b36f07d
+  onlyWriteTrigger: 0

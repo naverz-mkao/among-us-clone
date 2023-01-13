@@ -21,6 +21,7 @@ ScriptedImporter:
   compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
     { value: true });\r\nconst ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nclass
     UIManager extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    Init() {\r\n   
-    }\r\n}\r\nexports.default = UIManager;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiVUlNYW5hZ2VyLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiVUlNYW5hZ2VyLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBQUEsaURBQXFEO0FBRXJELE1BQXFCLFNBQVUsU0FBUSxxQ0FBcUI7SUFFakQsSUFBSTtJQUdYLENBQUM7Q0FFSjtBQVBELDRCQU9DIn0=","assetPath":"Assets/03_Scripts/UI/UIManager.ts","manifest":{"properties":[],"name":"UIManager","description":""},"isCompiled":true}'
-  typescriptHash: 511384c92482e096fb79369aea6e7ddb
+    }\r\n    SetupVirusUI(isVirus) {\r\n        if (isVirus) {\r\n        }\r\n       
+    else {\r\n        }\r\n    }\r\n}\r\nexports.default = UIManager;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiVUlNYW5hZ2VyLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiVUlNYW5hZ2VyLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBQ0EsaURBQXFEO0FBRXJELE1BQXFCLFNBQVUsU0FBUSxxQ0FBcUI7SUFFakQsSUFBSTtJQUdYLENBQUM7SUFFTSxZQUFZLENBQUMsT0FBZ0I7UUFFaEMsSUFBSSxPQUFPLEVBQ1g7U0FFQzthQUVEO1NBRUM7SUFDTCxDQUFDO0NBR0o7QUFwQkQsNEJBb0JDIn0=","assetPath":"Assets/03_Scripts/UI/UIManager.ts","manifest":{"properties":[],"name":"UIManager","description":""},"isCompiled":true}'
+  typescriptHash: ab0c894616e2723b1478069a1cedcf00
   onlyWriteTrigger: 0

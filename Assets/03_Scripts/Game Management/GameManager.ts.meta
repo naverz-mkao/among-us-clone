@@ -20,13 +20,27 @@ ScriptedImporter:
   wrapperOutputDirectory: Generated
   compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
     { value: true });\r\nconst UnityEngine_1 = require(\"UnityEngine\");\r\nconst
-    ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst Main_1 = require(\"../Main\");\r\nclass
-    GameManager extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    constructor()
-    {\r\n        super(...arguments);\r\n        this.spawnCount = 0;\r\n    }\r\n   
-    Init() {\r\n    }\r\n    GetSpawnTransform() {\r\n        return this.spawnLocations[this.spawnCount].transform;\r\n   
-    }\r\n    AddSpawn() {\r\n        this.spawnCount++;\r\n    }\r\n    RemoveSpawn()
-    {\r\n        this.spawnCount--;\r\n    }\r\n}\r\nexports.default = GameManager;\r\n//#
-    sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiR2FtZU1hbmFnZXIuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJHYW1lTWFuYWdlci50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOztBQUFBLDZDQUFnRTtBQUVoRSxpREFBcUQ7QUFFckQsa0NBQTJCO0FBRTNCLE1BQXFCLFdBQVksU0FBUSxxQ0FBcUI7SUFBOUQ7O1FBR1ksZUFBVSxHQUFHLENBQUMsQ0FBQztJQXVCM0IsQ0FBQztJQXJCVSxJQUFJO0lBR1gsQ0FBQztJQUVNLGlCQUFpQjtRQUVwQixPQUFPLElBQUksQ0FBQyxjQUFjLENBQUMsSUFBSSxDQUFDLFVBQVUsQ0FBQyxDQUFDLFNBQVMsQ0FBQztJQUMxRCxDQUFDO0lBRU0sUUFBUTtRQUVYLElBQUksQ0FBQyxVQUFVLEVBQUUsQ0FBQztJQUN0QixDQUFDO0lBRU0sV0FBVztRQUVkLElBQUksQ0FBQyxVQUFVLEVBQUUsQ0FBQztJQUN0QixDQUFDO0NBR0o7QUExQkQsOEJBMEJDIn0=","assetPath":"Assets/03_Scripts/Game
+    ZEPETO_Character_Controller_1 = require(\"ZEPETO.Character.Controller\");\r\nconst
+    ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst CharacterController_1
+    = require(\"../Character/CharacterController\");\r\nconst Main_1 = require(\"../Main\");\r\nconst
+    ClientScript_1 = require(\"./Multiplay/ClientScript\");\r\nclass GameManager
+    extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    constructor() {\r\n       
+    super(...arguments);\r\n        this.spawnCount = 0;\r\n        this.virusId
+    = \"\";\r\n        this.players = new Map();\r\n    }\r\n    Init() {\r\n       
+    this.StartCoroutine(this.WaitForPlayersToLoad());\r\n    }\r\n    *WaitForPlayersToLoad()
+    {\r\n        let loadCount = (Main_1.default.instance.hasEnteredLobby) ? Main_1.default.instance.client.connectedClients
+    : 1;\r\n        while (this.spawnCount < loadCount) {\r\n            yield;\r\n       
+    }\r\n        Main_1.default.instance.client.SendMessageInitializeGame();\r\n   
+    }\r\n    GetSpawnTransform() {\r\n        return this.spawnLocations[this.spawnCount].transform;\r\n   
+    }\r\n    AddSpawn(userId) {\r\n        this.spawnCount++;\r\n        let player
+    = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.GetPlayer(userId);\r\n       
+    let cc = player.character.gameObject.AddComponent($typeof(CharacterController_1.default));\r\n       
+    cc.Init(Main_1.default.instance.client.multiplayPlayers.get(userId));\r\n       
+    this.players.set(userId, cc);\r\n    }\r\n    RemoveSpawn() {\r\n        this.spawnCount--;\r\n   
+    }\r\n    InitializeWithVirus(virusId) {\r\n        this.virusId = virusId;\r\n       
+    this.players.forEach((value, key) => {\r\n            let cc = value;\r\n           
+    cc.SetAsVirus(cc.playerInfo.userId == virusId);\r\n        });\r\n    }\r\n}\r\nexports.default
+    = GameManager;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiR2FtZU1hbmFnZXIuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJHYW1lTWFuYWdlci50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOztBQUFBLDZDQUFnRTtBQUNoRSw2RUFBbUY7QUFDbkYsaURBQXFEO0FBRXJELDBFQUFtRTtBQUNuRSxrQ0FBMkI7QUFDM0IsMkRBQW9EO0FBRXBELE1BQXFCLFdBQVksU0FBUSxxQ0FBcUI7SUFBOUQ7O1FBR1ksZUFBVSxHQUFHLENBQUMsQ0FBQztRQUNmLFlBQU8sR0FBWSxFQUFFLENBQUM7UUFFdEIsWUFBTyxHQUFzQyxJQUFJLEdBQUcsRUFBK0IsQ0FBQTtJQXlDL0YsQ0FBQztJQXhDVSxJQUFJO1FBRVAsSUFBSSxDQUFDLGNBQWMsQ0FBQyxJQUFJLENBQUMsb0JBQW9CLEVBQUUsQ0FBQyxDQUFDO0lBQ3JELENBQUM7SUFFTSxDQUFDLG9CQUFvQjtRQUV4QixJQUFJLFNBQVMsR0FBRyxDQUFDLGNBQUksQ0FBQyxRQUFRLENBQUMsZUFBZSxDQUFDLENBQUMsQ0FBQyxDQUFDLGNBQUksQ0FBQyxRQUFRLENBQUMsTUFBTSxDQUFDLGdCQUFnQixDQUFDLENBQUMsQ0FBQyxDQUFDLENBQUM7UUFDNUYsT0FBTyxJQUFJLENBQUMsVUFBVSxHQUFHLFNBQVMsRUFBRTtZQUFFLEtBQUssQ0FBQztTQUFFO1FBRTlDLGNBQUksQ0FBQyxRQUFRLENBQUMsTUFBTSxDQUFDLHlCQUF5QixFQUFFLENBQUM7SUFDckQsQ0FBQztJQUVNLGlCQUFpQjtRQUVwQixPQUFPLElBQUksQ0FBQyxjQUFjLENBQUMsSUFBSSxDQUFDLFVBQVUsQ0FBQyxDQUFDLFNBQVMsQ0FBQztJQUMxRCxDQUFDO0lBRU0sUUFBUSxDQUFDLE1BQWM7UUFFMUIsSUFBSSxDQUFDLFVBQVUsRUFBRSxDQUFDO1FBQ2xCLElBQUksTUFBTSxHQUFpQiwyQ0FBYSxDQUFDLFFBQVEsQ0FBQyxTQUFTLENBQUMsTUFBTSxDQUFDLENBQUM7UUFDcEUsSUFBSSxFQUFFLEdBQXlCLE1BQU0sQ0FBQyxTQUFTLENBQUMsVUFBVSxDQUFDLFlBQVksU0FBQyw2QkFBbUIsRUFBRyxDQUFDO1FBQy9GLEVBQUUsQ0FBQyxJQUFJLENBQUMsY0FBSSxDQUFDLFFBQVEsQ0FBQyxNQUFNLENBQUMsZ0JBQWdCLENBQUMsR0FBRyxDQUFDLE1BQU0sQ0FBQyxDQUFDLENBQUM7UUFDM0QsSUFBSSxDQUFDLE9BQU8sQ0FBQyxHQUFHLENBQUMsTUFBTSxFQUFFLEVBQUUsQ0FBQyxDQUFDO0lBQ2pDLENBQUM7SUFFTSxXQUFXO1FBRWQsSUFBSSxDQUFDLFVBQVUsRUFBRSxDQUFDO0lBQ3RCLENBQUM7SUFFTSxtQkFBbUIsQ0FBQyxPQUFlO1FBRXRDLElBQUksQ0FBQyxPQUFPLEdBQUcsT0FBTyxDQUFDO1FBQ3ZCLElBQUksQ0FBQyxPQUFPLENBQUMsT0FBTyxDQUFDLENBQUMsS0FBMEIsRUFBRSxHQUFXLEVBQUUsRUFBRTtZQUM3RCxJQUFJLEVBQUUsR0FBRyxLQUFLLENBQUM7WUFDZixFQUFFLENBQUMsVUFBVSxDQUFDLEVBQUUsQ0FBQyxVQUFVLENBQUMsTUFBTSxJQUFJLE9BQU8sQ0FBQyxDQUFDO1FBQ25ELENBQUMsQ0FBQyxDQUFDO0lBQ1AsQ0FBQztDQUNKO0FBL0NELDhCQStDQyJ9","assetPath":"Assets/03_Scripts/Game
     Management/GameManager.ts","manifest":{"properties":[{"assembly":"UnityEngine.CoreModule","name":"spawnLocations","type":"UnityEngine.GameObject[]","isArray":true,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]}],"name":"GameManager","description":""},"isCompiled":true}'
-  typescriptHash: 389b290c4f861346a7840f53369b0c77
+  typescriptHash: e0f27245be7cfc63ecbbb9a3f4d1c91e
   onlyWriteTrigger: 0

@@ -5,6 +5,7 @@ declare module "ZEPETO.Multiplay.Schema" {
 
 	interface State extends Schema {
 		players: MapSchema<Player>;
+		virusId: number;
 	}
 	class Vector3Schema extends Schema {
 		x: number;

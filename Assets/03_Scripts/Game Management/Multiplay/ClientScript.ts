@@ -4,7 +4,8 @@ import { Room } from 'ZEPETO.Multiplay';
 import { Player, State } from 'ZEPETO.Multiplay.Schema';
 import { ZepetoScriptBehaviour } from 'ZEPETO.Script'
 import { WorldService, ZepetoWorldMultiplay } from 'ZEPETO.World';
-import Main from '../Main';
+import Main from '../../Main';
+import ClientMessageSender from './ClientMessageSender';
 
 export enum MultiplayMessageType {
 
@@ -13,6 +14,9 @@ export enum MultiplayMessageType {
 
     // For Animation states
     CharacterState = "CharacterState",
+    
+    //Initialize When the Game Starts
+    InitializeGame = "InitializeGame"
 }
 
 //Transform position data
@@ -29,9 +33,14 @@ export type MultiplayMessageCharacterState = {
     characterState: number
 }
 
+export type MultiplayMessageVirusInfo = {
+    virusId: number,
+    clientCount: number
+}
+
 export default class ClientScript extends ZepetoScriptBehaviour {
     private static instance: ClientScript;
-
+    public static isInitializing: boolean = true;
     static GetInstance(): ClientScript {
         if (!ClientScript.instance) {
             const targetObj = GameObject.Find("Client");
@@ -48,17 +57,32 @@ export default class ClientScript extends ZepetoScriptBehaviour {
     public multiplayPlayers: Map<string, Player> = new Map<string, Player>();
 
     public objZepetoPlayers: ZepetoPlayers;
-
+    
+    public messageSender: ClientMessageSender = new ClientMessageSender();
+    
+    public connectedClients: number = 0;
+    
+    public Awake() {
+        this.messageSender = new ClientMessageSender();
+        this.messageSender.Init(this);
+        ClientScript.isInitializing = true;
+    }
     Start() { 
         //Cache the room in the Callback when the server creates a room object. 
         this.multiplay.RoomCreated += (room: Room) => {
             this.multiplayRoom = room;
+            
         };
 
         //Callback for when the room is joined. 
         this.multiplay.RoomJoined += (room: Room) => {
             //Called each time the room state variables are altered
             room.OnStateChange += this.OnStateChange;
+
+            this.multiplayRoom.AddMessageHandler(MultiplayMessageType.InitializeGame, (message: MultiplayMessageVirusInfo) => {
+                console.log(`Initialized Game with virus ${message.virusId}`);
+                Main.instance.InitializeWithVirus(message.virusId);
+            });
         }
 
         GameObject.DontDestroyOnLoad(this.gameObject);
@@ -99,11 +123,18 @@ export default class ClientScript extends ZepetoScriptBehaviour {
         // If the added player id matches the world service id, we know this is the local player. 
         const isLocal = WorldService.userId === userId;
         
-        Main.instance.AddSpawn(userId);
+       // Main.instance.AddSpawn(userId);
+        
+        if (isLocal)
+        {
+            ClientScript.isInitializing = false;
+        }
+        
         // Instantiate character with the above settings. 
         ZepetoPlayers.instance.CreatePlayerWithUserId(userId, userId, spawnInfo, isLocal);
     }
 
+    
     private OnPlayerRemove(player: Player, userId: string) {
         if (!this.multiplayPlayers.has(userId)) return;
         ZepetoPlayers.instance.RemovePlayer(userId);
@@ -170,7 +201,8 @@ export default class ClientScript extends ZepetoScriptBehaviour {
         });
     }
 
-    private SendMessageCharacterState(characterState: CharacterState) {
+    //Message Sending Functions
+    public SendMessageCharacterState(characterState: CharacterState) {
         // Create the character state message body. 
         const message: MultiplayMessageCharacterState = {
             characterState: characterState
@@ -180,7 +212,7 @@ export default class ClientScript extends ZepetoScriptBehaviour {
         this.multiplayRoom.Send(MultiplayMessageType.CharacterState, message);
     }
 
-    private *SendMessageCharacterTransformLoop(tick: number) {
+    public *SendMessageCharacterTransformLoop(tick: number) {
         while (true) {
 
             // Wait For the designated amount of time (tick)
@@ -206,7 +238,7 @@ export default class ClientScript extends ZepetoScriptBehaviour {
         }
     }
 
-    private SendMessageCharacterTransform(transform: Transform) {
+    public SendMessageCharacterTransform(transform: Transform) {
         //Cache the local transform position. 
         const position = transform.localPosition;
 
@@ -219,5 +251,17 @@ export default class ClientScript extends ZepetoScriptBehaviour {
 
         // Send the message to the server. 
         this.multiplayRoom.Send(MultiplayMessageType.CharacterTransform, message);
+    }
+
+    public SendMessageInitializeGame()
+    {
+        const clientCount = this.multiplayPlayers.size;
+        let message : MultiplayMessageVirusInfo = {
+            virusId : 1,
+            clientCount : clientCount
+        }
+        
+        console.log(`Initializing Game ${MultiplayMessageType.InitializeGame}: Virus(${message.virusId}, ${message.clientCount})`);
+        this.multiplayRoom.Send(MultiplayMessageType.InitializeGame, message);
     }
 }

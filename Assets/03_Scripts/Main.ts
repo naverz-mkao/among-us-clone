@@ -3,8 +3,9 @@ import { GameObject, Transform } from 'UnityEngine';
 import CharacterController from './Character/CharacterController';
 import GameManager from './Game Management/GameManager';
 import UIManager from './UI/UIManager';
-import ClientStarter from './Game Management/ClientStarter';
 import LobbySystem from './Game Management/LobbySystem';
+import {ZepetoPlayer, ZepetoPlayers } from 'ZEPETO.Character.Controller';
+import ClientScript from './Game Management/Multiplay/ClientScript';
 
 export default class Main extends ZepetoScriptBehaviour {
     public static instance: Main;
@@ -13,7 +14,9 @@ export default class Main extends ZepetoScriptBehaviour {
     public gameMgr: GameManager;
     public uiMgr: UIManager;
     public lobby: LobbySystem;
-    public client: ClientStarter;
+    public client: ClientScript;
+    
+    public hasEnteredLobby : boolean = false;
 
     private spawnedIds: string[];
 
@@ -31,34 +34,43 @@ export default class Main extends ZepetoScriptBehaviour {
         Main.instance = this;
         this.gameMgr = this.GetComponentInChildren<GameManager>();
         this.uiMgr = this.GetComponentInChildren<UIManager>();
-        this.client = this.GetComponentInChildren<ClientStarter>();
+        this.client = this.GetComponentInChildren<ClientScript>();
         this.lobby = this.GetComponentInChildren<LobbySystem>();
     }
 
     public Start()
     {
         this.spawnedIds = new Array<string>();
-        this.InitializeAll();
-
-
+        this.StartCoroutine(this.InitializeAll());
     }
 
-    public InitializeAll()  
+    public *InitializeAll()  
     {
+        console.log("Initializing");
+        //WaitFor ClientInit First
+        this.client?.Init();
+        while (ClientScript.isInitializing) { yield; }
+        
         this.gameMgr?.Init();
         this.uiMgr?.Init();
-        this.characterController?.Init();
-        this.client?.Init();
         this.lobby?.Init();
+        this.InitializePlayers();
+    }
+
+    public InitializePlayers()
+    {
+        ZepetoPlayers.instance.OnAddedPlayer.AddListener((userId) => {
+            this.AddSpawn(userId);
+        });
     }
 
     public AddSpawn(userId: string)
     {
         if (this.spawnedIds.includes(userId)) { return; }
-
+        console.log("Initializing ID " + userId);
         this.spawnedIds.push(userId);
         if (this.gameMgr)
-            this.gameMgr.AddSpawn();
+            this.gameMgr.AddSpawn(userId);
         if (this.lobby)
             this.lobby.AddSpawn();
     }
@@ -84,5 +96,11 @@ export default class Main extends ZepetoScriptBehaviour {
         else 
             return new Transform();
     }
-
+    
+    public InitializeWithVirus(virusId: number)
+    {
+        if (this.gameMgr == undefined) { return; }
+        console.log(`Setting Virus with id ${this.spawnedIds.length} / ${this.spawnedIds.get_Item(virusId)}`);
+        this.gameMgr.InitializeWithVirus(this.spawnedIds[virusId]);
+    }
 }
