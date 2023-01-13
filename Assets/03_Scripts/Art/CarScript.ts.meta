@@ -1,0 +1,35 @@
+fileFormatVersion: 2
+guid: f7d4fe5b9c201fc4cbbfcb443b7c1aed
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst UnityEngine_1 = require(\"UnityEngine\");\r\nconst
+    ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nclass CarScript extends ZEPETO_Script_1.ZepetoScriptBehaviour
+    {\r\n    Start() {\r\n        this.currentForwardPosition = 0;\r\n    }\r\n   
+    Update() {\r\n        this.currentForwardPosition += this.speed * UnityEngine_1.Time.deltaTime;\r\n       
+    this.transform.position = UnityEngine_1.Vector3.op_Addition(this.transform.position,
+    UnityEngine_1.Vector3.op_Multiply(UnityEngine_1.Vector3.op_Multiply(this.transform.forward,
+    UnityEngine_1.Time.deltaTime), this.speed));\r\n        if (this.currentForwardPosition
+    >= this.maxDistance) {\r\n            this.currentForwardPosition = 0;\r\n           
+    this.speed *= -1;\r\n        }\r\n        if (this.currentForwardPosition <=
+    -this.maxDistance) {\r\n            this.currentForwardPosition = 0;\r\n           
+    this.speed *= -1;\r\n        }\r\n    }\r\n}\r\nexports.default = CarScript;\r\n//#
+    sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiQ2FyU2NyaXB0LmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiQ2FyU2NyaXB0LnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBQUEsNkNBQTRDO0FBQzVDLGlEQUFxRDtBQUVyRCxNQUFxQixTQUFVLFNBQVEscUNBQXFCO0lBS3hELEtBQUs7UUFDRCxJQUFJLENBQUMsc0JBQXNCLEdBQUcsQ0FBQyxDQUFDO0lBQ3BDLENBQUM7SUFFRCxNQUFNO1FBQ0YsSUFBSSxDQUFDLHNCQUFzQixJQUFJLElBQUksQ0FBQyxLQUFLLEdBQUcsa0JBQUksQ0FBQyxTQUFTLENBQUM7UUFDM0QsSUFBSSxDQUFDLFNBQVMsQ0FBQyxRQUFRLEdBZGhCLHFCQUFPLENBMEI4NnBCLFdBQVksQ0FaeDhwQixJQUFJLENBQUMsU0FBUyxDQUFDLFFBQVEsRUFkaEIscUJBQU8sQ0EwQjhzcUIsV0FBWSxDQTFCanVxQixxQkFBTyxDQTBCOHNxQixXQUFZLENBWjdzcUIsSUFBSSxDQUFDLFNBQVMsQ0FBQyxPQUFPLEVBQUcsa0JBQUksQ0FBQyxTQUFTLEdBQUcsSUFBSSxDQUFDLEtBQUssR0FBQztRQUVoRixJQUFJLElBQUksQ0FBQyxzQkFBc0IsSUFBSSxJQUFJLENBQUMsV0FBVyxFQUFFO1lBQ2pELElBQUksQ0FBQyxzQkFBc0IsR0FBRyxDQUFDLENBQUE7WUFDL0IsSUFBSSxDQUFDLEtBQUssSUFBSSxDQUFDLENBQUMsQ0FBQztTQUNwQjtRQUNELElBQUksSUFBSSxDQUFDLHNCQUFzQixJQUFJLENBQUMsSUFBSSxDQUFDLFdBQVcsRUFBRTtZQUNsRCxJQUFJLENBQUMsc0JBQXNCLEdBQUcsQ0FBQyxDQUFBO1lBQy9CLElBQUksQ0FBQyxLQUFLLElBQUksQ0FBQyxDQUFDLENBQUM7U0FDcEI7SUFDTCxDQUFDO0NBRUo7QUF2QkQsNEJBdUJDIn0=","assetPath":"Assets/CarScript.ts","manifest":{"properties":[{"assembly":"mscorlib","name":"currentForwardPosition","type":"System.Single","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"mscorlib","name":"speed","type":"System.Single","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"mscorlib","name":"maxDistance","type":"System.Single","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]}],"name":"CarScript","description":""},"isCompiled":true}'
+  typescriptHash: 1248eb75f8c665baa1c831f871c5cd26
+  onlyWriteTrigger: 0
