@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2825c138-3be0-48b5-8a0c-a759b61eb544" name="Changes" comment="" />
+    <list default="true" id="2825c138-3be0-48b5-8a0c-a759b61eb544" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Amongus_Clone/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Amongus_Clone/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/03_Scripts/Character/CharacterController.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03_Scripts/Character/CharacterController.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/03_Scripts/Character/CharacterController.ts.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03_Scripts/Character/CharacterController.ts.meta" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -89,7 +93,7 @@
       <workItem from="1673379708966" duration="4025000" />
       <workItem from="1673480892848" duration="2436000" />
       <workItem from="1673554865830" duration="9240000" />
-      <workItem from="1673567605201" duration="2865000" />
+      <workItem from="1673567605201" duration="4113000" />
     </task>
     <servers />
   </component>

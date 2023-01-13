@@ -41,8 +41,6 @@ export default class CharacterController extends ZepetoScriptBehaviour {
             let cam : ZepetoCamera = localPlayer.zepetoCamera;
             
             //Camera Settings
-            cam.camera.orthographic = true;
-            cam.camera.orthographicSize = 5;
             cam.cameraParent.rotation = Quaternion.Euler(0, 0, 0);
         });
     }
