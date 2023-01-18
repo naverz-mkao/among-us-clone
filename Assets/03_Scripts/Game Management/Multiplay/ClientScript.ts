@@ -67,6 +67,7 @@ export default class ClientScript extends ZepetoScriptBehaviour {
         this.messageSender.Init(this);
         ClientScript.isInitializing = true;
     }
+    
     Start() { 
         //Cache the room in the Callback when the server creates a room object. 
         this.multiplay.RoomCreated += (room: Room) => {
@@ -91,6 +92,11 @@ export default class ClientScript extends ZepetoScriptBehaviour {
     public Init()
     {
         
+    }
+    
+    public GetPlayer(userId: string) : Player
+    {
+        return this.multiplayRoom.State.players.get_Item(userId);
     }
 
     private OnStateChange(state: State, isFirst: boolean) {

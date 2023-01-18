@@ -19,10 +19,11 @@ ScriptedImporter:
   WrapperFilters: []
   wrapperOutputDirectory: Generated
   compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
-    { value: true });\r\nconst ClientScript_1 = require(\"./ClientScript\");\r\nclass
-    ClientMessageSender {\r\n    Init(client) {\r\n        this.client = client;\r\n   
-    }\r\n    SetRoom(room) {\r\n        this.room = room;\r\n    }\r\n}\r\nexports.default
-    = ClientMessageSender;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiQ2xpZW50TWVzc2FnZVNlbmRlci5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIkNsaWVudE1lc3NhZ2VTZW5kZXIudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7QUFJQSxpREFBbUQ7QUFFbkQsTUFBcUIsbUJBQW1CO0lBSTdCLElBQUksQ0FBQyxNQUFvQjtRQUU1QixJQUFJLENBQUMsTUFBTSxHQUFHLE1BQU0sQ0FBQztJQUN6QixDQUFDO0lBRU0sT0FBTyxDQUFDLElBQVc7UUFFdEIsSUFBSSxDQUFDLElBQUksR0FBRyxJQUFJLENBQUM7SUFDckIsQ0FBQztDQUVKO0FBZEQsc0NBY0MifQ==","assetPath":"Assets/03_Scripts/Game
+    { value: true });\r\nconst UnityEngine_1 = require(\"UnityEngine\");\r\nconst
+    ClientScript_1 = require(\"./ClientScript\");\r\nclass ClientMessageSender {\r\n   
+    Init(client) {\r\n        this.client = client;\r\n    }\r\n    SetRoom(room)
+    {\r\n        this.room = room;\r\n    }\r\n}\r\nexports.default = ClientMessageSender;\r\n//#
+    sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiQ2xpZW50TWVzc2FnZVNlbmRlci5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIkNsaWVudE1lc3NhZ2VTZW5kZXIudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7QUFFQSw2Q0FBc0Q7QUFFdEQsaURBQW1EO0FBRW5ELE1BQXFCLG1CQUFtQjtJQUk3QixJQUFJLENBQUMsTUFBb0I7UUFFNUIsSUFBSSxDQUFDLE1BQU0sR0FBRyxNQUFNLENBQUM7SUFDekIsQ0FBQztJQUVNLE9BQU8sQ0FBQyxJQUFXO1FBRXRCLElBQUksQ0FBQyxJQUFJLEdBQUcsSUFBSSxDQUFDO0lBQ3JCLENBQUM7Q0FFSjtBQWRELHNDQWNDIn0=","assetPath":"Assets/03_Scripts/Game
     Management/Multiplay/ClientMessageSender.ts","manifest":{"properties":[],"name":"ClientMessageSender","description":""},"isCompiled":true}'
   typescriptHash: 5636a8418ce6b23456f8809c9dcd0d55
   onlyWriteTrigger: 0

@@ -19,18 +19,21 @@ ScriptedImporter:
   WrapperFilters: []
   wrapperOutputDirectory: Generated
   compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
-    { value: true });\r\nconst UnityEngine_1 = require(\"UnityEngine\");\r\nconst
+    { value: true });\r\nexports.PlayerTeam = void 0;\r\nconst UnityEngine_1 = require(\"UnityEngine\");\r\nconst
     ZEPETO_Character_Controller_1 = require(\"ZEPETO.Character.Controller\");\r\nconst
     ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst CharacterController_1
     = require(\"../Character/CharacterController\");\r\nconst Main_1 = require(\"../Main\");\r\nconst
-    ClientScript_1 = require(\"./Multiplay/ClientScript\");\r\nclass GameManager
-    extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    constructor() {\r\n       
-    super(...arguments);\r\n        this.spawnCount = 0;\r\n        this.virusId
-    = \"\";\r\n        this.players = new Map();\r\n    }\r\n    Init() {\r\n       
-    this.StartCoroutine(this.WaitForPlayersToLoad());\r\n    }\r\n    *WaitForPlayersToLoad()
-    {\r\n        let loadCount = (Main_1.default.instance.hasEnteredLobby) ? Main_1.default.instance.client.connectedClients
-    : 1;\r\n        while (this.spawnCount < loadCount) {\r\n            yield;\r\n       
-    }\r\n        Main_1.default.instance.client.SendMessageInitializeGame();\r\n   
+    ClientScript_1 = require(\"./Multiplay/ClientScript\");\r\nvar PlayerTeam;\r\n(function
+    (PlayerTeam) {\r\n    PlayerTeam[PlayerTeam[\"VIRUS\"] = 0] = \"VIRUS\";\r\n   
+    PlayerTeam[PlayerTeam[\"SURVIVOR\"] = 1] = \"SURVIVOR\";\r\n    PlayerTeam[PlayerTeam[\"GHOST\"]
+    = 2] = \"GHOST\";\r\n})(PlayerTeam = exports.PlayerTeam || (exports.PlayerTeam
+    = {}));\r\nclass GameManager extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n   
+    constructor() {\r\n        super(...arguments);\r\n        this.spawnCount =
+    0;\r\n        this.virusId = \"\";\r\n        this.players = new Map();\r\n   
+    }\r\n    Init() {\r\n        this.StartCoroutine(this.WaitForPlayersToLoad());\r\n   
+    }\r\n    *WaitForPlayersToLoad() {\r\n        let loadCount = (Main_1.default.instance.hasEnteredLobby)
+    ? Main_1.default.instance.client.connectedClients : 1;\r\n        while (this.spawnCount
+    < loadCount) {\r\n            yield;\r\n        }\r\n        Main_1.default.instance.client.SendMessageInitializeGame();\r\n   
     }\r\n    GetSpawnTransform() {\r\n        return this.spawnLocations[this.spawnCount].transform;\r\n   
     }\r\n    AddSpawn(userId) {\r\n        this.spawnCount++;\r\n        let player
     = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.GetPlayer(userId);\r\n       
@@ -39,8 +42,13 @@ ScriptedImporter:
     this.players.set(userId, cc);\r\n    }\r\n    RemoveSpawn() {\r\n        this.spawnCount--;\r\n   
     }\r\n    InitializeWithVirus(virusId) {\r\n        this.virusId = virusId;\r\n       
     this.players.forEach((value, key) => {\r\n            let cc = value;\r\n           
-    cc.SetAsVirus(cc.playerInfo.userId == virusId);\r\n        });\r\n    }\r\n}\r\nexports.default
-    = GameManager;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiR2FtZU1hbmFnZXIuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJHYW1lTWFuYWdlci50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOztBQUFBLDZDQUFnRTtBQUNoRSw2RUFBbUY7QUFDbkYsaURBQXFEO0FBRXJELDBFQUFtRTtBQUNuRSxrQ0FBMkI7QUFDM0IsMkRBQW9EO0FBRXBELE1BQXFCLFdBQVksU0FBUSxxQ0FBcUI7SUFBOUQ7O1FBR1ksZUFBVSxHQUFHLENBQUMsQ0FBQztRQUNmLFlBQU8sR0FBWSxFQUFFLENBQUM7UUFFdEIsWUFBTyxHQUFzQyxJQUFJLEdBQUcsRUFBK0IsQ0FBQTtJQXlDL0YsQ0FBQztJQXhDVSxJQUFJO1FBRVAsSUFBSSxDQUFDLGNBQWMsQ0FBQyxJQUFJLENBQUMsb0JBQW9CLEVBQUUsQ0FBQyxDQUFDO0lBQ3JELENBQUM7SUFFTSxDQUFDLG9CQUFvQjtRQUV4QixJQUFJLFNBQVMsR0FBRyxDQUFDLGNBQUksQ0FBQyxRQUFRLENBQUMsZUFBZSxDQUFDLENBQUMsQ0FBQyxDQUFDLGNBQUksQ0FBQyxRQUFRLENBQUMsTUFBTSxDQUFDLGdCQUFnQixDQUFDLENBQUMsQ0FBQyxDQUFDLENBQUM7UUFDNUYsT0FBTyxJQUFJLENBQUMsVUFBVSxHQUFHLFNBQVMsRUFBRTtZQUFFLEtBQUssQ0FBQztTQUFFO1FBRTlDLGNBQUksQ0FBQyxRQUFRLENBQUMsTUFBTSxDQUFDLHlCQUF5QixFQUFFLENBQUM7SUFDckQsQ0FBQztJQUVNLGlCQUFpQjtRQUVwQixPQUFPLElBQUksQ0FBQyxjQUFjLENBQUMsSUFBSSxDQUFDLFVBQVUsQ0FBQyxDQUFDLFNBQVMsQ0FBQztJQUMxRCxDQUFDO0lBRU0sUUFBUSxDQUFDLE1BQWM7UUFFMUIsSUFBSSxDQUFDLFVBQVUsRUFBRSxDQUFDO1FBQ2xCLElBQUksTUFBTSxHQUFpQiwyQ0FBYSxDQUFDLFFBQVEsQ0FBQyxTQUFTLENBQUMsTUFBTSxDQUFDLENBQUM7UUFDcEUsSUFBSSxFQUFFLEdBQXlCLE1BQU0sQ0FBQyxTQUFTLENBQUMsVUFBVSxDQUFDLFlBQVksU0FBQyw2QkFBbUIsRUFBRyxDQUFDO1FBQy9GLEVBQUUsQ0FBQyxJQUFJLENBQUMsY0FBSSxDQUFDLFFBQVEsQ0FBQyxNQUFNLENBQUMsZ0JBQWdCLENBQUMsR0FBRyxDQUFDLE1BQU0sQ0FBQyxDQUFDLENBQUM7UUFDM0QsSUFBSSxDQUFDLE9BQU8sQ0FBQyxHQUFHLENBQUMsTUFBTSxFQUFFLEVBQUUsQ0FBQyxDQUFDO0lBQ2pDLENBQUM7SUFFTSxXQUFXO1FBRWQsSUFBSSxDQUFDLFVBQVUsRUFBRSxDQUFDO0lBQ3RCLENBQUM7SUFFTSxtQkFBbUIsQ0FBQyxPQUFlO1FBRXRDLElBQUksQ0FBQyxPQUFPLEdBQUcsT0FBTyxDQUFDO1FBQ3ZCLElBQUksQ0FBQyxPQUFPLENBQUMsT0FBTyxDQUFDLENBQUMsS0FBMEIsRUFBRSxHQUFXLEVBQUUsRUFBRTtZQUM3RCxJQUFJLEVBQUUsR0FBRyxLQUFLLENBQUM7WUFDZixFQUFFLENBQUMsVUFBVSxDQUFDLEVBQUUsQ0FBQyxVQUFVLENBQUMsTUFBTSxJQUFJLE9BQU8sQ0FBQyxDQUFDO1FBQ25ELENBQUMsQ0FBQyxDQUFDO0lBQ1AsQ0FBQztDQUNKO0FBL0NELDhCQStDQyJ9","assetPath":"Assets/03_Scripts/Game
-    Management/GameManager.ts","manifest":{"properties":[{"assembly":"UnityEngine.CoreModule","name":"spawnLocations","type":"UnityEngine.GameObject[]","isArray":true,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]}],"name":"GameManager","description":""},"isCompiled":true}'
-  typescriptHash: e0f27245be7cfc63ecbbb9a3f4d1c91e
+    //Set as virus is id matches character. Otherwise, set survivor if ready, and
+    ghost otherwise.\r\n            if (cc.playerInfo.userId == virusId)\r\n               
+    cc.SetTeam(PlayerTeam.VIRUS);\r\n            else\r\n                cc.SetTeam(cc.IsReady()
+    ? PlayerTeam.SURVIVOR : PlayerTeam.GHOST);\r\n        });\r\n    }\r\n}\r\nexports.default
+    = GameManager;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiR2FtZU1hbmFnZXIuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJHYW1lTWFuYWdlci50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7QUFBQSw2Q0FBZ0U7QUFDaEUsNkVBQW1GO0FBQ25GLGlEQUFxRDtBQUVyRCwwRUFBbUU7QUFDbkUsa0NBQTJCO0FBQzNCLDJEQUFvRDtBQUVwRCxJQUFZLFVBQXFDO0FBQWpELFdBQVksVUFBVTtJQUFHLDZDQUFLLENBQUE7SUFBRSxtREFBUSxDQUFBO0lBQUUsNkNBQUssQ0FBQTtBQUFDLENBQUMsRUFBckMsVUFBVSxHQUFWLGtCQUFVLEtBQVYsa0JBQVUsUUFBMkI7QUFDakQsTUFBcUIsV0FBWSxTQUFRLHFDQUFxQjtJQUE5RDs7UUFPWSxlQUFVLEdBQUcsQ0FBQyxDQUFDO1FBQ2YsWUFBTyxHQUFZLEVBQUUsQ0FBQztRQUV0QixZQUFPLEdBQXNDLElBQUksR0FBRyxFQUErQixDQUFBO0lBOEMvRixDQUFDO0lBN0NVLElBQUk7UUFFUCxJQUFJLENBQUMsY0FBYyxDQUFDLElBQUksQ0FBQyxvQkFBb0IsRUFBRSxDQUFDLENBQUM7SUFDckQsQ0FBQztJQUVNLENBQUMsb0JBQW9CO1FBRXhCLElBQUksU0FBUyxHQUFHLENBQUMsY0FBSSxDQUFDLFFBQVEsQ0FBQyxlQUFlLENBQUMsQ0FBQyxDQUFDLENBQUMsY0FBSSxDQUFDLFFBQVEsQ0FBQyxNQUFNLENBQUMsZ0JBQWdCLENBQUMsQ0FBQyxDQUFDLENBQUMsQ0FBQztRQUM1RixPQUFPLElBQUksQ0FBQyxVQUFVLEdBQUcsU0FBUyxFQUFFO1lBQUUsS0FBSyxDQUFDO1NBQUU7UUFFOUMsY0FBSSxDQUFDLFFBQVEsQ0FBQyxNQUFNLENBQUMseUJBQXlCLEVBQUUsQ0FBQztJQUNyRCxDQUFDO0lBRU0saUJBQWlCO1FBRXBCLE9BQU8sSUFBSSxDQUFDLGNBQWMsQ0FBQyxJQUFJLENBQUMsVUFBVSxDQUFDLENBQUMsU0FBUyxDQUFDO0lBQzFELENBQUM7SUFFTSxRQUFRLENBQUMsTUFBYztRQUUxQixJQUFJLENBQUMsVUFBVSxFQUFFLENBQUM7UUFDbEIsSUFBSSxNQUFNLEdBQWlCLDJDQUFhLENBQUMsUUFBUSxDQUFDLFNBQVMsQ0FBQyxNQUFNLENBQUMsQ0FBQztRQUNwRSxJQUFJLEVBQUUsR0FBeUIsTUFBTSxDQUFDLFNBQVMsQ0FBQyxVQUFVLENBQUMsWUFBWSxTQUFDLDZCQUFtQixFQUFHLENBQUM7UUFDL0YsRUFBRSxDQUFDLElBQUksQ0FBQyxjQUFJLENBQUMsUUFBUSxDQUFDLE1BQU0sQ0FBQyxnQkFBZ0IsQ0FBQyxHQUFHLENBQUMsTUFBTSxDQUFDLENBQUMsQ0FBQztRQUMzRCxJQUFJLENBQUMsT0FBTyxDQUFDLEdBQUcsQ0FBQyxNQUFNLEVBQUUsRUFBRSxDQUFDLENBQUM7SUFDakMsQ0FBQztJQUVNLFdBQVc7UUFFZCxJQUFJLENBQUMsVUFBVSxFQUFFLENBQUM7SUFDdEIsQ0FBQztJQUVNLG1CQUFtQixDQUFDLE9BQWU7UUFFdEMsSUFBSSxDQUFDLE9BQU8sR0FBRyxPQUFPLENBQUM7UUFDdkIsSUFBSSxDQUFDLE9BQU8sQ0FBQyxPQUFPLENBQUMsQ0FBQyxLQUEwQixFQUFFLEdBQVcsRUFBRSxFQUFFO1lBQzdELElBQUksRUFBRSxHQUFHLEtBQUssQ0FBQztZQUVmLDhGQUE4RjtZQUM5RixJQUFJLEVBQUUsQ0FBQyxVQUFVLENBQUMsTUFBTSxJQUFJLE9BQU87Z0JBQy9CLEVBQUUsQ0FBQyxPQUFPLENBQUMsVUFBVSxDQUFDLEtBQUssQ0FBQyxDQUFDOztnQkFFN0IsRUFBRSxDQUFDLE9BQU8sQ0FBQyxFQUFFLENBQUMsT0FBTyxFQUFFLENBQUMsQ0FBQyxDQUFDLFVBQVUsQ0FBQyxRQUFRLENBQUMsQ0FBQyxDQUFDLFVBQVUsQ0FBQyxLQUFLLENBQUMsQ0FBQztRQUMxRSxDQUFDLENBQUMsQ0FBQztJQUNQLENBQUM7Q0FDSjtBQXhERCw4QkF3REMifQ==","assetPath":"Assets/03_Scripts/Game
+    Management/GameManager.ts","manifest":{"properties":[{"assembly":"UnityEngine.CoreModule","name":"spawnLocations","type":"UnityEngine.GameObject[]","isArray":true,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"Header","args":["\"Initialization
+    Objects\""]}]},{"assembly":"UnityEngine.CoreModule","name":"detectionTrigger","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"Header","args":["\"Character
+    Components\""]}]}],"name":"GameManager","description":""},"isCompiled":true}'
+  typescriptHash: 5e911e9b43687023ec90c23eba6b87de
   onlyWriteTrigger: 0

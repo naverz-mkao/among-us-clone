@@ -1,0 +1,37 @@
+fileFormatVersion: 2
+guid: 18658ddb24ffc7340a567b4196e519b7
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst
+    InteractibleObject_1 = require(\"../Interactibles/InteractibleObject\");\r\nconst
+    Main_1 = require(\"../Main\");\r\nconst CharacterController_1 = require(\"./CharacterController\");\r\nclass
+    CharacterTriggerCheck extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n   
+    OnTriggerEnter(other) {\r\n        console.log(\"Collided with \" + other.gameObject.name
+    + \" Tag: \" + other.tag);\r\n        if (other.CompareTag(\"Interactible\"))
+    {\r\n            let info = other.gameObject.GetComponent($typeof(InteractibleObject_1.default));\r\n           
+    Main_1.default.instance.characterController.EnableInteraction(true, info);\r\n       
+    }\r\n        if (other.CompareTag(\"Survivor\")) {\r\n        }\r\n        if
+    (other.CompareTag(\"Virus\")) {\r\n        }\r\n    }\r\n    OnTriggerExit(other)
+    {\r\n        if (other.CompareTag(\"Interactible\")) {\r\n            let info
+    = other.gameObject.GetComponent($typeof(InteractibleObject_1.default));\r\n           
+    Main_1.default.instance.characterController.EnableInteraction(false, info);\r\n       
+    }\r\n    }\r\n}\r\nexports.default = CharacterTriggerCheck;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiQ2hhcmFjdGVyVHJpZ2dlckNoZWNrLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiQ2hhcmFjdGVyVHJpZ2dlckNoZWNrLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBQ0EsaURBQXFEO0FBQ3JELDRFQUFxRTtBQUNyRSxrQ0FBMkI7QUFDM0IsK0RBQXdEO0FBRXhELE1BQXFCLHFCQUFzQixTQUFRLHFDQUFxQjtJQUU3RCxjQUFjLENBQUMsS0FBZTtRQUVqQyxPQUFPLENBQUMsR0FBRyxDQUFDLGdCQUFnQixHQUFHLEtBQUssQ0FBQyxVQUFVLENBQUMsSUFBSSxHQUFHLFFBQVEsR0FBRyxLQUFLLENBQUMsR0FBRyxDQUFDLENBQUM7UUFDN0UsSUFBSSxLQUFLLENBQUMsVUFBVSxDQUFDLGNBQWMsQ0FBQyxFQUNwQztZQUVJLElBQUksSUFBSSxHQUFHLEtBQUssQ0FBQyxVQUFVLENBQUMsWUFBWSxTQUFDLDRCQUFrQixFQUFHLENBQUM7WUFDL0QsY0FBSSxDQUFDLFFBQVEsQ0FBQyxtQkFBbUIsQ0FBQyxpQkFBaUIsQ0FBQyxJQUFJLEVBQUUsSUFBSSxDQUFDLENBQUM7U0FDbkU7UUFFRCxJQUFJLEtBQUssQ0FBQyxVQUFVLENBQUMsVUFBVSxDQUFDLEVBQ2hDO1NBRUM7UUFFRCxJQUFJLEtBQUssQ0FBQyxVQUFVLENBQUMsT0FBTyxDQUFDLEVBQzdCO1NBRUM7SUFDTCxDQUFDO0lBRU0sYUFBYSxDQUFDLEtBQWU7UUFFaEMsSUFBSSxLQUFLLENBQUMsVUFBVSxDQUFDLGNBQWMsQ0FBQyxFQUNwQztZQUNJLElBQUksSUFBSSxHQUFHLEtBQUssQ0FBQyxVQUFVLENBQUMsWUFBWSxTQUFDLDRCQUFrQixFQUFHLENBQUM7WUFDL0QsY0FBSSxDQUFDLFFBQVEsQ0FBQyxtQkFBbUIsQ0FBQyxpQkFBaUIsQ0FBQyxLQUFLLEVBQUUsSUFBSSxDQUFDLENBQUM7U0FDcEU7SUFDTCxDQUFDO0NBRUo7QUFoQ0Qsd0NBZ0NDIn0=","assetPath":"Assets/03_Scripts/Character/CharacterTriggerCheck.ts","manifest":{"properties":[],"name":"CharacterTriggerCheck","description":""},"isCompiled":true}'
+  typescriptHash: c4c0032c8ab30e0e942d6032859adcc6
+  onlyWriteTrigger: 0

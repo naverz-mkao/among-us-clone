@@ -6,9 +6,14 @@ import CharacterController from '../Character/CharacterController';
 import Main from '../Main';
 import ClientScript from './Multiplay/ClientScript';
 
+export enum PlayerTeam { VIRUS, SURVIVOR, GHOST }
 export default class GameManager extends ZepetoScriptBehaviour {
+    @Header("Initialization Objects")
     public spawnLocations : GameObject[];
-
+    
+    @Header("Character Components")
+    public detectionTrigger: GameObject;
+    
     private spawnCount = 0;
     private virusId : string = "";
 
@@ -50,7 +55,12 @@ export default class GameManager extends ZepetoScriptBehaviour {
         this.virusId = virusId;
         this.players.forEach((value: CharacterController, key: string) => {
             let cc = value;
-            cc.SetAsVirus(cc.playerInfo.userId == virusId);
+            
+            //Set as virus is id matches character. Otherwise, set survivor if ready, and ghost otherwise.
+            if (cc.playerInfo.userId == virusId)
+                cc.SetTeam(PlayerTeam.VIRUS);
+            else
+                cc.SetTeam(cc.IsReady() ? PlayerTeam.SURVIVOR : PlayerTeam.GHOST);
         });
     }
 }

@@ -22,24 +22,59 @@ ScriptedImporter:
     { value: true });\r\nconst UnityEngine_1 = require(\"UnityEngine\");\r\nconst
     ZEPETO_Character_Controller_1 = require(\"ZEPETO.Character.Controller\");\r\nconst
     ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst ZEPETO_World_1 = require(\"ZEPETO.World\");\r\nconst
-    Main_1 = require(\"../Main\");\r\nconst UICharacterController_1 = require(\"../UI/UICharacterController\");\r\nclass
-    CharacterController extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    constructor()
-    {\r\n        super(...arguments);\r\n        this.isVirus = false;\r\n    }\r\n   
-    Init(playerInfo) {\r\n        this.playerInfo = playerInfo;\r\n        UnityEngine_1.GameObject.Find(\"ZepetoPlayers\").GetComponent($typeof(UICharacterController_1.default));\r\n       
-    this.player = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.GetPlayer(this.playerInfo.userId);\r\n       
-    if (this.IsLocal())\r\n            this.SetCamera();\r\n    }\r\n    Update()
-    {\r\n        if (UnityEngine_1.Input.GetKeyDown(UnityEngine_1.KeyCode.T)) {\r\n           
-    console.error(ZEPETO_Character_Controller_1.ZepetoPlayers.instance.LocalPlayer.zepetoCamera.gameObject.name);\r\n       
+    GameManager_1 = require(\"../Game Management/GameManager\");\r\nconst InteractibleInfo_1
+    = require(\"../Interactibles/InteractibleInfo\");\r\nconst InteractibleObject_1
+    = require(\"../Interactibles/InteractibleObject\");\r\nconst Main_1 = require(\"../Main\");\r\nconst
+    UICharacterController_1 = require(\"../UI/UICharacterController\");\r\nconst
+    CharacterTriggerCheck_1 = require(\"./CharacterTriggerCheck\");\r\nclass CharacterController
+    extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    constructor() {\r\n       
+    super(...arguments);\r\n        this.isVirus = false;\r\n    }\r\n    Init(playerInfo)
+    {\r\n        this.playerInfo = playerInfo;\r\n        this.player = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.GetPlayer(this.playerInfo.userId);\r\n       
+    //NOTE: Might Potentially be an issue if the local player is already added by
+    this point. \r\n        ZEPETO_Character_Controller_1.ZepetoPlayers.instance.OnAddedLocalPlayer.AddListener(()
+    => {\r\n            this.SetCamera();\r\n            //Initialize UI Elements\r\n           
+    this.uiController = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.gameObject.transform.GetComponentInChildren($typeof(UICharacterController_1.default));\r\n           
+    Main_1.default.instance.uiMgr.InitUI(this.uiController);\r\n            Main_1.default.instance.characterController
+    = this;\r\n            //Spawn Trigger Area\r\n            let trigger = UnityEngine_1.GameObject.Instantiate(Main_1.default.instance.gameMgr.detectionTrigger,
+    this.transform, false).GetComponent($typeof(CharacterTriggerCheck_1.default));\r\n       
+    });\r\n    }\r\n    Update() {\r\n        if (UnityEngine_1.Input.GetKeyDown(UnityEngine_1.KeyCode.T))
+    {\r\n            console.error(ZEPETO_Character_Controller_1.ZepetoPlayers.instance.LocalPlayer.zepetoCamera.gameObject.name);\r\n       
     }\r\n    }\r\n    IsLocal() {\r\n        return (this.playerInfo.userId == ZEPETO_World_1.WorldService.userId);\r\n   
-    }\r\n    SetCamera() {\r\n        //NOTE: Might Potentially be an issue if the
-    local player is already added by this point. \r\n        ZEPETO_Character_Controller_1.ZepetoPlayers.instance.OnAddedLocalPlayer.AddListener(()
-    => {\r\n            let localPlayer = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.LocalPlayer;\r\n           
-    let cam = localPlayer.zepetoCamera;\r\n            //Camera Settings\r\n           
-    // cam.camera.orthographic = true;\r\n            // cam.camera.orthographicSize
-    = 5;\r\n            cam.cameraParent.rotation = UnityEngine_1.Quaternion.Euler(0,
-    0, 0);\r\n        });\r\n    }\r\n    SetAsVirus(b) {\r\n        if (this.playerInfo.userId
-    == ZEPETO_World_1.WorldService.userId) {\r\n            Main_1.default.instance.uiMgr.SetupVirusUI(b);\r\n       
-    }\r\n        this.isVirus = b;\r\n    }\r\n}\r\nexports.default = CharacterController;\r\n//#
-    sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiQ2hhcmFjdGVyQ29udHJvbGxlci5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIkNoYXJhY3RlckNvbnRyb2xsZXIudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7QUFBQSw2Q0FBcUY7QUFDckYsNkVBQW9HO0FBRXBHLGlEQUFxRDtBQUNyRCwrQ0FBNEM7QUFDNUMsa0NBQTJCO0FBQzNCLHVFQUFnRTtBQUVoRSxNQUFxQixtQkFBb0IsU0FBUSxxQ0FBcUI7SUFBdEU7O1FBRVcsWUFBTyxHQUFHLEtBQUssQ0FBQztJQWdEM0IsQ0FBQztJQTdDVSxJQUFJLENBQUMsVUFBa0I7UUFFMUIsSUFBSSxDQUFDLFVBQVUsR0FBRyxVQUFVLENBQUM7UUFDN0Isd0JBQVUsQ0FBQyxJQUFJLENBQUMsZUFBZSxDQUFDLENBQUMsWUFBWSxTQUFDLCtCQUFxQixHQUFJO1FBQ3ZFLElBQUksQ0FBQyxNQUFNLEdBQUcsMkNBQWEsQ0FBQyxRQUFRLENBQUMsU0FBUyxDQUFDLElBQUksQ0FBQyxVQUFVLENBQUMsTUFBTSxDQUFDLENBQUM7UUFDdkUsSUFBSSxJQUFJLENBQUMsT0FBTyxFQUFFO1lBQ2QsSUFBSSxDQUFDLFNBQVMsRUFBRSxDQUFDO0lBQ3pCLENBQUM7SUFFTSxNQUFNO1FBRVQsSUFBSSxtQkFBSyxDQUFDLFVBQVUsQ0FBQyxxQkFBTyxDQUFDLENBQUMsQ0FBQyxFQUMvQjtZQUNJLE9BQU8sQ0FBQyxLQUFLLENBQUMsMkNBQWEsQ0FBQyxRQUFRLENBQUMsV0FBVyxDQUFDLFlBQVksQ0FBQyxVQUFVLENBQUMsSUFBSSxDQUFDLENBQUM7U0FDbEY7SUFDTCxDQUFDO0lBRU0sT0FBTztRQUVWLE9BQU8sQ0FBQyxJQUFJLENBQUMsVUFBVSxDQUFDLE1BQU0sSUFBSSwyQkFBWSxDQUFDLE1BQU0sQ0FBQyxDQUFDO0lBQzNELENBQUM7SUFFTSxTQUFTO1FBRVosMEZBQTBGO1FBQzFGLDJDQUFhLENBQUMsUUFBUSxDQUFDLGtCQUFrQixDQUFDLFdBQVcsQ0FBQyxHQUFHLEVBQUU7WUFDdkQsSUFBSSxXQUFXLEdBQWlCLDJDQUFhLENBQUMsUUFBUSxDQUFDLFdBQVcsQ0FBQztZQUNuRSxJQUFJLEdBQUcsR0FBa0IsV0FBVyxDQUFDLFlBQVksQ0FBQztZQUVsRCxpQkFBaUI7WUFDakIsa0NBQWtDO1lBQ2xDLG1DQUFtQztZQUNuQyxHQUFHLENBQUMsWUFBWSxDQUFDLFFBQVEsR0FBRyx3QkFBVSxDQUFDLEtBQUssQ0FBQyxDQUFDLEVBQUUsQ0FBQyxFQUFFLENBQUMsQ0FBQyxDQUFDO1FBQzFELENBQUMsQ0FBQyxDQUFDO0lBQ1AsQ0FBQztJQUVNLFVBQVUsQ0FBQyxDQUFXO1FBRXpCLElBQUksSUFBSSxDQUFDLFVBQVUsQ0FBQyxNQUFNLElBQUksMkJBQVksQ0FBQyxNQUFNLEVBQ2pEO1lBQ0ksY0FBSSxDQUFDLFFBQVEsQ0FBQyxLQUFLLENBQUMsWUFBWSxDQUFDLENBQUMsQ0FBQyxDQUFDO1NBQ3ZDO1FBRUQsSUFBSSxDQUFDLE9BQU8sR0FBRyxDQUFDLENBQUM7SUFDckIsQ0FBQztDQUNKO0FBbERELHNDQWtEQyJ9","assetPath":"Assets/03_Scripts/Character/CharacterController.ts","manifest":{"properties":[{"assembly":"","name":"playerInfo","type":"ZEPETO.Multiplay.Schema.Player","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"mscorlib","name":"isVirus","type":"System.Boolean","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]}],"name":"CharacterController","description":""},"isCompiled":true}'
-  typescriptHash: 5ef094d588058f86e161ee1a44c65db1
+    }\r\n    IsReady() {\r\n        //TODO: Set up ready depending on server value\r\n       
+    //return Main.instance.client.GetPlayer(this.playerInfo.userId).isReady;\r\n       
+    return true;\r\n    }\r\n    SetCamera() {\r\n        let localPlayer = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.LocalPlayer;\r\n       
+    let cam = localPlayer.zepetoCamera;\r\n        //Camera Settings\r\n        cam.cameraParent.rotation
+    = UnityEngine_1.Quaternion.Euler(0, 0, 0);\r\n    }\r\n    SetTeam(team) {\r\n       
+    if (this.playerInfo.userId == ZEPETO_World_1.WorldService.userId) {\r\n           
+    this.uiController.SetTeam(team);\r\n        }\r\n        switch (team) {\r\n           
+    case GameManager_1.PlayerTeam.VIRUS:\r\n                this.isVirus = true;\r\n               
+    break;\r\n            case GameManager_1.PlayerTeam.SURVIVOR:\r\n               
+    this.isVirus = false;\r\n                break;\r\n            case GameManager_1.PlayerTeam.GHOST:\r\n               
+    this.isVirus = false;\r\n                break;\r\n        }\r\n    }\r\n   
+    EnableInteraction(b, interactObject) {\r\n        this.currentEvent = interactObject.GetEvent();\r\n       
+    if (this.currentEvent == InteractibleInfo_1.InteractionEvent.MINIGAME_BUTTONCLICKER)
+    {\r\n            this.uiController.EnableUse(b);\r\n        }\r\n        else
+    if (this.currentEvent == InteractibleInfo_1.InteractionEvent.MEETING_HALL) {\r\n           
+    this.uiController.EnableUse(b);\r\n        }\r\n        else if (this.currentEvent
+    == InteractibleInfo_1.InteractionEvent.MEETING_REPORTBODY) {\r\n            this.uiController.EnableUse(b);\r\n       
+    }\r\n        //Switch statement does not work for some reason\r\n        // switch
+    (this.currentEvent)\r\n        // {\r\n        //     case InteractionEvent.MINIGAME_BUTTONCLICKER:\r\n       
+    //         console.log(\"Enabling Button Clicker Event\");\r\n        //        
+    this.uiController.EnableUse(b);\r\n        //         break;\r\n        //    
+    case InteractionEvent.MEETING_HALL:\r\n        //         this.uiController.EnableUse(b);\r\n       
+    //         break;\r\n        //     case InteractionEvent.MEETING_REPORTBODY:\r\n       
+    //         this.uiController.EnableUse(b);\r\n        //         break;\r\n       
+    //     default:\r\n        //         console.log(\"INteraction Failed: \" +
+    (this.currentEvent == InteractionEvent.MINIGAME_BUTTONCLICKER));\r\n        //        
+    break;\r\n        // }\r\n    }\r\n    Use() {\r\n        console.log(\"Used
+    \" + this.currentEvent);\r\n        if (this.currentEvent == InteractibleInfo_1.InteractionEvent.MINIGAME_BUTTONCLICKER)
+    {\r\n            console.log(\"Playing Button Minigame\");\r\n        }\r\n       
+    else if (this.currentEvent == InteractibleInfo_1.InteractionEvent.MEETING_HALL)
+    {\r\n            console.log(\"Calling Hall Meeting\");\r\n        }\r\n       
+    else if (this.currentEvent == InteractibleInfo_1.InteractionEvent.MEETING_REPORTBODY)
+    {\r\n            console.log(\"Reporting Body\");\r\n        }\r\n    }\r\n   
+    Kill() {\r\n        console.log(\"Killed\");\r\n    }\r\n    Sabotage() {\r\n       
+    console.log(\"Sabotaged\");\r\n    }\r\n    Report() {\r\n        console.log(\"Reported\");\r\n   
+    }\r\n}\r\nexports.default = CharacterController;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiQ2hhcmFjdGVyQ29udHJvbGxlci5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIkNoYXJhY3RlckNvbnRyb2xsZXIudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7QUFBQSw2Q0FBcUY7QUFDckYsNkVBQW9HO0FBRXBHLGlEQUFxRDtBQUNyRCwrQ0FBNEM7QUFDNUMsZ0VBQTREO0FBQzVELHdFQUF1RjtBQUN2Riw0RUFBcUU7QUFDckUsa0NBQTJCO0FBQzNCLHVFQUFnRTtBQUNoRSxtRUFBNEQ7QUFFNUQsTUFBcUIsbUJBQW9CLFNBQVEscUNBQXFCO0lBQXRFOztRQUVXLFlBQU8sR0FBRyxLQUFLLENBQUM7SUErSTNCLENBQUM7SUF4SVUsSUFBSSxDQUFDLFVBQWtCO1FBRTFCLElBQUksQ0FBQyxVQUFVLEdBQUcsVUFBVSxDQUFDO1FBQzdCLElBQUksQ0FBQyxNQUFNLEdBQUcsMkNBQWEsQ0FBQyxRQUFRLENBQUMsU0FBUyxDQUFDLElBQUksQ0FBQyxVQUFVLENBQUMsTUFBTSxDQUFDLENBQUM7UUFFdkUsMEZBQTBGO1FBQzFGLDJDQUFhLENBQUMsUUFBUSxDQUFDLGtCQUFrQixDQUFDLFdBQVcsQ0FBQyxHQUFHLEVBQUU7WUFDdkQsSUFBSSxDQUFDLFNBQVMsRUFBRSxDQUFDO1lBRWpCLHdCQUF3QjtZQUN4QixJQUFJLENBQUMsWUFBWSxHQUFHLDJDQUFhLENBQUMsUUFBUSxDQUFDLFVBQVUsQ0FBQyxTQUFTLENBQUMsc0JBQXNCLFNBQUMsK0JBQXFCLEVBQUcsQ0FBQztZQUNoSCxjQUFJLENBQUMsUUFBUSxDQUFDLEtBQUssQ0FBQyxNQUFNLENBQUMsSUFBSSxDQUFDLFlBQVksQ0FBQyxDQUFDO1lBQzlDLGNBQUksQ0FBQyxRQUFRLENBQUMsbUJBQW1CLEdBQUcsSUFBSSxDQUFDO1lBRXpDLG9CQUFvQjtZQUNwQixJQUFJLE9BQU8sR0FBMEIsd0JBQVUsQ0FBQyxXQUFXLENBQWEsY0FBSSxDQUFDLFFBQVEsQ0FBQyxPQUFPLENBQUMsZ0JBQWdC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","assetPath":"Assets/03_Scripts/Character/CharacterController.ts","manifest":{"properties":[{"assembly":"","name":"playerInfo","type":"ZEPETO.Multiplay.Schema.Player","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"mscorlib","name":"isVirus","type":"System.Boolean","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"","name":"uiController","type":"C:/Users/leehy/Documents/NaverZ/ZEPETO/Projects/RandDProjects/Amongus_Clone/Assets/03_Scripts/UI/UICharacterController.default","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]}],"name":"CharacterController","description":""},"isCompiled":true}'
+  typescriptHash: 083c96a883870860b35e5ceb50a81877
   onlyWriteTrigger: 0

@@ -1282,7 +1282,7 @@ MonoBehaviour:
     minZoomDistance: 0
     maxPitch: 0
     minPitch: 0
-    offset: {x: 0, y: 7, z: -2}
+    offset: {x: 0, y: 4, z: 0}
     lockXAxis: 1
     layer:
       serializedVersion: 2
@@ -1702,23 +1702,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1905416158356575360, guid: d21b61d9ac1d2e24f9a8deeb513e3a4e, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9654585
+      value: 0.92387956
       objectReference: {fileID: 0}
     - target: {fileID: 1905416158356575360, guid: d21b61d9ac1d2e24f9a8deeb513e3a4e, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.2605568
+      value: 0.38268343
       objectReference: {fileID: 0}
     - target: {fileID: 1905416158356575360, guid: d21b61d9ac1d2e24f9a8deeb513e3a4e, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1905416158356575360, guid: d21b61d9ac1d2e24f9a8deeb513e3a4e, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1905416158356575360, guid: d21b61d9ac1d2e24f9a8deeb513e3a4e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 30.206
+      value: 45
       objectReference: {fileID: 0}
     - target: {fileID: 1905416158356575360, guid: d21b61d9ac1d2e24f9a8deeb513e3a4e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y

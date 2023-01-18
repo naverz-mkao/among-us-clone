@@ -1,22 +1,32 @@
 import { Vector2 } from 'UnityEngine';
 import { ZepetoScriptBehaviour } from 'ZEPETO.Script'
+import { PlayerTeam } from '../Game Management/GameManager';
+import UICharacterController from './UICharacterController';
 
 export default class UIManager extends ZepetoScriptBehaviour {
+    public uicontroller: UICharacterController;
+    
     
     public Init()
     {
         
     }
     
-    public SetupVirusUI(isVirus: boolean)
+    public InitUI(uicontroller: UICharacterController)
     {
-        if (isVirus)
+        this.uicontroller = uicontroller;
+    }
+    
+    public SetTeam(team: PlayerTeam)
+    {
+        switch (team)
         {
-            
-        }
-        else
-        {
-            
+            case PlayerTeam.VIRUS:
+                break;
+            case PlayerTeam.SURVIVOR:
+                break;
+            case PlayerTeam.GHOST:
+                break;
         }
     }
 }
