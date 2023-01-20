@@ -46,14 +46,9 @@ export default class Main extends ZepetoScriptBehaviour {
 
     public *InitializeAll()  
     {
-        console.log("Initializing");
-        //WaitFor ClientInit First
         this.client?.Init();
-        while (ClientScript.isInitializing) { yield; }
-        
         this.gameMgr?.Init();
         this.uiMgr?.Init();
-        this.lobby?.Init();
         this.InitializePlayers();
     }
 
@@ -71,8 +66,6 @@ export default class Main extends ZepetoScriptBehaviour {
         this.spawnedIds.push(userId);
         if (this.gameMgr)
             this.gameMgr.AddSpawn(userId);
-        if (this.lobby)
-            this.lobby.AddSpawn();
     }
 
     public RemoveSpawn(userId: string)
@@ -87,20 +80,15 @@ export default class Main extends ZepetoScriptBehaviour {
             this.lobby.RemoveSpawn();
     }
 
-    public GetSpawnTransform(): Transform
+    public GetSpawnTransform(spawnIndex: number): Transform
     {
-        if (this.gameMgr != undefined)
-            return this.gameMgr.GetSpawnTransform();
-        else if (this.lobby != undefined)
-            return this.lobby.GetSpawnTransform();
-        else 
-            return new Transform();
+        return this.gameMgr?.GetSpawnTransform(spawnIndex);
     }
     
     public InitializeWithVirus(virusId: string)
     {
         if (this.gameMgr == undefined) { return; }
         console.log(`Setting Virus with id ${virusId}`);
-        this.gameMgr.InitializeWithVirus(virusId);
+        this.StartCoroutine(this.gameMgr.InitializeWithVirus(virusId));
     }
 }

@@ -26,6 +26,12 @@ export default class CharacterController extends ZepetoScriptBehaviour {
     private currentTarget: string;
     
     private targetPlayers: Map<string, string> = new Map<string, string>();
+    
+    public Awake()
+    {
+        this.team = PlayerTeam.NONE;
+    }
+    
     public Init(playerInfo: Player)
     {
         this.playerInfo = playerInfo;
@@ -115,7 +121,7 @@ export default class CharacterController extends ZepetoScriptBehaviour {
 
     public SetTeam(team: PlayerTeam)
     {
-        if (this.team == team) { return; }
+        if (this.team == team && this.team != PlayerTeam.NONE) { return; }
         if (this.playerInfo.userId == WorldService.userId)
         {
             this.uiController.SetTeam(team);
@@ -124,10 +130,11 @@ export default class CharacterController extends ZepetoScriptBehaviour {
         switch (team)
         {
             case PlayerTeam.VIRUS:
-                this.gameObject.tag = "Survivor";
+                this.gameObject.tag = "Virus";
+                
                 break;
             case PlayerTeam.SURVIVOR:
-                this.gameObject.tag = "Virus";
+                this.gameObject.tag = "Survivor";
                 break;
             case PlayerTeam.GHOST:
                 this.gameObject.tag = "Ghost";
@@ -140,6 +147,7 @@ export default class CharacterController extends ZepetoScriptBehaviour {
                 }
                 break;
         }
+        
         
         this.team = team;
         this.SetMaterials(team);

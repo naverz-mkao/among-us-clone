@@ -1,12 +1,13 @@
 import { GameObject, ParticleSystem, Quaternion, Transform } from 'UnityEngine';
 import {SpawnInfo, ZepetoPlayer, ZepetoPlayers} from 'ZEPETO.Character.Controller';
+import { Player } from 'ZEPETO.Multiplay.Schema';
 import { ZepetoScriptBehaviour } from 'ZEPETO.Script'
 import { WorldService } from 'ZEPETO.World';
 import CharacterController from '../Character/CharacterController';
 import Main from '../Main';
 import ClientScript from './Multiplay/ClientScript';
 
-export enum PlayerTeam { VIRUS, SURVIVOR, GHOST }
+export enum PlayerTeam { VIRUS, SURVIVOR, GHOST, NONE }
 export default class GameManager extends ZepetoScriptBehaviour {
     @Header("Initialization Objects")
     public spawnLocations : GameObject[];
@@ -22,22 +23,27 @@ export default class GameManager extends ZepetoScriptBehaviour {
     private players : Map<string, CharacterController> = new Map<string, CharacterController>();
 
     private bodies : Map<string, GameObject> = new Map<string, GameObject>();
+    private isLoadingPlayers: boolean = false;
     public Init()
     {
-        //this.StartCoroutine(this.WaitForPlayersToLoad());
+        this.StartCoroutine(this.WaitForPlayersToLoad());
     }
     
-    // public *WaitForPlayersToLoad()
-    // {
-    //     let loadCount = (Main.instance.hasEnteredLobby) ? Main.instance.client.IsReady() : 1; 
-    //     while (this.spawnCount < loadCount) { yield; }
-    //
-    //     Main.instance.client.SendMessageInitializeGame();
-    // }
-
-    public GetSpawnTransform(): Transform
+    public *WaitForPlayersToLoad()
     {
-        return this.spawnLocations[this.spawnCount].transform;
+        this.isLoadingPlayers = true;
+        while (!Main.instance.client.IsReady()) { yield; }
+        Main.instance.uiMgr.UpdateUIConsole("Game is Ready to Begin. Waiting for players to load");
+        let clientCount = Main.instance.client.multiplayRoom.State.players.Count;
+        
+        while (this.spawnCount < clientCount) { yield; }
+        Main.instance.uiMgr.UpdateUIConsole("All players Loaded. Assiging Virus...");
+        this.isLoadingPlayers = false;
+    }
+
+    public GetSpawnTransform(spawnIndex: number): Transform
+    {
+        return this.spawnLocations[spawnIndex].transform;
     }
     
     public GetPlayerCC(userId: string) : CharacterController
@@ -62,8 +68,9 @@ export default class GameManager extends ZepetoScriptBehaviour {
         this.spawnCount--;
     }
 
-    public InitializeWithVirus(virusId: string)
+    public *InitializeWithVirus(virusId: string)
     {
+        while (this.isLoadingPlayers) { yield; }
         this.virusId = virusId;
         this.players.forEach((value: CharacterController, key: string) => {
             let cc = value;
@@ -117,6 +124,7 @@ export default class GameManager extends ZepetoScriptBehaviour {
             return;
         }
         ZepetoPlayers.instance.RemovePlayer(userId);
+        this.spawnCount--;
         this.players.delete(userId);
     }
     
@@ -129,13 +137,14 @@ export default class GameManager extends ZepetoScriptBehaviour {
         if (isLocal)
         {
             let cc: CharacterController = this.players.get(userId);
-            let spawnTrans = Main.instance.GetSpawnTransform();
+            let spawnTrans = Main.instance.GetSpawnTransform(cc.playerInfo.spawnIndex);
             cc.zptPlayer.character.Teleport(spawnTrans.position, spawnTrans.rotation);
             return;
         }
         
+        const player: Player = Main.instance.client.GetPlayer(userId);
         const spawnInfo = new SpawnInfo();
-        const transformInfo : Transform = Main.instance.GetSpawnTransform();
+        const transformInfo : Transform = Main.instance.GetSpawnTransform(player.spawnIndex);
         console.log(transformInfo.gameObject.name);
         spawnInfo.position = transformInfo.position;
         spawnInfo.rotation = transformInfo.rotation;

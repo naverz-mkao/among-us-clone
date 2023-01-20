@@ -18,6 +18,7 @@ declare module "ZEPETO.Multiplay.Schema" {
 		position: Vector3Schema;
 		sessionId: string;
 		team: Team;
+		spawnIndex: number;
 	}
 	class Team extends Schema {
 		teamId: number;

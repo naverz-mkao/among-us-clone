@@ -86,8 +86,14 @@ enum GameState {
     //Waiting for enough users to begin the game
     Wait,
 
-    //Enough players have been found, game is in progress.
-    Game,
+    //Enough players have been found, game is ready to begin.
+    GameReady,
+    
+    //All Players loaded. Game is in progress
+    GameStart,
+    
+    //Winner has been decided. Game is over
+    GameFinish,
 
     //Game has finished and the results are shown. 
     Result
@@ -161,14 +167,15 @@ export default class ClientScript extends ZepetoScriptBehaviour {
         this.multiplayRoom.AddMessageHandler(MultiplayMessageType.GameReady, (message: MultiplayMessageGameReady) => {
             console.log(`Initialized Game with virus ${message.virusId}`);
             Main.instance.InitializeWithVirus(message.virusId);
+            this.gameState = GameState.GameReady;
         });
 
         this.multiplayRoom.AddMessageHandler(MultiplayMessageType.GameStart, (message => {
-            this.gameState = GameState.Game;
+            this.gameState = GameState.GameStart;
         }));
 
         this.multiplayRoom.AddMessageHandler(MultiplayMessageType.GameFinish, (message => {
-            
+            this.gameState = GameState.GameFinish;
         }));
 
         this.multiplayRoom.AddMessageHandler(MultiplayMessageType.Result, (message => {
@@ -183,7 +190,7 @@ export default class ClientScript extends ZepetoScriptBehaviour {
     
     public IsReady() : boolean
     {
-        return this.gameState == GameState.Game;    
+        return this.gameState == GameState.GameReady;    
     }
     
     public GetPlayer(userId: string) : Player
@@ -213,7 +220,7 @@ export default class ClientScript extends ZepetoScriptBehaviour {
 
         //Create spawn info for our new character. 
         const spawnInfo = new SpawnInfo();
-        const transformInfo : Transform = Main.instance.GetSpawnTransform();
+        const transformInfo : Transform = Main.instance.GetSpawnTransform(player.spawnIndex);
         console.log(transformInfo.gameObject.name);
         spawnInfo.position = transformInfo.position;
         spawnInfo.rotation = transformInfo.rotation;

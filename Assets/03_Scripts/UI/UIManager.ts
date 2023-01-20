@@ -23,10 +23,13 @@ export default class UIManager extends ZepetoScriptBehaviour {
         switch (team)
         {
             case PlayerTeam.VIRUS:
+                this.UpdateUIConsole("You are the Virus. Go destroy the system!");
                 break;
             case PlayerTeam.SURVIVOR:
+                this.UpdateUIConsole("You are not the virus. Find the Virus and save zepeto!");
                 break;
             case PlayerTeam.GHOST:
+                this.UpdateUIConsole("You died... You can still help though, by completing missions!");
                 break;
         }
     }

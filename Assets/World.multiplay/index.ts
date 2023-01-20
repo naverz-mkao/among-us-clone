@@ -77,12 +77,18 @@ type MultiplayMessageResult = {
 }
 
 enum GameState {
-
+    
     //Waiting for enough users to begin the game
     Wait,
 
-    //Enough players have been found, game is in progress.
-    Game,
+    //Enough players have been found, game is ready to begin.
+    GameReady,
+
+    //All Players loaded. Game is in progress
+    GameStart,
+
+    //Winner has been decided. Game is over
+    GameFinish,
 
     //Game has finished and the results are shown. 
     Result
@@ -107,7 +113,11 @@ export default class extends Sandbox {
     private resultTime: number = 0;
     
     private virusID: string = "";
+    
+    private openSpawnIndices: boolean[];
     onCreate(options: SandboxOptions) {
+        this.openSpawnIndices = new Array(this.maxClients);
+        
         // Position Sync Message
         this.onMessage(MultiplayMessageType.CharacterTransform, (client, message: MultiplayMessageCharacterTransform) => {
             // Only continue if the player exists based on the userId
@@ -154,10 +164,24 @@ export default class extends Sandbox {
         })
     }
 
+    //Get the next available spawn transform index.
+    GetOpenSpawnIndex(fromIndex : number): number
+    {
+        let spawnIndex: number = fromIndex;
+        for (let i = 0; i < this.maxClients; i++)
+        {
+            if (!this.openSpawnIndices[spawnIndex]) {break;}
+            spawnIndex = (fromIndex + 1) % this.maxClients;
+        }
+        
+        this.openSpawnIndices[spawnIndex] = true;
+        return spawnIndex;
+    }
+    
     onJoin(client: SandboxPlayer) {
         const userId = client.userId;
         const player = new Player();
-
+        
         // Apply the schema userID value to the player object. 
         player.userId = userId;
 
@@ -169,6 +193,9 @@ export default class extends Sandbox {
         player.position.y = 0;
         player.position.z = 0;
         
+        //Get the next available spawn transform index
+        player.spawnIndex = this.GetOpenSpawnIndex(this.state.players.size);
+        
         //Cache our player to the map. 
         this.state.players.set(userId, player);
         console.log(`Began Waiting.. ${this.state.players.size}/${this.gameStartCount}`);
@@ -176,8 +203,13 @@ export default class extends Sandbox {
     }
 
     onLeave(client: SandboxPlayer, consented?: boolean) {
+        //Unset the flag for the players spawn transform index
+        this.openSpawnIndices[this.state.players.get(client.userId).spawnIndex] = false;
+        
         // Delete the player data
         this.state.players.delete(client.userId);
+        
+        //TODO: Check if the player that left is a virus. If yes, trigger survivor victory.
     }
 
     onTick(deltaTime: number): void {
@@ -196,11 +228,6 @@ export default class extends Sandbox {
     InitializeGame()
     {
         this.gameTime = 0;
-        
-        //Assign the virus player
-        let randIndex: number = Math.floor(Math.random() * this.state.players.size);
-        let userID = Array.from(this.state.players.keys())[randIndex];
-        this.virusID = this.state.players.get(userID).userId;
         
         //Send a message to the clients that the game is beginning. 
         this.SendMessageGameStart();
@@ -227,7 +254,7 @@ export default class extends Sandbox {
             this.gameTime += deltaTime;
 
             // Start the game after 4 seconds (4000 milliseconds)
-            if (this.gameTime >= 4000) this.SetGameState(GameState.Game);
+            if (this.gameTime >= 4000) this.SetGameState(GameState.GameStart);
         }
     }
 
@@ -245,7 +272,7 @@ export default class extends Sandbox {
         //Initialize the corresponding game state. 
         switch (gameState) {
             case GameState.Wait: this.InitializeWait(); break;
-            case GameState.Game: this.InitializeGame(); break;
+            case GameState.GameStart: this.InitializeGame(); break;
             case GameState.Result: this.InitializeResult(); break;
         }
     }
@@ -261,11 +288,18 @@ export default class extends Sandbox {
     }
 
     SendMessageGameReady() {
+        
+        //Assign the virus player
+        let randIndex: number = Math.floor(Math.random() * this.state.players.size);
+        let userID = Array.from(this.state.players.keys())[randIndex];
+        this.virusID = this.state.players.get(userID).userId;
+        
         const message: MultiplayMessageGameReady = {
             virusId: this.virusID
         };
 
         console.log("Game Ready..");
+        console.log(`Player ${message.virusId} is the virus`);
         this.broadcast(MultiplayMessageType.GameReady, message);
     }
 
