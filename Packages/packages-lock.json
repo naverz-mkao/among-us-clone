@@ -193,24 +193,6 @@
       },
       "url": "https://upm.zepeto.run"
     },
-    "zepeto.buildit.common": {
-      "version": "1.0.2",
-      "depth": 1,
-      "source": "registry",
-      "dependencies": {
-        "zepeto.character": "3.1.4"
-      },
-      "url": "https://upm.zepeto.run"
-    },
-    "zepeto.buildit.wedding": {
-      "version": "1.0.2",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {
-        "zepeto.buildit.common": "1.0.2"
-      },
-      "url": "https://upm.zepeto.run"
-    },
     "zepeto.character": {
       "version": "3.1.13",
       "depth": 1,

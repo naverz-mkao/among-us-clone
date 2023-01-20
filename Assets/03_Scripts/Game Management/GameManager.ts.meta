@@ -21,22 +21,24 @@ ScriptedImporter:
   compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
     { value: true });\r\nexports.PlayerTeam = void 0;\r\nconst UnityEngine_1 = require(\"UnityEngine\");\r\nconst
     ZEPETO_Character_Controller_1 = require(\"ZEPETO.Character.Controller\");\r\nconst
-    ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst CharacterController_1
-    = require(\"../Character/CharacterController\");\r\nconst Main_1 = require(\"../Main\");\r\nconst
-    ClientScript_1 = require(\"./Multiplay/ClientScript\");\r\nvar PlayerTeam;\r\n(function
-    (PlayerTeam) {\r\n    PlayerTeam[PlayerTeam[\"VIRUS\"] = 0] = \"VIRUS\";\r\n   
-    PlayerTeam[PlayerTeam[\"SURVIVOR\"] = 1] = \"SURVIVOR\";\r\n    PlayerTeam[PlayerTeam[\"GHOST\"]
-    = 2] = \"GHOST\";\r\n})(PlayerTeam = exports.PlayerTeam || (exports.PlayerTeam
-    = {}));\r\nclass GameManager extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n   
-    constructor() {\r\n        super(...arguments);\r\n        this.spawnCount =
-    0;\r\n        this.virusId = \"\";\r\n        this.players = new Map();\r\n   
-    }\r\n    Init() {\r\n        this.StartCoroutine(this.WaitForPlayersToLoad());\r\n   
-    }\r\n    *WaitForPlayersToLoad() {\r\n        let loadCount = (Main_1.default.instance.hasEnteredLobby)
-    ? Main_1.default.instance.client.connectedClients : 1;\r\n        while (this.spawnCount
-    < loadCount) {\r\n            yield;\r\n        }\r\n        Main_1.default.instance.client.SendMessageInitializeGame();\r\n   
-    }\r\n    GetSpawnTransform() {\r\n        return this.spawnLocations[this.spawnCount].transform;\r\n   
-    }\r\n    AddSpawn(userId) {\r\n        this.spawnCount++;\r\n        let player
-    = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.GetPlayer(userId);\r\n       
+    ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst ZEPETO_World_1 = require(\"ZEPETO.World\");\r\nconst
+    CharacterController_1 = require(\"../Character/CharacterController\");\r\nconst
+    Main_1 = require(\"../Main\");\r\nconst ClientScript_1 = require(\"./Multiplay/ClientScript\");\r\nvar
+    PlayerTeam;\r\n(function (PlayerTeam) {\r\n    PlayerTeam[PlayerTeam[\"VIRUS\"]
+    = 0] = \"VIRUS\";\r\n    PlayerTeam[PlayerTeam[\"SURVIVOR\"] = 1] = \"SURVIVOR\";\r\n   
+    PlayerTeam[PlayerTeam[\"GHOST\"] = 2] = \"GHOST\";\r\n})(PlayerTeam = exports.PlayerTeam
+    || (exports.PlayerTeam = {}));\r\nclass GameManager extends ZEPETO_Script_1.ZepetoScriptBehaviour
+    {\r\n    constructor() {\r\n        super(...arguments);\r\n        this.spawnCount
+    = 0;\r\n        this.virusId = \"\";\r\n        this.players = new Map();\r\n       
+    this.bodies = new Map();\r\n    }\r\n    Init() {\r\n        //this.StartCoroutine(this.WaitForPlayersToLoad());\r\n   
+    }\r\n    // public *WaitForPlayersToLoad()\r\n    // {\r\n    //     let loadCount
+    = (Main.instance.hasEnteredLobby) ? Main.instance.client.IsReady() : 1; \r\n   
+    //     while (this.spawnCount < loadCount) { yield; }\r\n    //\r\n    //    
+    Main.instance.client.SendMessageInitializeGame();\r\n    // }\r\n    GetSpawnTransform()
+    {\r\n        return this.spawnLocations[this.spawnCount].transform;\r\n    }\r\n   
+    GetPlayerCC(userId) {\r\n        if (this.players.has(userId))\r\n           
+    return this.players[userId];\r\n        return null;\r\n    }\r\n    AddSpawn(userId)
+    {\r\n        this.spawnCount++;\r\n        let player = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.GetPlayer(userId);\r\n       
     let cc = player.character.gameObject.AddComponent($typeof(CharacterController_1.default));\r\n       
     cc.Init(Main_1.default.instance.client.multiplayPlayers.get(userId));\r\n       
     this.players.set(userId, cc);\r\n    }\r\n    RemoveSpawn() {\r\n        this.spawnCount--;\r\n   
@@ -45,10 +47,34 @@ ScriptedImporter:
     //Set as virus is id matches character. Otherwise, set survivor if ready, and
     ghost otherwise.\r\n            if (cc.playerInfo.userId == virusId)\r\n               
     cc.SetTeam(PlayerTeam.VIRUS);\r\n            else\r\n                cc.SetTeam(cc.IsReady()
-    ? PlayerTeam.SURVIVOR : PlayerTeam.GHOST);\r\n        });\r\n    }\r\n}\r\nexports.default
-    = GameManager;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiR2FtZU1hbmFnZXIuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJHYW1lTWFuYWdlci50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7QUFBQSw2Q0FBZ0U7QUFDaEUsNkVBQW1GO0FBQ25GLGlEQUFxRDtBQUVyRCwwRUFBbUU7QUFDbkUsa0NBQTJCO0FBQzNCLDJEQUFvRDtBQUVwRCxJQUFZLFVBQXFDO0FBQWpELFdBQVksVUFBVTtJQUFHLDZDQUFLLENBQUE7SUFBRSxtREFBUSxDQUFBO0lBQUUsNkNBQUssQ0FBQTtBQUFDLENBQUMsRUFBckMsVUFBVSxHQUFWLGtCQUFVLEtBQVYsa0JBQVUsUUFBMkI7QUFDakQsTUFBcUIsV0FBWSxTQUFRLHFDQUFxQjtJQUE5RDs7UUFPWSxlQUFVLEdBQUcsQ0FBQyxDQUFDO1FBQ2YsWUFBTyxHQUFZLEVBQUUsQ0FBQztRQUV0QixZQUFPLEdBQXNDLElBQUksR0FBRyxFQUErQixDQUFBO0lBOEMvRixDQUFDO0lBN0NVLElBQUk7UUFFUCxJQUFJLENBQUMsY0FBYyxDQUFDLElBQUksQ0FBQyxvQkFBb0IsRUFBRSxDQUFDLENBQUM7SUFDckQsQ0FBQztJQUVNLENBQUMsb0JBQW9CO1FBRXhCLElBQUksU0FBUyxHQUFHLENBQUMsY0FBSSxDQUFDLFFBQVEsQ0FBQyxlQUFlLENBQUMsQ0FBQyxDQUFDLENBQUMsY0FBSSxDQUFDLFFBQVEsQ0FBQyxNQUFNLENBQUMsZ0JBQWdCLENBQUMsQ0FBQyxDQUFDLENBQUMsQ0FBQztRQUM1RixPQUFPLElBQUksQ0FBQyxVQUFVLEdBQUcsU0FBUyxFQUFFO1lBQUUsS0FBSyxDQUFDO1NBQUU7UUFFOUMsY0FBSSxDQUFDLFFBQVEsQ0FBQyxNQUFNLENBQUMseUJBQXlCLEVBQUUsQ0FBQztJQUNyRCxDQUFDO0lBRU0saUJBQWlCO1FBRXBCLE9BQU8sSUFBSSxDQUFDLGNBQWMsQ0FBQyxJQUFJLENBQUMsVUFBVSxDQUFDLENBQUMsU0FBUyxDQUFDO0lBQzFELENBQUM7SUFFTSxRQUFRLENBQUMsTUFBYztRQUUxQixJQUFJLENBQUMsVUFBVSxFQUFFLENBQUM7UUFDbEIsSUFBSSxNQUFNLEdBQWlCLDJDQUFhLENBQUMsUUFBUSxDQUFDLFNBQVMsQ0FBQyxNQUFNLENBQUMsQ0FBQztRQUNwRSxJQUFJLEVBQUUsR0FBeUIsTUFBTSxDQUFDLFNBQVMsQ0FBQyxVQUFVLENBQUMsWUFBWSxTQUFDLDZCQUFtQixFQUFHLENBQUM7UUFDL0YsRUFBRSxDQUFDLElBQUksQ0FBQyxjQUFJLENBQUMsUUFBUSxDQUFDLE1BQU0sQ0FBQyxnQkFBZ0IsQ0FBQyxHQUFHLENBQUMsTUFBTSxDQUFDLENBQUMsQ0FBQztRQUMzRCxJQUFJLENBQUMsT0FBTyxDQUFDLEdBQUcsQ0FBQyxNQUFNLEVBQUUsRUFBRSxDQUFDLENBQUM7SUFDakMsQ0FBQztJQUVNLFdBQVc7UUFFZCxJQUFJLENBQUMsVUFBVSxFQUFFLENBQUM7SUFDdEIsQ0FBQztJQUVNLG1CQUFtQixDQUFDLE9BQWU7UUFFdEMsSUFBSSxDQUFDLE9BQU8sR0FBRyxPQUFPLENBQUM7UUFDdkIsSUFBSSxDQUFDLE9BQU8sQ0FBQyxPQUFPLENBQUMsQ0FBQyxLQUEwQixFQUFFLEdBQVcsRUFBRSxFQUFFO1lBQzdELElBQUksRUFBRSxHQUFHLEtBQUssQ0FBQztZQUVmLDhGQUE4RjtZQUM5RixJQUFJLEVBQUUsQ0FBQyxVQUFVLENBQUMsTUFBTSxJQUFJLE9BQU87Z0JBQy9CLEVBQUUsQ0FBQyxPQUFPLENBQUMsVUFBVSxDQUFDLEtBQUssQ0FBQyxDQUFDOztnQkFFN0IsRUFBRSxDQUFDLE9BQU8sQ0FBQyxFQUFFLENBQUMsT0FBTyxFQUFFLENBQUMsQ0FBQyxDQUFDLFVBQVUsQ0FBQyxRQUFRLENBQUMsQ0FBQyxDQUFDLFVBQVUsQ0FBQyxLQUFLLENBQUMsQ0FBQztRQUMxRSxDQUFDLENBQUMsQ0FBQztJQUNQLENBQUM7Q0FDSjtBQXhERCw4QkF3REMifQ==","assetPath":"Assets/03_Scripts/Game
+    ? PlayerTeam.SURVIVOR : PlayerTeam.GHOST);\r\n        });\r\n    }\r\n    UpdateTeam(userId,
+    teamId) {\r\n        let cc = this.players.get(userId);\r\n        cc.SetTeam(teamId);\r\n   
+    }\r\n    KillPlayer(userId) {\r\n        if (!this.players.has(userId)) {\r\n           
+    console.error(`Couldn''t kill ${userId}, user doesn''t exist or is already dead`);\r\n           
+    return;\r\n        }\r\n        let cc = this.players.get(userId);\r\n       
+    cc.SetTeam(PlayerTeam.GHOST);\r\n        let body = UnityEngine_1.GameObject.Instantiate(this.bodyPrefab,
+    cc.transform.position, UnityEngine_1.Quaternion.identity);\r\n        body.gameObject.name
+    = cc.playerInfo.userId;\r\n    }\r\n    ReportBody(userId) {\r\n        let body
+    = this.bodies.get(userId);\r\n        if (UnityEngine_1.GameObject.op_Inequality(body,
+    null)) {\r\n            UnityEngine_1.GameObject.Destroy(body);\r\n        }\r\n       
+    //Show Hall Meeting UI\r\n    }\r\n    //Despawn character without removing user
+    from the world server.\r\n    DespawnPlayer(userId) {\r\n        if (ZEPETO_World_1.WorldService.userId
+    === userId) {\r\n            console.error(\"Cannot Remove Local User!\");\r\n           
+    return;\r\n        }\r\n        ZEPETO_Character_Controller_1.ZepetoPlayers.instance.RemovePlayer(userId);\r\n       
+    this.players.delete(userId);\r\n    }\r\n    //Respawn a player that already
+    exists in the world.\r\n    RespawnPlayer(userId) {\r\n        let isLocal =
+    (ZEPETO_World_1.WorldService.userId === userId);\r\n        //Don''t Create another
+    character controller if local\r\n        if (isLocal) {\r\n            let cc
+    = this.players.get(userId);\r\n            let spawnTrans = Main_1.default.instance.GetSpawnTransform();\r\n           
+    cc.zptPlayer.character.Teleport(spawnTrans.position, spawnTrans.rotation);\r\n           
+    return;\r\n        }\r\n        const spawnInfo = new ZEPETO_Character_Controller_1.SpawnInfo();\r\n       
+    const transformInfo = Main_1.default.instance.GetSpawnTransform();\r\n       
+    console.log(transformInfo.gameObject.name);\r\n        spawnInfo.position = transformInfo.position;\r\n       
+    spawnInfo.rotation = transformInfo.rotation;\r\n        $extension(\"ZEPETO.Character.Controller.ZepetoPlayersExtension\").CreatePlayerWithUserId(ZEPETO_Character_Controller_1.ZepetoPlayers.instance,
+    userId, userId, spawnInfo, isLocal);\r\n    }\r\n}\r\nexports.default = GameManager;\r\n//#
+    sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiR2FtZU1hbmFnZXIuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJHYW1lTWFuYWdlci50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7QUFBQSw2Q0FBZ0Y7QUFDaEYsNkVBQW1GO0FBQ25GLGlEQUFxRDtBQUNyRCwrQ0FBNEM7QUFDNUMsMEVBQW1FO0FBQ25FLGtDQUEyQjtBQUMzQiwyREFBb0Q7QUFFcEQsSUFBWSxVQUFxQztBQUFqRCxXQUFZLFVBQVU7SUFBRyw2Q0FBSyxDQUFBO0lBQUUsbURBQVEsQ0FBQTtJQUFFLDZDQUFLLENBQUE7QUFBQyxDQUFDLEVBQXJDLFVBQVUsR0FBVixrQkFBVSxLQUFWLGtCQUFVLFFBQTJCO0FBQ2pELE1BQXFCLFdBQVksU0FBUSxxQ0FBcUI7SUFBOUQ7O1FBU1ksZUFBVSxHQUFHLENBQUMsQ0FBQztRQUNmLFlBQU8sR0FBWSxFQUFFLENBQUM7UUFFdEIsWUFBTyxHQUFzQyxJQUFJLEdBQUcsRUFBK0IsQ0FBQztRQUVwRixXQUFNLEdBQTZCLElBQUksR0FBRyxFQUFzQixDQUFDO0lBeUg3RSxDQUFDO0lBeEhVLElBQUk7UUFFUCxtREFBbUQ7SUFDdkQsQ0FBQztJQUVELGlDQUFpQztJQUNqQyxJQUFJO0lBQ0osNkZBQTZGO0lBQzdGLHFEQUFxRDtJQUNyRCxFQUFFO0lBQ0Ysd0RBQXdEO0lBQ3hELElBQUk7SUFFRyxpQkFBaUI7UUFFcEIsT0FBTyxJQUFJLENBQUMsY0FBYyxDQUFDLElBQUksQ0FBQyxVQUFVLENBQUMsQ0FBQyxTQUFTLENBQUM7SUFDMUQsQ0FBQztJQUVNLFdBQVcsQ0FBQyxNQUFjO1FBRTdCLElBQUksSUFBSSxDQUFDLE9BQU8sQ0FBQyxHQUFHLENBQUMsTUFBTSxDQUFDO1lBQ3hCLE9BQU8sSUFBSSxDQUFDLE9BQU8sQ0FBQyxNQUFNLENBQUMsQ0FBQztRQUVoQyxPQUFPLElBQUksQ0FBQztJQUNoQixDQUFDO0lBRU0sUUFBUSxDQUFDLE1BQWM7UUFFMUIsSUFBSSxDQUFDLFVBQVUsRUFBRSxDQUFDO1FBQ2xCLElBQUksTUFBTSxHQUFpQiwyQ0FBYSxDQUFDLFFBQVEsQ0FBQyxTQUFTLENBQUMsTUFBTSxDQUFDLENBQUM7UUFDcEUsSUFBSSxFQUFFLEdBQXlCLE1BQU0sQ0FBQyxTQUFTLENBQUMsVUFBVSxDQUFDLFlBQVksU0FBQyw2QkFBbUIsRUFBRyxDQUFDO1FBQy9GLEVBQUUsQ0FBQyxJQUFJLENBQUMsY0FBSSxDQUFDLFFBQVEsQ0FBQyxNQUFNLENBQUMsZ0JBQWdCLENBQUMsR0FBRyxDQUFDLE1BQU0sQ0FBQyxDQUFDLENBQUM7UUFDM0QsSUFBSSxDQUFDLE9BQU8sQ0FBQyxHQUFHLENBQUMsTUFBTSxFQUFFLEVBQUUsQ0FBQyxDQUFDO0lBQ2pDLENBQUM7SUFFTSxXQUFXO1FBRWQsSUFBSSxDQUFDLFVBQVUsRUFBRSxDQUFDO0lBQ3RCLENBQUM7SUFFTSxtQkFBbUIsQ0FBQyxPQUFlO1FBRXRDLElBQUksQ0FBQyxPQUFPLEdBQUcsT0FBTyxDQUFDO1FBQ3ZCLElBQUksQ0FBQyxPQUFPLENBQUMsT0FBTyxDQUFDLENBQUMsS0FBMEIsRUFBRSxHQUFXLEVBQUUsRUFBRTtZQUM3RCxJQUFJLEVBQUUsR0FBRyxLQUFLLENBQUM7WUFFZiw4RkFBOEY7WUFDOUYsSUFBSSxFQUFFLENBQUMsVUFBVSxDQUFDLE1BQU0sSUFBSSxPQUFPO2dCQUMvQixFQUFFLENBQUMsT0FBTyxDQUFDLFVBQVUsQ0FBQyxLQUFLLENBQUMsQ0FBQzs7Z0JBRTdCLEVBQUUsQ0FBQyxPQUFPLENBQUMsRUFBRSxDQUFDLE9BQU8sRUFBRSxDQUFDLENBQUMsQ0FBQyxVQUFVLENBQUMsUUFBUSxDQUFDLENBQUMsQ0FBQyxVQUFVLENBQUMsS0FBSyxDQUFDLENBQUM7UUFDMUUsQ0FBQyxDQUFDLENBQUM7SUFDUCxDQUFDO0lBRU0sVUFBVSxDQUFDLE1BQWMsRUFBRSxNQUFjO1FBRTVDLElBQUksRUFBRSxHQUFHLElBQUksQ0FBQyxPQUFPLENBQUMsR0FBRyxDQUFDLE1BQU0sQ0FBQyxDQUFDO1FBQ2xDLEVBQUUsQ0FBQyxPQUFPLENBQUMsTUFBb0IsQ0FBQyxDQUFDO0lBQ3JDLENBQUM7SUFFTSxVQUFVLENBQUMsTUFBYztRQUU1QixJQUFJLENBQUMsSUFBSSxDQUFDLE9BQU8sQ0FBQyxHQUFHLENBQUMsTUFBTSxDQUFDLEVBQzdCO1lBQ0ksT0FBTyxDQUFDLEtBQUssQ0FBQyxpQkFBaUIsTUFBTSx5Q0FBeUMsQ0FBQyxDQUFDO1lBQ2hGLE9BQU87U0FDVjtRQUVELElBQUksRUFBRSxHQUFHLElBQUksQ0FBQyxPQUFPLENBQUMsR0FBRyxDQUFDLE1BQU0sQ0FBQyxDQUFDO1FBQ2xDLEVBQUUsQ0FBQyxPQUFPLENBQUMsVUFBVSxDQUFDLEtBQUssQ0FBQyxDQUFDO1FBRTdCLElBQUksSUFBSSxHQUFlLHdCQUFVLENBQUMsV0FBVyxDQUFhLElBQUksQ0FBQyxVQUFVLEVBQUUsRUFBRSxDQUFDLFNBQVMsQ0FBQyxRQUFRLEVBQUUsd0JBQVUsQ0FBQyxRQUFRLENBQUMsQ0FBQztRQUN2SCxJQUFJLENBQUMsVUFBVSxDQUFDLElBQUksR0FBRyxFQUFFLENBQUMsVUFBVSxDQUFDLE1BQU0sQ0FBQztJQUNoRCxDQUFDO0lBRU0sVUFBVSxDQUFDLE1BQWM7UUFFNUIsSUFBSSxJQUFJLEdBQUcsSUFBSSxDQUFDLE1BQU0sQ0FBQyxHQUFHLENBQUMsTUFBTSxDQUFDLENBQUM7UUFDbkMsSUF0R0Msd0JBQVUsQ0FpSnl3TSxhQUFjLENBM0M5eE0sSUFBSSxFQUFJLElBQUksR0FDaEI7WUFDSSx3QkFBVSxDQUFDLE9BQU8sQ0FBQyxJQUFJLENBQUMsQ0FBQztTQUM1QjtRQUVELHNCQUFzQjtJQUMxQixDQUFDO0lBRUQsZ0VBQWdFO0lBQ3pELGFBQWEsQ0FBQyxNQUFjO1FBRS9CLElBQUksMkJBQVksQ0FBQyxNQUFNLEtBQUssTUFBTSxFQUNsQztZQUNJLE9BQU8sQ0FBQyxLQUFLLENBQUMsMkJBQTJCLENBQUMsQ0FBQztZQUMzQyxPQUFPO1NBQ1Y7UUFDRCwyQ0FBYSxDQUFDLFFBQVEsQ0FBQyxZQUFZLENBQUMsTUFBTSxDQUFDLENBQUM7UUFDNUMsSUFBSSxDQUFDLE9BQU8sQ0FBQyxNQUFNLENBQUMsTUFBTSxDQUFDLENBQUM7SUFDaEMsQ0FBQztJQUVELG9EQUFvRDtJQUM3QyxhQUFhLENBQUMsTUFBYztRQUUvQixJQUFJLE9BQU8sR0FBYSxDQUFDLDJCQUFZLENBQUMsTUFBTSxLQUFLLE1BQU0sQ0FBQyxDQUFDO1FBRXpELG9EQUFvRDtRQUNwRCxJQUFJLE9BQU8sRUFDWDtZQUNJLElBQUksRUFBRSxHQUF3QixJQUFJLENBQUMsT0FBTyxDQUFDLEdBQUcsQ0FBQyxNQUFNLENBQUMsQ0FBQztZQUN2RCxJQUFJLFVBQVUsR0FBRyxjQUFJLENBQUMsUUFBUSxDQUFDLGlCQUFpQixFQUFFLENBQUM7WUFDbkQsRUFBRSxDQUFDLFNBQVMsQ0FBQyxTQUFTLENBQUMsUUFBUSxDQUFDLFVBQVUsQ0FBQyxRQUFRLEVBQUUsVUFBVSxDQUFDLFFBQVEsQ0FBQyxDQUFDO1lBQzFFLE9BQU87U0FDVjtRQUVELE1BQU0sU0FBUyxHQUFHLElBQUksdUNBQVMsRUFBRSxDQUFDO1FBQ2xDLE1BQU0sYUFBYSxHQUFlLGNBQUksQ0FBQyxRQUFRLENBQUMsaUJBQWlCLEVBQUUsQ0FBQztRQUNwRSxPQUFPLENBQUMsR0FBRyxDQUFDLGFBQWEsQ0FBQyxVQUFVLENBQUMsSUFBSSxDQUFDLENBQUM7UUFDM0MsU0FBUyxDQUFDLFFBQVEsR0FBRyxhQUFhLENBQUMsUUFBUSxDQUFDO1FBQzVDLFNBQVMsQ0FBQyxRQUFRLEdBQUcsYUFBYSxDQUFDLFFBQVEsQ0FBQztRQUU1QyxpRUFBdUIsc0JBQXNCLENBQTdDLDJDQUFhLENBQUMsUUFBUSxFQUF3QixNQUFNLEVBQUUsTUFBTSxFQUFFLFNBQVMsRUFBRSxPQUFPLEVBQUU7SUFDdEYsQ0FBQztDQUNKO0FBdklELDhCQXVJQyJ9","assetPath":"Assets/03_Scripts/Game
     Management/GameManager.ts","manifest":{"properties":[{"assembly":"UnityEngine.CoreModule","name":"spawnLocations","type":"UnityEngine.GameObject[]","isArray":true,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"Header","args":["\"Initialization
     Objects\""]}]},{"assembly":"UnityEngine.CoreModule","name":"detectionTrigger","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"Header","args":["\"Character
-    Components\""]}]}],"name":"GameManager","description":""},"isCompiled":true}'
-  typescriptHash: 5e911e9b43687023ec90c23eba6b87de
+    Components\""]}]},{"assembly":"UnityEngine.CoreModule","name":"bodyPrefab","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"UnityEngine.ParticleSystemModule","name":"killFX","type":"UnityEngine.ParticleSystem","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]}],"name":"GameManager","description":""},"isCompiled":true}'
+  typescriptHash: f84f5d53956ee362d72f2554c656cd44
   onlyWriteTrigger: 0

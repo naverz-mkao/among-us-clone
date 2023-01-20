@@ -1,4 +1,4 @@
-import {Camera, GameObject, Input, KeyCode, Quaternion, Vector2 } from 'UnityEngine';
+import {Camera, GameObject, Input, KeyCode, Material, Quaternion, Vector2, Vector3 } from 'UnityEngine';
 import {LocalPlayer, ZepetoCamera, ZepetoPlayer, ZepetoPlayers } from 'ZEPETO.Character.Controller';
 import { Player } from 'ZEPETO.Multiplay.Schema';
 import { ZepetoScriptBehaviour } from 'ZEPETO.Script'
@@ -12,17 +12,24 @@ import CharacterTriggerCheck from './CharacterTriggerCheck';
 
 export default class CharacterController extends ZepetoScriptBehaviour {
     public playerInfo : Player;
-    public isVirus = false;
+    
+    public matGhost : Material;
+    public matVirus : Material;
+    public matSurvivor : Material;
     
     public uiController: UICharacterController;
     
-    private player: ZepetoPlayer;
+    public zptPlayer: ZepetoPlayer;
+    private team: PlayerTeam;
     
     private currentEvent: InteractionEvent;
+    private currentTarget: string;
+    
+    private targetPlayers: Map<string, string> = new Map<string, string>();
     public Init(playerInfo: Player)
     {
         this.playerInfo = playerInfo;
-        this.player = ZepetoPlayers.instance.GetPlayer(this.playerInfo.userId);
+        this.zptPlayer = ZepetoPlayers.instance.GetPlayer(this.playerInfo.userId);
 
         //NOTE: Might Potentially be an issue if the local player is already added by this point. 
         ZepetoPlayers.instance.OnAddedLocalPlayer.AddListener(() => {
@@ -45,6 +52,11 @@ export default class CharacterController extends ZepetoScriptBehaviour {
             console.error(ZepetoPlayers.instance.LocalPlayer.zepetoCamera.gameObject.name);
         }
     }
+
+    public IsVirus(): boolean
+    {
+        return (this.team == PlayerTeam.VIRUS);
+    }
     
     public IsLocal(): boolean
     {
@@ -59,6 +71,39 @@ export default class CharacterController extends ZepetoScriptBehaviour {
         return true;
     }
     
+    public AddTarget(userId: string)
+    {
+        if (this.targetPlayers.has(userId)) {return;}
+        
+        this.targetPlayers.set(userId, userId);
+    }
+    
+    public RemoveTarget(userId: string)
+    {
+        if (!this.targetPlayers.has(userId)) {return;}
+
+        this.targetPlayers.delete(userId);
+    }
+    
+    public GetNearestTarget() : string
+    {
+        if (this.targetPlayers.size == 0) { return ""; };
+        
+        let closestDist : number = Infinity;
+        let finalID: string = "";
+        this.targetPlayers.forEach((value, key) => {
+            let cc : CharacterController = Main.instance.gameMgr.GetPlayerCC(value);
+            let dist: number = Vector3.Distance(this.transform.position, cc.transform.position);
+            if (dist < closestDist)
+            {
+                closestDist = dist;
+                finalID  = cc.playerInfo.userId;
+            }
+        });
+        
+        return finalID;
+    }
+    
     public SetCamera()
     {
         let localPlayer : LocalPlayer = ZepetoPlayers.instance.LocalPlayer;
@@ -70,6 +115,7 @@ export default class CharacterController extends ZepetoScriptBehaviour {
 
     public SetTeam(team: PlayerTeam)
     {
+        if (this.team == team) { return; }
         if (this.playerInfo.userId == WorldService.userId)
         {
             this.uiController.SetTeam(team);
@@ -78,13 +124,37 @@ export default class CharacterController extends ZepetoScriptBehaviour {
         switch (team)
         {
             case PlayerTeam.VIRUS:
-                this.isVirus = true;
+                this.gameObject.tag = "Survivor";
                 break;
             case PlayerTeam.SURVIVOR:
-                this.isVirus = false;
+                this.gameObject.tag = "Virus";
                 break;
             case PlayerTeam.GHOST:
-                this.isVirus = false;
+                this.gameObject.tag = "Ghost";
+                
+                //Despawn if not local
+                if (!this.IsLocal())
+                {
+                    Main.instance.gameMgr.DespawnPlayer(this.playerInfo.userId);
+                    return;
+                }
+                break;
+        }
+        
+        this.team = team;
+        this.SetMaterials(team);
+        Main.instance.client.SendMessageUpdateTeam(this.playerInfo.userId, team);
+    }
+    
+    public SetMaterials(team: PlayerTeam)
+    {
+        switch (team)
+        {
+            case PlayerTeam.VIRUS:
+                break;
+            case PlayerTeam.SURVIVOR:
+                break;
+            case PlayerTeam.GHOST:
                 break;
         }
     }
@@ -143,7 +213,8 @@ export default class CharacterController extends ZepetoScriptBehaviour {
     
     public Kill()
     {
-        console.log("Killed");
+        console.log(`Killed ${this.currentTarget}`);
+        Main.instance.gameMgr.KillPlayer(this.currentTarget);
     }
     
     public Sabotage()

@@ -1,3 +1,4 @@
+import { TextMeshProUGUI } from 'TMPro';
 import { Vector2 } from 'UnityEngine';
 import { ZepetoScriptBehaviour } from 'ZEPETO.Script'
 import { PlayerTeam } from '../Game Management/GameManager';
@@ -5,7 +6,7 @@ import UICharacterController from './UICharacterController';
 
 export default class UIManager extends ZepetoScriptBehaviour {
     public uicontroller: UICharacterController;
-    
+    public messageText: TextMeshProUGUI;
     
     public Init()
     {
@@ -28,5 +29,10 @@ export default class UIManager extends ZepetoScriptBehaviour {
             case PlayerTeam.GHOST:
                 break;
         }
+    }
+    
+    public UpdateUIConsole(message: string)
+    {
+        this.messageText.text = message;
     }
 }

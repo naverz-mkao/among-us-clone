@@ -97,10 +97,10 @@ export default class Main extends ZepetoScriptBehaviour {
             return new Transform();
     }
     
-    public InitializeWithVirus(virusId: number)
+    public InitializeWithVirus(virusId: string)
     {
         if (this.gameMgr == undefined) { return; }
-        console.log(`Setting Virus with id ${this.spawnedIds.length} / ${this.spawnedIds.get_Item(virusId)}`);
-        this.gameMgr.InitializeWithVirus(this.spawnedIds[virusId]);
+        console.log(`Setting Virus with id ${virusId}`);
+        this.gameMgr.InitializeWithVirus(virusId);
     }
 }

@@ -1,4 +1,4 @@
-import { GameObject, Quaternion, Transform } from 'UnityEngine';
+import { GameObject, ParticleSystem, Quaternion, Transform } from 'UnityEngine';
 import {SpawnInfo, ZepetoPlayer, ZepetoPlayers} from 'ZEPETO.Character.Controller';
 import { ZepetoScriptBehaviour } from 'ZEPETO.Script'
 import { WorldService } from 'ZEPETO.World';
@@ -13,27 +13,39 @@ export default class GameManager extends ZepetoScriptBehaviour {
     
     @Header("Character Components")
     public detectionTrigger: GameObject;
+    public bodyPrefab: GameObject;
+    public killFX: ParticleSystem;
     
     private spawnCount = 0;
     private virusId : string = "";
 
-    private players : Map<string, CharacterController> = new Map<string, CharacterController>()
+    private players : Map<string, CharacterController> = new Map<string, CharacterController>();
+
+    private bodies : Map<string, GameObject> = new Map<string, GameObject>();
     public Init()
     {
-        this.StartCoroutine(this.WaitForPlayersToLoad());
+        //this.StartCoroutine(this.WaitForPlayersToLoad());
     }
     
-    public *WaitForPlayersToLoad()
-    {
-        let loadCount = (Main.instance.hasEnteredLobby) ? Main.instance.client.connectedClients : 1; 
-        while (this.spawnCount < loadCount) { yield; }
-
-        Main.instance.client.SendMessageInitializeGame();
-    }
+    // public *WaitForPlayersToLoad()
+    // {
+    //     let loadCount = (Main.instance.hasEnteredLobby) ? Main.instance.client.IsReady() : 1; 
+    //     while (this.spawnCount < loadCount) { yield; }
+    //
+    //     Main.instance.client.SendMessageInitializeGame();
+    // }
 
     public GetSpawnTransform(): Transform
     {
         return this.spawnLocations[this.spawnCount].transform;
+    }
+    
+    public GetPlayerCC(userId: string) : CharacterController
+    {
+        if (this.players.has(userId))
+            return this.players[userId];
+        
+        return null;
     }
 
     public AddSpawn(userId: string)
@@ -62,5 +74,72 @@ export default class GameManager extends ZepetoScriptBehaviour {
             else
                 cc.SetTeam(cc.IsReady() ? PlayerTeam.SURVIVOR : PlayerTeam.GHOST);
         });
+    }
+    
+    public UpdateTeam(userId: string, teamId: number)
+    {
+        let cc = this.players.get(userId);
+        cc.SetTeam(teamId as PlayerTeam);
+    }
+    
+    public KillPlayer(userId: string)
+    {
+        if (!this.players.has(userId)) 
+        {
+            console.error(`Couldn't kill ${userId}, user doesn't exist or is already dead`);
+            return; 
+        }
+        
+        let cc = this.players.get(userId);
+        cc.SetTeam(PlayerTeam.GHOST);
+        
+        let body: GameObject = GameObject.Instantiate<GameObject>(this.bodyPrefab, cc.transform.position, Quaternion.identity);
+        body.gameObject.name = cc.playerInfo.userId;
+    }
+    
+    public ReportBody(userId: string)
+    {
+        let body = this.bodies.get(userId);
+        if (body != null)
+        {
+            GameObject.Destroy(body);
+        }
+        
+        //Show Hall Meeting UI
+    }
+    
+    //Despawn character without removing user from the world server.
+    public DespawnPlayer(userId: string)
+    {
+        if (WorldService.userId === userId)
+        {
+            console.error("Cannot Remove Local User!");
+            return;
+        }
+        ZepetoPlayers.instance.RemovePlayer(userId);
+        this.players.delete(userId);
+    }
+    
+    //Respawn a player that already exists in the world.
+    public RespawnPlayer(userId: string)
+    {
+        let isLocal : boolean = (WorldService.userId === userId);
+        
+        //Don't Create another character controller if local
+        if (isLocal)
+        {
+            let cc: CharacterController = this.players.get(userId);
+            let spawnTrans = Main.instance.GetSpawnTransform();
+            cc.zptPlayer.character.Teleport(spawnTrans.position, spawnTrans.rotation);
+            return;
+        }
+        
+        const spawnInfo = new SpawnInfo();
+        const transformInfo : Transform = Main.instance.GetSpawnTransform();
+        console.log(transformInfo.gameObject.name);
+        spawnInfo.position = transformInfo.position;
+        spawnInfo.rotation = transformInfo.rotation;
+
+        ZepetoPlayers.instance.CreatePlayerWithUserId(userId, userId, spawnInfo, isLocal);
     }
 }
