@@ -30,7 +30,7 @@ export default class UICharacterController extends ZepetoScriptBehaviour {
             case PlayerTeam.VIRUS:
                 this.reportButton.gameObject.SetActive(true);
                 this.killButton.gameObject.SetActive(true);
-
+                
                 this.EnableSabotage(false);
                 this.EnableUse(false);
                 this.EnableKill(false);

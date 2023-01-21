@@ -80,8 +80,8 @@ export default class CharacterController extends ZepetoScriptBehaviour {
     public AddTarget(userId: string)
     {
         if (this.targetPlayers.has(userId)) {return;}
-        
         this.targetPlayers.set(userId, userId);
+        Main.instance.characterController.uiController.EnableKill(true);
     }
     
     public RemoveTarget(userId: string)
@@ -89,11 +89,15 @@ export default class CharacterController extends ZepetoScriptBehaviour {
         if (!this.targetPlayers.has(userId)) {return;}
 
         this.targetPlayers.delete(userId);
+        if (this.targetPlayers.size == 0)
+        {
+            Main.instance.characterController.uiController.EnableKill(false);
+        }
     }
     
     public GetNearestTarget() : string
     {
-        if (this.targetPlayers.size == 0) { return ""; };
+        if (this.targetPlayers.size == 0) { return ""; }
         
         let closestDist : number = Infinity;
         let finalID: string = "";
@@ -121,10 +125,16 @@ export default class CharacterController extends ZepetoScriptBehaviour {
 
     public SetTeam(team: PlayerTeam)
     {
+        console.error(`Assigning ${this.playerInfo.userId} To team ${team}`);
+        //Main.instance.uiMgr.UpdateUIConsole(`Setting the team to ${team} Check: ${(this.team == team)} | ${(this.team != PlayerTeam.NONE)} | ${this.team} | ${team}`);
         if (this.team == team && this.team != PlayerTeam.NONE) { return; }
+        
+        
         if (this.playerInfo.userId == WorldService.userId)
         {
+            Main.instance.uiMgr.UpdateUIConsole(`Setting the team to ${team}`);
             this.uiController.SetTeam(team);
+            Main.instance.uiMgr.SetTeam(team);
         }
 
         switch (team)
@@ -151,7 +161,6 @@ export default class CharacterController extends ZepetoScriptBehaviour {
         
         this.team = team;
         this.SetMaterials(team);
-        Main.instance.client.SendMessageUpdateTeam(this.playerInfo.userId, team);
     }
     
     public SetMaterials(team: PlayerTeam)
@@ -180,7 +189,7 @@ export default class CharacterController extends ZepetoScriptBehaviour {
         }
         else if (this.currentEvent == InteractionEvent.MEETING_REPORTBODY)
         {
-            this.uiController.EnableUse(b);
+            this.uiController.EnableReport(b);
         }
         
         //Switch statement does not work for some reason
@@ -212,17 +221,14 @@ export default class CharacterController extends ZepetoScriptBehaviour {
         else if (this.currentEvent == InteractionEvent.MEETING_HALL)
         {
             console.log("Calling Hall Meeting");
-        }
-        else if (this.currentEvent == InteractionEvent.MEETING_REPORTBODY)
-        {
-            console.log("Reporting Body");
+            Main.instance.uiMgr.ShowVotingWin();
         }
     }
     
     public Kill()
     {
         console.log(`Killed ${this.currentTarget}`);
-        Main.instance.gameMgr.KillPlayer(this.currentTarget);
+        Main.instance.gameMgr.KillPlayer(this.GetNearestTarget());
     }
     
     public Sabotage()
@@ -233,5 +239,6 @@ export default class CharacterController extends ZepetoScriptBehaviour {
     public Report()
     {
         console.log("Reported");
+        Main.instance.uiMgr.ShowVotingWin();
     }
 }

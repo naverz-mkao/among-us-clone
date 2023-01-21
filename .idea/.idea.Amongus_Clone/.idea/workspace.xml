@@ -2,27 +2,42 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2825c138-3be0-48b5-8a0c-a759b61eb544" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Amongus_Clone/.idea/runConfigurations/Zepeto_Multiplay_Script.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Amongus_Clone/.idea/runConfigurations/Zepeto_Multiplay_Script.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Amongus_Clone/.idea/runConfigurations/Zepeto_Script.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Amongus_Clone/.idea/runConfigurations/Zepeto_Script.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Amongus_Clone/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Amongus_Clone/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vscode/launch.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vscode/launch.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/01_Art/Prefabs/Level.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01_Art/Prefabs/Level.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/01_Art/Prefabs/TriggerCheck.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01_Art/Prefabs/TriggerCheck.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/01_Art/Prefabs/UICanvas.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01_Art/Prefabs/UICanvas.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/01_Art/Prefabs/UIController_Touchpad_Horizontal.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01_Art/Prefabs/UIController_Touchpad_Horizontal.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/03_Scripts/Character/CharacterController.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03_Scripts/Character/CharacterController.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/03_Scripts/Character/CharacterController.ts.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03_Scripts/Character/CharacterController.ts.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/03_Scripts/Character/CharacterTriggerCheck.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03_Scripts/Character/CharacterTriggerCheck.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/03_Scripts/Character/CharacterTriggerCheck.ts.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03_Scripts/Character/CharacterTriggerCheck.ts.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/03_Scripts/Game Management/GameManager.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03_Scripts/Game Management/GameManager.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/03_Scripts/Game Management/GameManager.ts.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03_Scripts/Game Management/GameManager.ts.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03_Scripts/Game Management/Multiplay/ClientMessageSender.ts.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03_Scripts/Game Management/Multiplay/ClientMessageSender.ts.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/03_Scripts/Game Management/Multiplay/ClientScript.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03_Scripts/Game Management/Multiplay/ClientScript.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/03_Scripts/Game Management/Multiplay/ClientScript.ts.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03_Scripts/Game Management/Multiplay/ClientScript.ts.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03_Scripts/Main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03_Scripts/Main.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/03_Scripts/Main.ts.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03_Scripts/Main.ts.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/03_Scripts/UI/UICharacterController.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03_Scripts/UI/UICharacterController.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/03_Scripts/UI/UICharacterController.ts.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03_Scripts/UI/UICharacterController.ts.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/03_Scripts/UI/UIManager.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03_Scripts/UI/UIManager.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/03_Scripts/UI/UIManager.ts.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03_Scripts/UI/UIManager.ts.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/05_Scenes/Main.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/05_Scenes/Main.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/World.multiplay/SchemaTypes/index.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/World.multiplay/SchemaTypes/index.d.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/World.multiplay/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/World.multiplay/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/World.multiplay/schemas.json" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/World.multiplay/schemas.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/WorldEditorSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/WorldEditorSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.collab-proxy@1.3.9/Tests/Editor/Presenters/MainPresenterTests.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ide.rider@3.0.17/Rider/Editor/ProjectGeneration/AssemblyNameProvider.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.inputsystem@1.0.2/InputSystem/Plugins/PlayerInput/PlayerInput.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.probuilder@4.5.2/Runtime/Core/BuiltinMaterials.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -111,6 +126,7 @@
       <workItem from="1673995496251" duration="6413000" />
       <workItem from="1674165145147" duration="9761000" />
       <workItem from="1674188514442" duration="15924000" />
+      <workItem from="1674252628605" duration="12166000" />
     </task>
     <servers />
   </component>

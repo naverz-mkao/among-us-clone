@@ -17,6 +17,10 @@ export enum MultiplayMessageType {
     
     //Initialize When the Game Starts
     InitializeGame = "InitializeGame",
+    
+    //Let Server Know Client is fully loaded
+    ClientReady = "ClientReady",
+    
     // Set Team
     UpdateTeam = "SetTeam",
 
@@ -80,6 +84,11 @@ type MultiplayMessageGameFinish = {
 type MultiplayMessageResult = {
 
 }
+
+type MultiplayMessageClientReady = {
+
+}
+
 
 enum GameState {
 
@@ -166,6 +175,8 @@ export default class ClientScript extends ZepetoScriptBehaviour {
 
         this.multiplayRoom.AddMessageHandler(MultiplayMessageType.GameReady, (message: MultiplayMessageGameReady) => {
             console.log(`Initialized Game with virus ${message.virusId}`);
+            Main.instance.uiMgr.UpdateUIConsole("Game is Ready. Assigning the Virus");
+            console.error("Recieved Game Ready Message");
             Main.instance.InitializeWithVirus(message.virusId);
             this.gameState = GameState.GameReady;
         });
@@ -237,7 +248,7 @@ export default class ClientScript extends ZepetoScriptBehaviour {
         {
             Main.instance.uiMgr.UpdateUIConsole(`Waiting For ${this.multiplayPlayers.size}/${this.minClients} Clients to connect`);
         }
-        
+        console.error("Added Player " + userId);
         // Instantiate character with the above settings. 
         ZepetoPlayers.instance.CreatePlayerWithUserId(userId, userId, spawnInfo, isLocal);
     }
@@ -310,9 +321,9 @@ export default class ClientScript extends ZepetoScriptBehaviour {
             
             player.team.OnChange += () => {
                 // Only sync for everyone but the local player
-                if (zepetoPlayer.isLocalPlayer == false) {
+                //if (zepetoPlayer.isLocalPlayer == false) {
                     Main.instance.gameMgr.UpdateTeam(player.userId, player.team.teamId);
-                }
+                //}
             }
         });
     }
@@ -379,6 +390,14 @@ export default class ClientScript extends ZepetoScriptBehaviour {
         
         console.log(`Initializing Game ${MultiplayMessageType.InitializeGame}: Virus(${message.virusId}, ${message.clientCount})`);
         this.multiplayRoom.Send(MultiplayMessageType.InitializeGame, message);
+    }
+
+    public SendMessageClientReady()
+    {
+        const clientCount = this.multiplayPlayers.size;
+        let message : MultiplayMessageClientReady = {}
+
+        this.multiplayRoom.Send(MultiplayMessageType.ClientReady, message);
     }
     
     public SendMessageUpdateTeam(userId: string, teamId: number)

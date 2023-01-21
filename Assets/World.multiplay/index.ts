@@ -12,6 +12,8 @@ enum MultiplayMessageType {
     // Initialize When the Game Starts
     InitializeGame = "InitializeGame",
     
+    ClientReady = "ClientReady",
+    
     // Set Team
     UpdateTeam = "SetTeam",
 
@@ -73,6 +75,10 @@ type MultiplayMessageGameFinish = {
 
 
 type MultiplayMessageResult = {
+
+}
+
+type MultiplayMessageClientReady = {
 
 }
 
@@ -148,6 +154,11 @@ export default class extends Sandbox {
             }
             
             this.broadcast(MultiplayMessageType.InitializeGame, info); 
+        });
+
+        this.onMessage<MultiplayMessageClientReady>(MultiplayMessageType.ClientReady, (client, message: MultiplayMessageClientReady) => {
+            console.log("Player " + client.userId + " is Ready");
+            this.currentPlayerCount++;
         });
         
         this.onMessage<MultiplayMessageCharacterTeam>(MultiplayMessageType.UpdateTeam, (client, message: MultiplayMessageCharacterTeam) => {
@@ -244,10 +255,10 @@ export default class extends Sandbox {
         if (this.gameState != GameState.Wait) return;
 
         // cache the current player count. 
-        this.currentPlayerCount = this.state.players.size;
+        //this.currentPlayerCount = this.state.players.size;
 
         // Check if there are enough players to start the game. 
-        if (this.currentPlayerCount == this.gameStartCount) {
+        if (this.currentPlayerCount >= this.gameStartCount) {
             // If the game hasn't yet started, send the gameready state to the clients. 
             if (this.gameTime == 0) this.SendMessageGameReady();
 

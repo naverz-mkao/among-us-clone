@@ -33,11 +33,10 @@ export default class GameManager extends ZepetoScriptBehaviour {
     {
         this.isLoadingPlayers = true;
         while (!Main.instance.client.IsReady()) { yield; }
-        Main.instance.uiMgr.UpdateUIConsole("Game is Ready to Begin. Waiting for players to load");
-        let clientCount = Main.instance.client.multiplayRoom.State.players.Count;
         
+        let clientCount = Main.instance.client.multiplayRoom.State.players.Count;
+        Main.instance.uiMgr.UpdateUIConsole(`Game is Ready to Begin. Waiting for players to load ${this.spawnCount}/${clientCount}`);
         while (this.spawnCount < clientCount) { yield; }
-        Main.instance.uiMgr.UpdateUIConsole("All players Loaded. Assiging Virus...");
         this.isLoadingPlayers = false;
     }
 
@@ -49,7 +48,7 @@ export default class GameManager extends ZepetoScriptBehaviour {
     public GetPlayerCC(userId: string) : CharacterController
     {
         if (this.players.has(userId))
-            return this.players[userId];
+            return this.players.get(userId);
         
         return null;
     }
@@ -61,6 +60,7 @@ export default class GameManager extends ZepetoScriptBehaviour {
         let cc : CharacterController = player.character.gameObject.AddComponent<CharacterController>();
         cc.Init(Main.instance.client.multiplayPlayers.get(userId));
         this.players.set(userId, cc);
+        Main.instance.client.SendMessageClientReady();
     }
 
     public RemoveSpawn()
@@ -71,10 +71,13 @@ export default class GameManager extends ZepetoScriptBehaviour {
     public *InitializeWithVirus(virusId: string)
     {
         while (this.isLoadingPlayers) { yield; }
+        Main.instance.uiMgr.UpdateUIConsole(`All players Loaded. Assiging Virus... ${this.players.size}`);
         this.virusId = virusId;
+        console.error("Assigning Teams for " + this.players.size + " Clients");
         this.players.forEach((value: CharacterController, key: string) => {
             let cc = value;
             
+            console.error("Assigning team " + (cc.playerInfo.userId == virusId) + " to " + cc.playerInfo.userId);
             //Set as virus is id matches character. Otherwise, set survivor if ready, and ghost otherwise.
             if (cc.playerInfo.userId == virusId)
                 cc.SetTeam(PlayerTeam.VIRUS);
@@ -98,7 +101,8 @@ export default class GameManager extends ZepetoScriptBehaviour {
         }
         
         let cc = this.players.get(userId);
-        cc.SetTeam(PlayerTeam.GHOST);
+        Main.instance.client.SendMessageUpdateTeam(userId, PlayerTeam.GHOST);
+        //cc.SetTeam(PlayerTeam.GHOST);
         
         let body: GameObject = GameObject.Instantiate<GameObject>(this.bodyPrefab, cc.transform.position, Quaternion.identity);
         body.gameObject.name = cc.playerInfo.userId;
@@ -113,6 +117,7 @@ export default class GameManager extends ZepetoScriptBehaviour {
         }
         
         //Show Hall Meeting UI
+        Main.instance.uiMgr.ShowVotingWin();
     }
     
     //Despawn character without removing user from the world server.

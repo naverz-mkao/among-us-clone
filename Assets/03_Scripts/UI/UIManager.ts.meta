@@ -19,18 +19,19 @@ ScriptedImporter:
   WrapperFilters: []
   wrapperOutputDirectory: Generated
   compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
-    { value: true });\r\nconst ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst
-    GameManager_1 = require(\"../Game Management/GameManager\");\r\nconst UICharacterController_1
-    = require(\"./UICharacterController\");\r\nclass UIManager extends ZEPETO_Script_1.ZepetoScriptBehaviour
-    {\r\n    Init() {\r\n    }\r\n    InitUI(uicontroller) {\r\n        this.uicontroller
-    = uicontroller;\r\n    }\r\n    SetTeam(team) {\r\n        switch (team) {\r\n           
-    case GameManager_1.PlayerTeam.VIRUS:\r\n                this.UpdateUIConsole(\"You
-    are the Virus. Go destroy the system!\");\r\n                break;\r\n           
-    case GameManager_1.PlayerTeam.SURVIVOR:\r\n                this.UpdateUIConsole(\"You
-    are not the virus. Find the Virus and save zepeto!\");\r\n                break;\r\n           
-    case GameManager_1.PlayerTeam.GHOST:\r\n                this.UpdateUIConsole(\"You
-    died... You can still help though, by completing missions!\");\r\n               
-    break;\r\n        }\r\n    }\r\n    UpdateUIConsole(message) {\r\n        this.messageText.text
-    = message;\r\n    }\r\n}\r\nexports.default = UIManager;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiVUlNYW5hZ2VyLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiVUlNYW5hZ2VyLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBRUEsaURBQXFEO0FBQ3JELGdFQUE0RDtBQUM1RCxtRUFBNEQ7QUFFNUQsTUFBcUIsU0FBVSxTQUFRLHFDQUFxQjtJQUlqRCxJQUFJO0lBR1gsQ0FBQztJQUVNLE1BQU0sQ0FBQyxZQUFtQztRQUU3QyxJQUFJLENBQUMsWUFBWSxHQUFHLFlBQVksQ0FBQztJQUNyQyxDQUFDO0lBRU0sT0FBTyxDQUFDLElBQWdCO1FBRTNCLFFBQVEsSUFBSSxFQUNaO1lBQ0ksS0FBSyx3QkFBVSxDQUFDLEtBQUs7Z0JBQ2pCLElBQUksQ0FBQyxlQUFlLENBQUMsMkNBQTJDLENBQUMsQ0FBQztnQkFDbEUsTUFBTTtZQUNWLEtBQUssd0JBQVUsQ0FBQyxRQUFRO2dCQUNwQixJQUFJLENBQUMsZUFBZSxDQUFDLHdEQUF3RCxDQUFDLENBQUM7Z0JBQy9FLE1BQU07WUFDVixLQUFLLHdCQUFVLENBQUMsS0FBSztnQkFDakIsSUFBSSxDQUFDLGVBQWUsQ0FBQyxnRUFBZ0UsQ0FBQyxDQUFDO2dCQUN2RixNQUFNO1NBQ2I7SUFDTCxDQUFDO0lBRU0sZUFBZSxDQUFDLE9BQWU7UUFFbEMsSUFBSSxDQUFDLFdBQVcsQ0FBQyxJQUFJLEdBQUcsT0FBTyxDQUFDO0lBQ3BDLENBQUM7Q0FDSjtBQWxDRCw0QkFrQ0MifQ==","assetPath":"Assets/03_Scripts/UI/UIManager.ts","manifest":{"properties":[{"assembly":"","name":"uicontroller","type":"C:/Users/leehy/Documents/NaverZ/ZEPETO/Projects/RandDProjects/Amongus_Clone/Assets/03_Scripts/UI/UICharacterController.default","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"Unity.TextMeshPro","name":"messageText","type":"TMPro.TextMeshProUGUI","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]}],"name":"UIManager","description":""},"isCompiled":true}'
-  typescriptHash: 2f8dba628986135694ac03775910f3f5
+    { value: true });\r\nconst UnityEngine_1 = require(\"UnityEngine\");\r\nconst
+    ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst GameManager_1 = require(\"../Game
+    Management/GameManager\");\r\nconst UICharacterController_1 = require(\"./UICharacterController\");\r\nclass
+    UIManager extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    Init() {\r\n   
+    }\r\n    InitUI(uicontroller) {\r\n        this.uicontroller = uicontroller;\r\n   
+    }\r\n    ShowVotingWin() {\r\n        this.votingWin.SetActive(true);\r\n   
+    }\r\n    SetTeam(team) {\r\n        if (team == GameManager_1.PlayerTeam.VIRUS)
+    {\r\n            this.UpdateUIConsole(\"You are the Virus. Go destroy the system!\");\r\n       
+    }\r\n        else if (team == GameManager_1.PlayerTeam.SURVIVOR) {\r\n           
+    this.UpdateUIConsole(\"You are not the virus. Find the Virus and save zepeto!\");\r\n       
+    }\r\n        else if (team == GameManager_1.PlayerTeam.GHOST) {\r\n           
+    this.UpdateUIConsole(\"You died... You can still help though, by completing missions!\");\r\n       
+    }\r\n    }\r\n    UpdateUIConsole(message) {\r\n        this.messageText.text
+    = message;\r\n    }\r\n}\r\nexports.default = UIManager;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiVUlNYW5hZ2VyLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiVUlNYW5hZ2VyLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBQ0EsNkNBQWlEO0FBQ2pELGlEQUFxRDtBQUNyRCxnRUFBNEQ7QUFDNUQsbUVBQTREO0FBRTVELE1BQXFCLFNBQVUsU0FBUSxxQ0FBcUI7SUFLakQsSUFBSTtJQUdYLENBQUM7SUFFTSxNQUFNLENBQUMsWUFBbUM7UUFFN0MsSUFBSSxDQUFDLFlBQVksR0FBRyxZQUFZLENBQUM7SUFDckMsQ0FBQztJQUVELGFBQWE7UUFFVCxJQUFJLENBQUMsU0FBUyxDQUFDLFNBQVMsQ0FBQyxJQUFJLENBQUMsQ0FBQztJQUNuQyxDQUFDO0lBRU0sT0FBTyxDQUFDLElBQWdCO1FBRTNCLElBQUksSUFBSSxJQUFJLHdCQUFVLENBQUMsS0FBSyxFQUM1QjtZQUNJLElBQUksQ0FBQyxlQUFlLENBQUMsMkNBQTJDLENBQUMsQ0FBQztTQUNyRTthQUNJLElBQUksSUFBSSxJQUFJLHdCQUFVLENBQUMsUUFBUSxFQUNwQztZQUNJLElBQUksQ0FBQyxlQUFlLENBQUMsd0RBQXdELENBQUMsQ0FBQztTQUNsRjthQUNJLElBQUksSUFBSSxJQUFJLHdCQUFVLENBQUMsS0FBSyxFQUNqQztZQUNJLElBQUksQ0FBQyxlQUFlLENBQUMsZ0VBQWdFLENBQUMsQ0FBQztTQUMxRjtJQUNMLENBQUM7SUFFTSxlQUFlLENBQUMsT0FBZTtRQUVsQyxJQUFJLENBQUMsV0FBVyxDQUFDLElBQUksR0FBRyxPQUFPLENBQUM7SUFDcEMsQ0FBQztDQUNKO0FBeENELDRCQXdDQyJ9","assetPath":"Assets/03_Scripts/UI/UIManager.ts","manifest":{"properties":[{"assembly":"","name":"uicontroller","type":"C:/Users/leehy/Documents/NaverZ/ZEPETO/Projects/RandDProjects/Amongus_Clone/Assets/03_Scripts/UI/UICharacterController.default","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"Unity.TextMeshPro","name":"messageText","type":"TMPro.TextMeshProUGUI","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"UnityEngine.CoreModule","name":"votingWin","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]}],"name":"UIManager","description":""},"isCompiled":true}'
+  typescriptHash: 688560ff9c6c67d25bfeec5bece97438
   onlyWriteTrigger: 0
