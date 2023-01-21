@@ -7,6 +7,7 @@ import UICharacterController from './UICharacterController';
 export default class UIManager extends ZepetoScriptBehaviour {
     public uicontroller: UICharacterController;
     public messageText: TextMeshProUGUI;
+    public timerText: TextMeshProUGUI;
     
     public votingWin: GameObject;
     public Init()
@@ -22,6 +23,20 @@ export default class UIManager extends ZepetoScriptBehaviour {
     ShowVotingWin()
     {
         this.votingWin.SetActive(true);
+        this.uicontroller.gameObject.SetActive(false);
+        this.messageText.gameObject.SetActive(false);
+    }
+    
+    HideVotingWin()
+    {
+        this.votingWin.SetActive(false);
+        this.uicontroller.gameObject.SetActive(true);
+        this.messageText.gameObject.SetActive(true);
+    }
+    
+    UpdateMeetingTimer(timer: number)
+    {
+        this.timerText.text = timer.toString();
     }
     
     public SetTeam(team: PlayerTeam)

@@ -1,4 +1,4 @@
-import {Camera, GameObject, Input, KeyCode, Material, Quaternion, Vector2, Vector3 } from 'UnityEngine';
+import {Camera, GameObject, Input, KeyCode, LayerMask, Material, Quaternion, Vector2, Vector3 } from 'UnityEngine';
 import {LocalPlayer, ZepetoCamera, ZepetoPlayer, ZepetoPlayers } from 'ZEPETO.Character.Controller';
 import { Player } from 'ZEPETO.Multiplay.Schema';
 import { ZepetoScriptBehaviour } from 'ZEPETO.Script'
@@ -48,6 +48,8 @@ export default class CharacterController extends ZepetoScriptBehaviour {
             
             //Spawn Trigger Area
             let trigger: CharacterTriggerCheck = GameObject.Instantiate<GameObject>(Main.instance.gameMgr.detectionTrigger, this.transform, false).GetComponent<CharacterTriggerCheck>();
+            
+            this.gameObject.layer = LayerMask.NameToLayer("Player");
         });
     }
     
@@ -125,14 +127,12 @@ export default class CharacterController extends ZepetoScriptBehaviour {
 
     public SetTeam(team: PlayerTeam)
     {
-        console.error(`Assigning ${this.playerInfo.userId} To team ${team}`);
         //Main.instance.uiMgr.UpdateUIConsole(`Setting the team to ${team} Check: ${(this.team == team)} | ${(this.team != PlayerTeam.NONE)} | ${this.team} | ${team}`);
         if (this.team == team && this.team != PlayerTeam.NONE) { return; }
         
         
         if (this.playerInfo.userId == WorldService.userId)
         {
-            Main.instance.uiMgr.UpdateUIConsole(`Setting the team to ${team}`);
             this.uiController.SetTeam(team);
             Main.instance.uiMgr.SetTeam(team);
         }
@@ -239,6 +239,6 @@ export default class CharacterController extends ZepetoScriptBehaviour {
     public Report()
     {
         console.log("Reported");
-        Main.instance.uiMgr.ShowVotingWin();
+        Main.instance.client.SendMessageCallMeeting();
     }
 }

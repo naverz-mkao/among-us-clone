@@ -15,14 +15,16 @@ export enum MultiplayMessageType {
     // For Animation states
     CharacterState = "CharacterState",
     
-    //Initialize When the Game Starts
-    InitializeGame = "InitializeGame",
-    
     //Let Server Know Client is fully loaded
     ClientReady = "ClientReady",
     
     // Set Team
     UpdateTeam = "SetTeam",
+    
+    //Call Meeting,
+    CallMeeting = "CallMeeting",
+    //Meeting Finished
+    MeetingFinished = "MeetingFinished",
 
     //Game States
     Waiting = "Waiting",
@@ -48,11 +50,6 @@ export type MultiplayMessageCharacterState = {
 
     //state id number for translation to enum. 
     characterState: number
-}
-
-export type MultiplayMessageVirusInfo = {
-    virusId: number,
-    clientCount: number
 }
 
 type MultiplayMessageCharacterTeam = {
@@ -88,6 +85,11 @@ type MultiplayMessageResult = {
 type MultiplayMessageClientReady = {
 
 }
+
+type MultiplayMessageCallMeeting = {
+
+}
+
 
 
 enum GameState {
@@ -160,12 +162,6 @@ export default class ClientScript extends ZepetoScriptBehaviour {
     
     public InitializeMessages()
     {
-        console.log("Initializing Messages");
-        this.multiplayRoom.AddMessageHandler(MultiplayMessageType.InitializeGame, (message: MultiplayMessageVirusInfo) => {
-            console.log(`Initialized Game with virus ${message.virusId}`);
-            
-        });
-        
         this.multiplayRoom.AddMessageHandler(MultiplayMessageType.Waiting, (message: MultiplayMessageWaiting) => {
             console.log("Waiting..");
             this.minClients = message.minClients;
@@ -191,6 +187,14 @@ export default class ClientScript extends ZepetoScriptBehaviour {
 
         this.multiplayRoom.AddMessageHandler(MultiplayMessageType.Result, (message => {
             this.gameState = GameState.Result;
+        }));
+
+        this.multiplayRoom.AddMessageHandler(MultiplayMessageType.CallMeeting, (message => {
+            Main.instance.uiMgr.ShowVotingWin();
+        }));
+
+        this.multiplayRoom.AddMessageHandler(MultiplayMessageType.MeetingFinished, (message => {
+            Main.instance.uiMgr.HideVotingWin();
         }));
     }
 
@@ -218,6 +222,7 @@ export default class ClientScript extends ZepetoScriptBehaviour {
             // Register Player Add/Remove events 
             state.players.add_OnAdd((player, userId) => { this.OnPlayerAdd(player, userId) });
             state.players.add_OnRemove((player, userId) => { this.OnPlayerRemove(player, userId) });
+            state.gameTimer.add_OnChange(() => { Main.instance.uiMgr.UpdateMeetingTimer(state.gameTimer.value)});
 
             this.InitializeCharacter(state);
         }
@@ -259,6 +264,11 @@ export default class ClientScript extends ZepetoScriptBehaviour {
         ZepetoPlayers.instance.RemovePlayer(userId);
         Main.instance.RemoveSpawn(userId);
         this.multiplayPlayers.delete(userId);
+
+        if (this.gameState == GameState.Wait)
+        {
+            Main.instance.uiMgr.UpdateUIConsole(`Waiting For ${this.multiplayPlayers.size}/${this.minClients} Clients to connect`);
+        }
     }
 
     private InitializeCharacter(state: State) {
@@ -380,24 +390,20 @@ export default class ClientScript extends ZepetoScriptBehaviour {
         this.multiplayRoom.Send(MultiplayMessageType.CharacterTransform, message);
     }
 
-    public SendMessageInitializeGame()
-    {
-        const clientCount = this.multiplayPlayers.size;
-        let message : MultiplayMessageVirusInfo = {
-            virusId : 1,
-            clientCount : clientCount
-        }
-        
-        console.log(`Initializing Game ${MultiplayMessageType.InitializeGame}: Virus(${message.virusId}, ${message.clientCount})`);
-        this.multiplayRoom.Send(MultiplayMessageType.InitializeGame, message);
-    }
-
     public SendMessageClientReady()
     {
         const clientCount = this.multiplayPlayers.size;
         let message : MultiplayMessageClientReady = {}
 
         this.multiplayRoom.Send(MultiplayMessageType.ClientReady, message);
+    }
+
+    public SendMessageCallMeeting()
+    {
+        const clientCount = this.multiplayPlayers.size;
+        let message : MultiplayMessageCallMeeting = {}
+
+        this.multiplayRoom.Send(MultiplayMessageType.CallMeeting, message);
     }
     
     public SendMessageUpdateTeam(userId: string, teamId: number)

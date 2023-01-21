@@ -5,31 +5,31 @@ import Main from '../Main';
 import CharacterController from './CharacterController';
 
 export default class CharacterTriggerCheck extends ZepetoScriptBehaviour {
-    public triggerObject: Transform;
     
     public myCC : CharacterController;
     
+    
+    private myCol : Collider;
     public Start()
     {
         this.myCC = Main.instance.characterController;
+        this.myCol = this.GetComponent<Collider>();
     }
     
     public OnTriggerEnter(other: Collider)
     {
-        console.error(`Trigger Activated ${other.gameObject.name} ${other.gameObject.tag} ${this.myCC.gameObject.tag} ${this.myCC.IsVirus()}`);
-        if (other.CompareTag("Interactible"))
+        if (other.gameObject.tag == "Interactible")
         {
             let info = other.gameObject.GetComponent<InteractibleObject>();
             this.myCC.EnableInteraction(true, info);
         }
         
-        if (other.CompareTag("Survivor") && this.myCC.IsVirus())
+        if (other.gameObject.tag == "Survivor" && this.myCC.IsVirus())
         {
-            this.triggerObject.localScale = Vector3.one * 3;
             this.myCC.AddTarget(other.gameObject.name);
         }
         
-        if (other.CompareTag("Virus"))
+        if (other.gameObject.tag == "Virus")
         {
             
         }
@@ -46,7 +46,6 @@ export default class CharacterTriggerCheck extends ZepetoScriptBehaviour {
         if (other.CompareTag("Survivor") && this.myCC.IsVirus())
         {
             this.myCC.RemoveTarget(other.gameObject.name);
-            this.triggerObject.localScale = Vector3.one * 1.5;
         }
     }
 

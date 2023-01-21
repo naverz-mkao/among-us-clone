@@ -1514,11 +1514,14 @@ MonoBehaviour:
     - uicontroller
     - messageText
     - votingWin
+    - timerText
     unityValues:
     - {fileID: 0}
     - {fileID: 148485872}
     - {fileID: 69658125}
+    - {fileID: 1528477582}
     values:
+    - 
     - 
     - 
     - 
@@ -2553,7 +2556,7 @@ MonoBehaviour:
     jumpPower: 0
     layer:
       serializedVersion: 2
-      m_Bits: 3
+      m_Bits: 0
     animatorController: {fileID: 9100000, guid: d45416f714b4fe74d9ddc118caf5f7c9, type: 2}
     shadow: {fileID: 1025544020809228, guid: 4512418b2a1844f42961867ad8421ab8, type: 3}
     motionController: 1
@@ -2837,6 +2840,17 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1455392953}
   m_Mesh: {fileID: 4300000, guid: 27ffb642db868d043bd53cf4c17ca7b2, type: 3}
+--- !u!114 &1528477582 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5779517451191378071, guid: 87645be3f89e0c2449f26a8d8ee43890, type: 3}
+  m_PrefabInstance: {fileID: 148485871}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1533630658
 GameObject:
   m_ObjectHideFlags: 0
