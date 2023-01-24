@@ -1,4 +1,4 @@
-import { Texture, Sprite, Texture2D, Vector2, Rect, GameObject } from 'UnityEngine';
+import { Texture, Sprite, Texture2D, Vector2, Rect, GameObject, Debug } from 'UnityEngine';
 import { Button } from 'UnityEngine.UI';
 import { ZepetoScriptBehaviour } from 'ZEPETO.Script'
 import { ZepetoWorldHelper } from 'ZEPETO.World';

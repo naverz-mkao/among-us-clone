@@ -256,6 +256,7 @@ export default class ClientScript extends ZepetoScriptBehaviour {
         console.error("Added Player " + userId);
         // Instantiate character with the above settings. 
         ZepetoPlayers.instance.CreatePlayerWithUserId(userId, userId, spawnInfo, isLocal);
+        //ZepetoPlayers.instance.GetPlayer(userId.toString());
     }
 
     

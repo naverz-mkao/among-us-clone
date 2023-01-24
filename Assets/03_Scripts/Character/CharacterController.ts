@@ -1,4 +1,4 @@
-import {Camera, GameObject, Input, KeyCode, LayerMask, Material, Quaternion, Vector2, Vector3 } from 'UnityEngine';
+import {Camera, Canvas, Debug, GameObject, Input, KeyCode, LayerMask, Material, Quaternion, Resources, Vector2, Vector3 } from 'UnityEngine';
 import {LocalPlayer, ZepetoCamera, ZepetoPlayer, ZepetoPlayers } from 'ZEPETO.Character.Controller';
 import { Player } from 'ZEPETO.Multiplay.Schema';
 import { ZepetoScriptBehaviour } from 'ZEPETO.Script'
@@ -26,6 +26,8 @@ export default class CharacterController extends ZepetoScriptBehaviour {
     private currentTarget: string;
     
     private targetPlayers: Map<string, string> = new Map<string, string>();
+
+    public localCharacterLight: GameObject;
     
     public Awake()
     {
@@ -34,6 +36,7 @@ export default class CharacterController extends ZepetoScriptBehaviour {
     
     public Init(playerInfo: Player)
     {
+        Debug.LogError("Character Controller Script Start")
         this.playerInfo = playerInfo;
         this.zptPlayer = ZepetoPlayers.instance.GetPlayer(this.playerInfo.userId);
 
@@ -50,7 +53,24 @@ export default class CharacterController extends ZepetoScriptBehaviour {
             let trigger: CharacterTriggerCheck = GameObject.Instantiate<GameObject>(Main.instance.gameMgr.detectionTrigger, this.transform, false).GetComponent<CharacterTriggerCheck>();
             
             this.gameObject.layer = LayerMask.NameToLayer("Player");
+
+            this.localCharacterLight = Resources.Load<GameObject>("CharacterLight");
+
+            this.AddLight(this.gameObject);
+
+            this.AddRenderCamera();
         });
+    }
+
+    public AddLight(parent: GameObject)
+    {
+        const characterLight: GameObject = GameObject.Instantiate(this.localCharacterLight, this.transform.position, Quaternion.identity) as GameObject;
+        characterLight.transform.parent = parent.transform;
+    }
+
+    public AddRenderCamera()
+    {
+        GameObject.Find("UICanvas").GetComponent<Canvas>().worldCamera = GameObject.Find("ZepetoCamera").GetComponent<Camera>();
     }
     
     public Update()
@@ -122,7 +142,7 @@ export default class CharacterController extends ZepetoScriptBehaviour {
         let cam : ZepetoCamera = localPlayer.zepetoCamera;
         
         //Camera Settings
-        cam.cameraParent.rotation = Quaternion.Euler(0, 0, 0);
+        cam.cameraParent.rotation = Quaternion.Euler(0, 45, 0);
     }
 
     public SetTeam(team: PlayerTeam)

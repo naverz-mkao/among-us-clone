@@ -27,7 +27,6 @@ export default class UIManager extends ZepetoScriptBehaviour {
         return this.uiVotingWinController;
     }
     
-    
     ShowVotingWin()
     {
         this.votingWin.SetActive(true);
