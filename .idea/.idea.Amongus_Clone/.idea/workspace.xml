@@ -6,21 +6,12 @@
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Amongus_Clone/.idea/runConfigurations/Zepeto_Script.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Amongus_Clone/.idea/runConfigurations/Zepeto_Script.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Amongus_Clone/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Amongus_Clone/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.vscode/launch.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vscode/launch.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/01_Art/Prefabs/TriggerCheck.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01_Art/Prefabs/TriggerCheck.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03_Scripts/Character/CharacterController.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03_Scripts/Character/CharacterController.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03_Scripts/Character/CharacterController.ts.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03_Scripts/Character/CharacterController.ts.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03_Scripts/Character/CharacterTriggerCheck.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03_Scripts/Character/CharacterTriggerCheck.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03_Scripts/Character/CharacterTriggerCheck.ts.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03_Scripts/Character/CharacterTriggerCheck.ts.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03_Scripts/Game Management/Multiplay/ClientScript.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03_Scripts/Game Management/Multiplay/ClientScript.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03_Scripts/Game Management/Multiplay/ClientScript.ts.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03_Scripts/Game Management/Multiplay/ClientScript.ts.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/01_Art/Prefabs/UICanvas.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01_Art/Prefabs/UICanvas.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/03_Scripts/Game Management/GameManager.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03_Scripts/Game Management/GameManager.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/03_Scripts/Game Management/GameManager.ts.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03_Scripts/Game Management/GameManager.ts.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/03_Scripts/UI/UIManager.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03_Scripts/UI/UIManager.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/03_Scripts/UI/UIManager.ts.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03_Scripts/UI/UIManager.ts.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/05_Scenes/Main.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/05_Scenes/Main.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/World.multiplay/SchemaTypes/index.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/World.multiplay/SchemaTypes/index.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/World.multiplay/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/World.multiplay/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/World.multiplay/schemas.json" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/World.multiplay/schemas.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/DynamicsManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/DynamicsManager.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -121,7 +112,11 @@
       <workItem from="1674165145147" duration="9761000" />
       <workItem from="1674188514442" duration="15924000" />
       <workItem from="1674252628605" duration="18166000" />
-      <workItem from="1674281914858" duration="2400000" />
+      <workItem from="1674281914858" duration="3561000" />
+      <workItem from="1674418299482" duration="3370000" />
+      <workItem from="1674515408824" duration="2934000" />
+      <workItem from="1674518590929" duration="2533000" />
+      <workItem from="1674526585406" duration="1835000" />
     </task>
     <servers />
   </component>

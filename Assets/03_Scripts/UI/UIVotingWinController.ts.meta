@@ -1,0 +1,59 @@
+fileFormatVersion: 2
+guid: a5226591aa4315f468d1eb5794974446
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst UnityEngine_1 = require(\"UnityEngine\");\r\nconst
+    ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst ZEPETO_World_1 = require(\"ZEPETO.World\");\r\nconst
+    CharacterController_1 = require(\"../Character/CharacterController\");\r\nconst
+    Main_1 = require(\"../Main\");\r\nconst TMPro_1 = require(\"TMPro\");\r\nclass
+    UIVotingWinController extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n   
+    constructor() {\r\n        super(...arguments);\r\n        this.profiles = new
+    Map();\r\n        this.hasVoted = false;\r\n    }\r\n    Awake() {\r\n       
+    this.confirmBtn.onClick.AddListener(() => {\r\n            if (this.hasVoted)
+    {\r\n                return;\r\n            }\r\n            Main_1.default.instance.gameMgr.VoteForUser(this.currentVote);\r\n           
+    this.confirmBtn.gameObject.SetActive(false);\r\n            this.hasVoted = true;\r\n       
+    });\r\n    }\r\n    Show() {\r\n        this.confirmBtn.gameObject.SetActive(false);\r\n       
+    this.lastHighlight = undefined;\r\n        this.hasVoted = false;\r\n       
+    for (let i = 0; i < this.profileButtons.length; i++) {\r\n            let btn
+    = this.profileButtons[i];\r\n            let highlight = btn.transform.Find(\"Highlight\");\r\n           
+    highlight.gameObject.SetActive(false);\r\n            let voteText = btn.transform.Find(\"VoteCount\").GetComponent($typeof(TMPro_1.TextMeshProUGUI));\r\n           
+    voteText.text = \"0\";\r\n        }\r\n    }\r\n    SetVoteCount(userId, value)
+    {\r\n        let btn = this.profiles.get(userId);\r\n        let voteText = btn.transform.Find(\"VoteCount\").GetComponent($typeof(TMPro_1.TextMeshProUGUI));\r\n       
+    voteText.text = value.toString();\r\n    }\r\n    LoadProfiles(playerCCs) {\r\n       
+    let ccCount = playerCCs.length;\r\n        for (let i = 0; i < this.profileButtons.length;
+    i++) {\r\n            let btn = this.profileButtons[i];\r\n            if (i
+    >= ccCount) {\r\n                btn.gameObject.SetActive(false);\r\n               
+    continue;\r\n            }\r\n            let cc = playerCCs[i];\r\n           
+    this.profiles.set(cc.playerInfo.userId, btn);\r\n            btn.gameObject.SetActive(true);\r\n           
+    let index = i;\r\n            ZEPETO_World_1.ZepetoWorldHelper.GetProfileTexture(cc.playerInfo.userId,
+    (texture) => {\r\n                let rect = new UnityEngine_1.Rect(0, 0, texture.width,
+    texture.height);\r\n                btn.image.sprite = UnityEngine_1.Sprite.Create(texture,
+    rect, new UnityEngine_1.Vector2(0.5, 0.5));\r\n                btn.onClick.AddListener(()
+    => {\r\n                    if (this.hasVoted) {\r\n                        return;\r\n                   
+    }\r\n                    this.confirmBtn.gameObject.SetActive(true);\r\n                   
+    let highlight = btn.transform.Find(\"Highlight\");\r\n                    if
+    (this.lastHighlight != undefined) {\r\n                        this.lastHighlight.SetActive(false);\r\n                   
+    }\r\n                    highlight.gameObject.SetActive(!highlight.gameObject.activeSelf);\r\n                   
+    this.lastHighlight = highlight.gameObject;\r\n                    this.currentVote
+    = cc.playerInfo.userId;\r\n                });\r\n            }, (error) => {\r\n               
+    console.error(error);\r\n            });\r\n        }\r\n    }\r\n}\r\nexports.default
+    = UIVotingWinController;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiVUlWb3RpbmdXaW5Db250cm9sbGVyLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiVUlWb3RpbmdXaW5Db250cm9sbGVyLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBQUEsNkNBQW9GO0FBRXBGLGlEQUFxRDtBQUNyRCwrQ0FBaUQ7QUFDakQsMEVBQW1FO0FBQ25FLGtDQUEyQjtBQUMzQixpQ0FBc0M7QUFFdEMsTUFBcUIscUJBQXNCLFNBQVEscUNBQXFCO0lBQXhFOztRQU9ZLGFBQVEsR0FBeUIsSUFBSSxHQUFHLEVBQWtCLENBQUM7UUFFM0QsYUFBUSxHQUFZLEtBQUssQ0FBQztJQTJFdEMsQ0FBQztJQXpFVSxLQUFLO1FBRVIsSUFBSSxDQUFDLFVBQVUsQ0FBQyxPQUFPLENBQUMsV0FBVyxDQUFDLEdBQUcsRUFBRTtZQUNyQyxJQUFJLElBQUksQ0FBQyxRQUFRLEVBQUU7Z0JBQUUsT0FBTzthQUFFO1lBQy9CLGNBQUksQ0FBQyxRQUFRLENBQUMsT0FBTyxDQUFDLFdBQVcsQ0FBQyxJQUFJLENBQUMsV0FBVyxDQUFDLENBQUM7WUFDcEQsSUFBSSxDQUFDLFVBQVUsQ0FBQyxVQUFVLENBQUMsU0FBUyxDQUFDLEtBQUssQ0FBQyxDQUFDO1lBQzVDLElBQUksQ0FBQyxRQUFRLEdBQUcsSUFBSSxDQUFDO1FBQ3hCLENBQUMsQ0FBQyxDQUFDO0lBQ1AsQ0FBQztJQUVNLElBQUk7UUFFUCxJQUFJLENBQUMsVUFBVSxDQUFDLFVBQVUsQ0FBQyxTQUFTLENBQUMsS0FBSyxDQUFDLENBQUM7UUFDNUMsSUFBSSxDQUFDLGFBQWEsR0FBRyxTQUFTLENBQUM7UUFDL0IsSUFBSSxDQUFDLFFBQVEsR0FBRyxLQUFLLENBQUM7UUFFdEIsS0FBSyxJQUFJLENBQUMsR0FBWSxDQUFDLEVBQUUsQ0FBQyxHQUFHLElBQUksQ0FBQyxjQUFjLENBQUMsTUFBTSxFQUFFLENBQUMsRUFBRSxFQUM1RDtZQUNJLElBQUksR0FBRyxHQUFHLElBQUksQ0FBQyxjQUFjLENB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","assetPath":"Assets/03_Scripts/UI/UIVotingWinController.ts","manifest":{"properties":[{"assembly":"UnityEngine.UI","name":"profileButtons","type":"UnityEngine.UI.Button[]","isArray":true,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"UnityEngine.UI","name":"confirmBtn","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]}],"name":"UIVotingWinController","description":""},"isCompiled":true}'
+  typescriptHash: c71c9ea4a0f244ec7d952a8b055ceac9
+  onlyWriteTrigger: 0

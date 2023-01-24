@@ -84,6 +84,11 @@ export default class GameManager extends ZepetoScriptBehaviour {
             else
                 cc.SetTeam(cc.IsReady() ? PlayerTeam.SURVIVOR : PlayerTeam.GHOST);
         });
+        
+        
+        
+        //LoadPlayer Profiles
+        Main.instance.uiMgr.uiVotingWinController.LoadProfiles(Array.from(this.players.values()));
     }
     
     public UpdateTeam(userId: string, teamId: number)
@@ -155,5 +160,12 @@ export default class GameManager extends ZepetoScriptBehaviour {
         spawnInfo.rotation = transformInfo.rotation;
 
         ZepetoPlayers.instance.CreatePlayerWithUserId(userId, userId, spawnInfo, isLocal);
+    }
+    
+    //Voting Win Functions
+    public VoteForUser(userId: string)
+    {
+        //TODO: Send Message to Server to Vote for player
+        console.log(`Voting for User: ${userId}`);
     }
 }
