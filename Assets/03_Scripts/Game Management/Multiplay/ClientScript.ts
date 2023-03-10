@@ -125,7 +125,7 @@ export default class ClientScript extends ZepetoScriptBehaviour {
 
     public multiplayRoom: Room;
 
-    private minClients: number = 2;
+    private minClients: number = 3;
 
     //Map of the players coming from the multiplay server. 
     public multiplayPlayers: Map<string, Player> = new Map<string, Player>();

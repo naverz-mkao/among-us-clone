@@ -110,7 +110,7 @@ export default class extends Sandbox {
     private gameState = GameState.Wait;
     
     //The minimum number of players required to begin the game. 
-    private readonly gameStartCount = 2;
+    private readonly gameStartCount = 3;
 
     //To track the current connected players
     private currentPlayerCount: number = 0;
@@ -172,7 +172,7 @@ export default class extends Sandbox {
             console.log(`Updated team for user ${message.userId} to ${message.userId}`);
             
             //Send Change team message to all client except original sender.
-            this.broadcast(MultiplayMessageType.UpdateTeam, info, {except : client});
+            //this.broadcast(MultiplayMessageType.UpdateTeam, info, {except : client});
         });
 
         this.onMessage<MultiplayMessageCallMeeting>(MultiplayMessageType.CallMeeting, (client, message: MultiplayMessageCallMeeting) => {

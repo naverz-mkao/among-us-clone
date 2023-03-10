@@ -1,0 +1,223 @@
+[World Settings]
+world id             wjam2023.com.hyunsik.johnn
+version              0.6                 
+max clients          8                   
+orientation          horizontal          
+disable invite       false               
+disable room list    false               
+disable private room false               
+
+[Build Manifest]
+[scenes]
+599 kb               assets/05_scenes/main.unity
+[assets]
+3 kb                 packages/com.unity.postprocessing/postprocessing/shaders/builtins/multiscalevo.shader
+6 kb                 packages/com.unity.postprocessing/postprocessing/textures/bluenoise64px/ldr_lll1_14.png
+5 kb                 assets/01_art/shaders/builditstandard.shader
+13 kb                packages/zepeto.character.controller/runtime/_resources/images/touchpad_handle_base.png
+3 kb                 packages/zepeto.character.controller/runtime/_resources/animations/ui/controller/touchpad_handle_origin_ziggle.anim
+2 kb                 packages/zepeto.character.controller/runtime/_resources/animations/ui/controller/touchpad_handle_off.anim
+2 kb                 packages/com.unity.postprocessing/postprocessing/shaders/builtins/copystdfromdoublewide.shader
+6 kb                 packages/com.unity.postprocessing/postprocessing/textures/bluenoise64px/ldr_lll1_12.png
+565 kb               assets/fonts/valorax/valorax-lg25v sdf.asset
+2 kb                 assets/postprocessing/zepetocamera profile.asset
+6 kb                 packages/com.unity.postprocessing/postprocessing/textures/bluenoise64px/ldr_lll1_58.png
+35 kb                packages/zepeto.character.controller/runtime/_resources/inputactions/zepetoinputcontrol.inputactions
+6 kb                 packages/com.unity.postprocessing/postprocessing/textures/bluenoise64px/ldr_lll1_4.png
+600 kb               packages/zepeto.character.controller/runtime/_resources/animations/base/v2/landing_slight.anim
+87 kb                packages/com.unity.textmeshpro/editor resources/gizmos/tmp - text component icon.psd
+62 kb                packages/zepeto.character.controller/runtime/_resources/animations/base/action1.anim
+63 kb                assets/01_art/models/building_01.fbx
+36 kb                packages/com.unity.postprocessing/postprocessing/gizmos/postprocesslayer.png
+6 kb                 packages/com.unity.postprocessing/postprocessing/textures/bluenoise64px/ldr_lll1_10.png
+1 kb                 packages/com.unity.postprocessing/postprocessing/shaders/debug/vectorscope.compute
+3 kb                 packages/com.unity.postprocessing/postprocessing/textures/smaa/searchtex.tga
+96 kb                packages/com.unity.postprocessing/postprocessing/textures/bluenoise256px/ldr_lll1_4.png
+3 kb                 packages/zepeto.character.controller/runtime/_resources/animations/ui/controller/touchpad_handle_ziggle.anim
+1 mb                 packages/zepeto.character.controller/runtime/_resources/animations/base/walk.anim
+3 kb                 assets/01_art/prefabs/charactershadow.prefab
+2 kb                 packages/zepeto.character.controller/runtime/_resources/animations/ui/controller/touchpad_handle_on.anim
+2 kb                 assets/01_art/materials/mat_neonred.mat
+6 kb                 packages/com.unity.postprocessing/postprocessing/textures/bluenoise64px/ldr_lll1_46.png
+3 kb                 assets/01_art/prefabs/zepetocamera.prefab
+6 kb                 packages/com.unity.postprocessing/postprocessing/textures/bluenoise64px/ldr_lll1_5.png
+6 kb                 packages/com.unity.postprocessing/postprocessing/textures/bluenoise64px/ldr_lll1_47.png
+6 kb                 assets/01_art/materials/mat_building.mat
+3 kb                 packages/com.unity.postprocessing/postprocessing/shaders/builtins/grainbaker.shader
+3 kb                 packages/com.unity.postprocessing/postprocessing/shaders/builtins/autoexposure.compute
+6 kb                 packages/com.unity.postprocessing/postprocessing/textures/bluenoise64px/ldr_lll1_43.png
+350 kb               packages/com.unity.postprocessing/postprocessing/textures/smaa/areatex.tga
+6 kb                 packages/com.unity.postprocessing/postprocessing/textures/bluenoise64px/ldr_lll1_28.png
+6 kb                 packages/com.unity.postprocessing/postprocessing/textures/bluenoise64px/ldr_lll1_19.png
+1 mb                 assets/01_art/models/environment/wd_weddingcake.prefab
+6 kb                 packages/com.unity.postprocessing/postprocessing/textures/bluenoise64px/ldr_lll1_44.png
+6 kb                 packages/com.unity.postprocessing/postprocessing/textures/bluenoise64px/ldr_lll1_23.png
+6 kb                 packages/com.unity.postprocessing/postprocessing/textures/bluenoise64px/ldr_lll1_41.png
+6 kb                 packages/com.unity.postprocessing/postprocessing/textures/bluenoise64px/ldr_lll1_40.png
+5 kb                 packages/com.unity.postprocessing/postprocessing/shaders/builtins/gaussiandownsample.compute
+6 kb                 packages/com.unity.postprocessing/postprocessing/textures/bluenoise64px/ldr_lll1_49.png
+6 kb                 packages/com.unity.postprocessing/postprocessing/textures/bluenoise64px/ldr_lll1_62.png
+96 kb                packages/com.unity.postprocessing/postprocessing/textures/bluenoise256px/ldr_lll1_2.png
+175 kb               assets/01_art/prefabs/uicanvas.prefab
+1 mb                 packages/zepeto.character.controller/runtime/_resources/animations/base/jump_move.anim
+6 kb                 packages/com.unity.postprocessing/postprocessing/textures/bluenoise64px/ldr_lll1_0.png
+2 kb                 assets/01_art/materials/mat_ground.mat
+96 kb                assets/01_art/models/environment/cr_lockera.prefab
+27 kb                packages/zepeto.character.controller/runtime/_resources/prefabs/uicontroller_touchpad_horizontal.prefab
+7 kb                 packages/zepeto.character.controller/runtime/_resources/animatorcontroller/uicontrollertouchpadhandleorigin.controller
+574 kb               packages/zepeto.character.controller/runtime/_resources/animations/base/v2/landing_roll.anim
+6 kb                 packages/com.unity.postprocessing/postprocessing/textures/bluenoise64px/ldr_lll1_26.png
+96 kb                packages/com.unity.postprocessing/postprocessing/textures/bluenoise256px/ldr_lll1_0.png
+62 kb                packages/zepeto.character.controller/runtime/_resources/animations/base/action2.anim
+208 kb               assets/01_art/models/environment/cr_backpack_01.prefab
+3 kb                 packages/com.unity.postprocessing/postprocessing/shaders/builtins/multiscalevodownsample1.compute
+6 kb                 packages/com.unity.postprocessing/postprocessing/textures/bluenoise64px/ldr_lll1_20.png
+10 kb                packages/com.unity.postprocessing/postprocessing/shaders/builtins/multiscalevorender.compute
+27 kb                packages/zepeto.character.controller/runtime/_resources/prefabs/uicontroller_touchpad_vertical.prefab
+2 kb                 assets/01_art/materials/character/mat_charactershadow.mat
+6 kb                 packages/com.unity.postprocessing/postprocessing/textures/bluenoise64px/ldr_lll1_35.png
+1 kb                 packages/com.unity.inputsystem/inputsystem/editor/icons/inputsystemuiinputmodule@64.png
+3 kb                 packages/com.unity.postprocessing/postprocessing/shaders/builtins/scalableao.shader
+41 kb                assets/01_art/models/environment/cr_bookshelf_001.prefab
+1 kb                 packages/com.unity.postprocessing/postprocessing/shaders/debug/waveform.shader
+7 kb                 packages/zepeto.character.controller/runtime/_resources/animatorcontroller/uicontrollertouchpadhandle.controller
+451 kb               packages/zepeto.character.controller/runtime/_resources/animations/base/v2/jump_dash.anim
+6 kb                 assets/01_art/materials/character/mat_playerghost.mat
+6 kb                 packages/com.unity.postprocessing/postprocessing/textures/bluenoise64px/ldr_lll1_53.png
+1017 b               packages/zepeto.character.controller/runtime/_resources/images/ellipse 28.png
+489 kb               packages/zepeto.character.controller/runtime/_resources/animations/base/v2/move_walk_fast.anim
+1 kb                 packages/com.unity.postprocessing/postprocessing/shaders/builtins/texture2dlerp.shader
+96 kb                packages/com.unity.postprocessing/postprocessing/textures/bluenoise256px/ldr_lll1_1.png
+4 kb                 packages/com.unity.postprocessing/postprocessing/shaders/builtins/finalpass.shader
+17 kb                packages/com.unity.postprocessing/postprocessing/shaders/builtins/multiscalevoupsample.compute
+11 kb                packages/com.unity.postprocessing/postprocessing/shaders/debug/overlays.shader
+6 kb                 packages/com.unity.postprocessing/postprocessing/textures/bluenoise64px/ldr_lll1_45.png
+12 kb                packages/zepeto.character.controller/runtime/_resources/images/touchpad_jump_base.png
+3 kb                 packages/com.unity.postprocessing/postprocessing/shaders/builtins/exposurehistogram.compute
+2 kb                 assets/01_art/prefabs/triggercheck.prefab
+442 kb               packages/zepeto.character.controller/runtime/_resources/animations/base/v2/jump_move.anim
+6 kb                 packages/com.unity.postprocessing/postprocessing/textures/bluenoise64px/ldr_lll1_55.png
+6 kb                 packages/com.unity.postprocessing/postprocessing/textures/bluenoise64px/ldr_lll1_9.png
+6 kb                 packages/com.unity.postprocessing/postprocessing/textures/bluenoise64px/ldr_lll1_56.png
+3 kb                 packages/com.unity.postprocessing/postprocessing/shaders/debug/lightmeter.shader
+62 kb                packages/zepeto.character.controller/runtime/_resources/animations/base/gesture.anim
+6 kb                 packages/com.unity.postprocessing/postprocessing/textures/bluenoise64px/ldr_lll1_7.png
+18 kb                packages/zepeto.character.controller/runtime/_resources/animatorcontroller/zepetoanimator.controller
+13 kb                assets/01_art/prefabs/profilebutton.prefab
+96 kb                assets/01_art/models/environment/cr_lockera_002.prefab
+11 kb                packages/com.unity.postprocessing/postprocessing/shaders/builtins/motionblur.shader
+6 kb                 packages/com.unity.postprocessing/postprocessing/textures/bluenoise64px/ldr_lll1_52.png
+7 kb                 packages/com.unity.postprocessing/postprocessing/shaders/builtins/depthoffield.shader
+6 kb                 packages/com.unity.postprocessing/postprocessing/textures/bluenoise64px/ldr_lll1_8.png
+2 kb                 packages/zepeto.character.controller/runtime/_resources/animations/ui/controller/touchpad_handle_origin_on.anim
+6 kb                 packages/com.unity.postprocessing/postprocessing/textures/bluenoise64px/ldr_lll1_17.png
+6 kb                 packages/com.unity.postprocessing/postprocessing/textures/bluenoise64px/ldr_lll1_50.png
+2 kb                 packages/com.unity.postprocessing/postprocessing/shaders/builtins/copystd.shader
+6 kb                 packages/com.unity.postprocessing/postprocessing/textures/bluenoise64px/ldr_lll1_15.png
+8 kb                 assets/01_art/materials/character/mat_playerbody.mat
+6 kb                 packages/com.unity.postprocessing/postprocessing/textures/bluenoise64px/ldr_lll1_32.png
+2 kb                 assets/01_art/materials/environment/colortexture_001.mat
+6 kb                 packages/com.unity.postprocessing/postprocessing/textures/bluenoise64px/ldr_lll1_63.png
+8 kb                 packages/com.unity.postprocessing/postprocessing/postprocessresources.asset
+239 kb               assets/01_art/prefabs/disentegrating.prefab
+560 kb               packages/zepeto.character.controller/runtime/_resources/animations/base/idle.anim
+4 kb                 packages/com.unity.postprocessing/postprocessing/shaders/builtins/lut3dbaker.compute
+10 kb                assets/textmesh pro/shaders/tmp_sdf.shader
+1 kb                 packages/com.unity.postprocessing/postprocessing/shaders/builtins/screenspacereflections.shader
+6 kb                 packages/com.unity.postprocessing/postprocessing/textures/bluenoise64px/ldr_lll1_1.png
+6 kb                 packages/com.unity.postprocessing/postprocessing/textures/bluenoise64px/ldr_lll1_54.png
+6 kb                 packages/com.unity.postprocessing/postprocessing/textures/bluenoise64px/ldr_lll1_39.png
+7 kb                 assets/textmesh pro/shaders/tmp_sdf-mobile.shader
+6 kb                 packages/com.unity.postprocessing/postprocessing/textures/bluenoise64px/ldr_lll1_30.png
+72 kb                assets/01_art/models/environment/cr_fireextinguisher_001.prefab
+34 kb                assets/_mk/mktoon/shader/legacy/standard/standardsimpleoutline.shader
+295 kb               packages/zepeto.character.controller/runtime/_resources/animatorcontroller/zepetoanimatorv2.controller
+1 mb                 packages/zepeto.character.controller/runtime/_resources/animations/gesture/4_ok.anim
+13 kb                assets/fonts/valorax/valorax-lg25v.otf
+374 kb               packages/zepeto.character.controller/runtime/_resources/animations/base/v2/move_run_fast.anim
+828 kb               packages/zepeto.character.controller/runtime/_resources/animations/base/v2/move_turn.anim
+6 kb                 packages/com.unity.postprocessing/postprocessing/textures/bluenoise64px/ldr_lll1_2.png
+36 kb                assets/_mk/mktoon/shader/legacy/particles/particlespbs.shader
+7 kb                 packages/com.unity.postprocessing/postprocessing/shaders/builtins/lut2dbaker.shader
+51 kb                assets/01_art/prefabs/uicontroller_touchpad_vertical.prefab
+1 mb                 packages/zepeto.character.controller/runtime/_resources/animations/base/v2/landing_deep.anim
+96 kb                packages/com.unity.postprocessing/postprocessing/textures/bluenoise256px/ldr_lll1_3.png
+4 kb                 assets/01_art/prefabs/car.prefab
+6 kb                 packages/com.unity.postprocessing/postprocessing/textures/bluenoise64px/ldr_lll1_18.png
+6 kb                 packages/com.unity.postprocessing/postprocessing/textures/bluenoise64px/ldr_lll1_27.png
+101 kb               packages/com.unity.textmeshpro/editor resources/gizmos/tmp - font asset icon.psd
+445 kb               packages/zepeto.character.controller/runtime/_resources/animations/base/v2/move_run.anim
+6 kb                 packages/com.unity.postprocessing/postprocessing/textures/bluenoise64px/ldr_lll1_31.png
+33 kb                assets/fonts/digital/digital7mono-yz9j4.ttf
+6 kb                 packages/com.unity.postprocessing/postprocessing/textures/bluenoise64px/ldr_lll1_29.png
+568 b                packages/com.unity.recorder/editor/assets/animation_recorder.png
+6 kb                 packages/com.unity.postprocessing/postprocessing/textures/bluenoise64px/ldr_lll1_61.png
+651 b                packages/com.unity.postprocessing/postprocessing/shaders/builtins/discardalpha.shader
+2 kb                 packages/com.unity.postprocessing/postprocessing/shaders/debug/histogram.compute
+6 kb                 packages/com.unity.postprocessing/postprocessing/textures/bluenoise64px/ldr_lll1_42.png
+2 kb                 packages/com.unity.postprocessing/postprocessing/shaders/builtins/subpixelmorphologicalantialiasing.shader
+1 mb                 packages/zepeto.character.controller/runtime/_resources/animations/base/jump_idle.anim
+3 kb                 assets/01_art/textures/charactershadow.png
+1 kb                 packages/com.unity.postprocessing/postprocessing/shaders/debug/waveform.compute
+2 kb                 packages/zepeto.character.controller/runtime/_resources/animations/ui/controller/touchpad_handle_origin_off.anim
+6 kb                 packages/com.unity.postprocessing/postprocessing/shaders/builtins/temporalantialiasing.shader
+6 kb                 packages/com.unity.postprocessing/postprocessing/textures/bluenoise64px/ldr_lll1_3.png
+6 kb                 packages/com.unity.postprocessing/postprocessing/textures/bluenoise64px/ldr_lll1_24.png
+6 kb                 packages/com.unity.postprocessing/postprocessing/textures/bluenoise64px/ldr_lll1_51.png
+330 kb               packages/zepeto.character.controller/runtime/_resources/animations/base/v2/falling.anim
+6 kb                 packages/com.unity.postprocessing/postprocessing/textures/bluenoise64px/ldr_lll1_60.png
+96 kb                packages/com.unity.postprocessing/postprocessing/textures/bluenoise256px/ldr_lll1_5.png
+5 kb                 packages/zepeto.character.controller/runtime/_resources/images/touchpad_handle_icon.png
+6 kb                 packages/com.unity.postprocessing/postprocessing/textures/bluenoise64px/ldr_lll1_21.png
+618 kb               packages/zepeto.character.controller/runtime/_resources/animations/base/v2/jump_idle.anim
+451 kb               packages/zepeto.character.controller/runtime/_resources/animations/base/v2/stamp.anim
+12 kb                packages/com.unity.postprocessing/postprocessing/shaders/builtins/uber.shader
+2 kb                 assets/01_art/materials/mat_road.mat
+5 kb                 packages/zepeto.character.controller/runtime/_resources/images/touchpad_jump_icon.png
+2 kb                 packages/com.unity.postprocessing/postprocessing/shaders/debug/histogram.shader
+6 kb                 packages/com.unity.postprocessing/postprocessing/textures/bluenoise64px/ldr_lll1_11.png
+651 b                assets/03_scripts/interactibles/meeting_reportbody.asset
+1 kb                 packages/com.unity.postprocessing/postprocessing/shaders/builtins/texture3dlerp.compute
+96 kb                packages/com.unity.postprocessing/postprocessing/textures/bluenoise256px/ldr_lll1_7.png
+6 kb                 packages/com.unity.postprocessing/postprocessing/textures/bluenoise64px/ldr_lll1_37.png
+34 kb                assets/01_art/models/environment/cr_recyclebin_001.prefab
+96 kb                packages/com.unity.postprocessing/postprocessing/textures/bluenoise256px/ldr_lll1_6.png
+2 kb                 assets/icons/img_popup_frame_bevel.png
+6 kb                 packages/com.unity.postprocessing/postprocessing/textures/bluenoise64px/ldr_lll1_36.png
+940 kb               packages/zepeto.character.controller/runtime/_resources/animations/base/run.anim
+6 kb                 packages/com.unity.postprocessing/postprocessing/textures/bluenoise64px/ldr_lll1_57.png
+565 kb               assets/fonts/digital/digital7mono-yz9j4 sdf.asset
+230 kb               assets/01_art/prefabs/player/playerbody.prefab
+2 kb                 packages/com.unity.postprocessing/postprocessing/shaders/builtins/copystdfromtexarray.shader
+655 b                assets/03_scripts/interactibles/minigame_buttonclick 1.asset
+6 kb                 packages/com.unity.postprocessing/postprocessing/textures/bluenoise64px/ldr_lll1_22.png
+6 kb                 packages/com.unity.postprocessing/postprocessing/textures/bluenoise64px/ldr_lll1_48.png
+6 kb                 packages/com.unity.postprocessing/postprocessing/textures/bluenoise64px/ldr_lll1_33.png
+27 kb                assets/01_art/textures/environment/colortexture_001.png
+69 kb                assets/01_art/prefabs/uicontroller_touchpad_horizontal.prefab
+1 mb                 packages/zepeto.character.controller/runtime/_resources/animations/base/v2/move_walk.anim
+6 kb                 packages/com.unity.postprocessing/postprocessing/textures/bluenoise64px/ldr_lll1_13.png
+176 kb               assets/01_art/prefabs/level.prefab
+2 kb                 assets/01_art/materials/mat_neonblue.mat
+2 kb                 packages/zepeto.character.controller/runtime/_resources/prefabs/eventsystem.prefab
+1014 kb              packages/zepeto.character.controller/runtime/_resources/animations/base/v2/idle.anim
+1 mb                 packages/zepeto.character.controller/runtime/_resources/animations/base/fall_end.anim
+1 kb                 packages/com.unity.postprocessing/postprocessing/shaders/builtins/copy.shader
+464 kb               packages/zepeto.character.controller/runtime/_resources/animations/base/v2/jump_double.anim
+6 kb                 packages/com.unity.postprocessing/postprocessing/shaders/builtins/bloom.shader
+6 kb                 packages/com.unity.postprocessing/postprocessing/textures/bluenoise64px/ldr_lll1_16.png
+1 kb                 packages/com.unity.postprocessing/postprocessing/shaders/debug/vectorscope.shader
+428 kb               packages/zepeto.character.controller/runtime/_resources/animations/base/hand_idle_01.anim
+1 kb                 packages/com.unity.postprocessing/postprocessing/shaders/builtins/deferredfog.shader
+31 kb                packages/com.unity.inputsystem/inputsystem/plugins/playerinput/defaultinputactions.inputactions
+6 kb                 packages/com.unity.postprocessing/postprocessing/textures/bluenoise64px/ldr_lll1_59.png
+6 kb                 packages/com.unity.postprocessing/postprocessing/textures/bluenoise64px/ldr_lll1_25.png
+6 kb                 packages/com.unity.postprocessing/postprocessing/textures/bluenoise64px/ldr_lll1_38.png
+2 kb                 packages/com.unity.postprocessing/postprocessing/shaders/builtins/multiscalevodownsample2.compute
+6 kb                 packages/com.unity.postprocessing/postprocessing/textures/bluenoise64px/ldr_lll1_6.png
+341 kb               assets/textmesh pro/fonts/liberationsans.ttf
+6 kb                 packages/com.unity.postprocessing/postprocessing/textures/bluenoise64px/ldr_lll1_34.png
+[resources]
+0 b                  assets/resources    
+0 b                  assets/textmesh pro/resources
+[streamingAssets]
