@@ -1,4 +1,4 @@
-import {Camera, Canvas, Debug, GameObject, Input, KeyCode, LayerMask, Material, Quaternion, Resources, Vector2, Vector3 } from 'UnityEngine';
+import {Camera, Canvas, Color, Color32, Debug, GameObject, Input, KeyCode, LayerMask, Material, Quaternion, Renderer, Resources, Vector2, Vector3 } from 'UnityEngine';
 import {LocalPlayer, ZepetoCamera, ZepetoPlayer, ZepetoPlayers } from 'ZEPETO.Character.Controller';
 import { Player } from 'ZEPETO.Multiplay.Schema';
 import { ZepetoScriptBehaviour } from 'ZEPETO.Script'
@@ -28,6 +28,7 @@ export default class CharacterController extends ZepetoScriptBehaviour {
     private targetPlayers: Map<string, string> = new Map<string, string>();
 
     public localCharacterLight: GameObject;
+    public localCharacterRing: GameObject;
     
     public Awake()
     {
@@ -55,8 +56,10 @@ export default class CharacterController extends ZepetoScriptBehaviour {
             this.gameObject.layer = LayerMask.NameToLayer("Player");
 
             this.localCharacterLight = Resources.Load<GameObject>("CharacterLight");
+            this.localCharacterRing = Resources.Load<GameObject>("CharacterRing");
 
             this.AddLight(this.gameObject);
+            this.AddRing(this.gameObject);
 
             this.AddRenderCamera();
         });
@@ -66,6 +69,29 @@ export default class CharacterController extends ZepetoScriptBehaviour {
     {
         const characterLight: GameObject = GameObject.Instantiate(this.localCharacterLight, this.transform.position, Quaternion.identity) as GameObject;
         characterLight.transform.parent = parent.transform;
+    }
+
+    public AddRing(parent: GameObject, playerIndex?) 
+    {
+        if (!playerIndex) {
+            playerIndex = 0;
+        }
+
+        let colors : Color[];
+        colors = [];
+
+        colors.push(Color.red);
+        colors.push(Color.blue);
+        colors.push(Color.green);
+        colors.push(Color.cyan);
+        colors.push(Color.magenta);
+        colors.push(Color.yellow);
+        colors.push(new Color(255/255, 45/255, 0/255, 1));
+        colors.push(new Color(1, 1, 1, 1));
+
+        const characterRing: GameObject = GameObject.Instantiate(this.localCharacterRing, this.transform.position, Quaternion.identity) as GameObject;
+        characterRing.GetComponentInChildren<Renderer>().material.color = colors[playerIndex];
+        characterRing.transform.parent = parent.transform;
     }
 
     public AddRenderCamera()
