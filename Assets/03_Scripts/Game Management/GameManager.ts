@@ -24,17 +24,37 @@ export default class GameManager extends ZepetoScriptBehaviour {
 
     private bodies : Map<string, GameObject> = new Map<string, GameObject>();
     private isLoadingPlayers: boolean = false;
+    
+    private bodyParent: Transform;
     public Init()
     {
-        this.StartCoroutine(this.WaitForPlayersToLoad());
+        
+    }
+    
+    public RespawnPlayers(userIds: Array<string>)
+    {
+        //If players doesn't exist in map, respawn.
+        userIds.forEach((userId) =>{
+            let player: Player = ClientScript.GetInstance().GetPlayer(userId);
+            console.log("Respawning: " + userId + " Team: " + player.team.teamId + " GhostID: " + PlayerTeam.GHOST);
+            
+            if (player.team.teamId == PlayerTeam.GHOST)
+            {
+               this.RespawnPlayer(userId);
+            }
+            else
+            {
+               console.log("Already Spawned");
+            }
+        });
     }
     
     public *WaitForPlayersToLoad()
     {
         this.isLoadingPlayers = true;
-        while (!Main.instance.client.IsReady()) { yield; }
+        while (!ClientScript.GetInstance().IsReady()) { yield; }
         
-        let clientCount = Main.instance.client.multiplayRoom.State.players.Count;
+        let clientCount = ClientScript.GetInstance().multiplayRoom.State.players.Count;
         Main.instance.uiMgr.UpdateUIConsole(`Game is Ready to Begin. Waiting for players to load ${this.spawnCount}/${clientCount}`);
         while (this.spawnCount < clientCount) { yield; }
         this.isLoadingPlayers = false;
@@ -58,9 +78,10 @@ export default class GameManager extends ZepetoScriptBehaviour {
         this.spawnCount++;
         let player: ZepetoPlayer = ZepetoPlayers.instance.GetPlayer(userId);
         let cc : CharacterController = player.character.gameObject.AddComponent<CharacterController>();
-        cc.Init(Main.instance.client.multiplayPlayers.get(userId));
+        console.error(ClientScript.GetInstance().GetPlayer(userId).userId);
+        cc.Init(ClientScript.GetInstance().GetPlayer(userId));
         this.players.set(userId, cc);
-        Main.instance.client.SendMessageClientReady();
+        ClientScript.GetInstance().SendMessageClientReady();
     }
 
     public RemoveSpawn()
@@ -70,25 +91,29 @@ export default class GameManager extends ZepetoScriptBehaviour {
 
     public *InitializeWithVirus(virusId: string)
     {
+        this.StartCoroutine(this.WaitForPlayersToLoad());
         while (this.isLoadingPlayers) { yield; }
         Main.instance.uiMgr.UpdateUIConsole(`All players Loaded. Assiging Virus... ${this.players.size}`);
         this.virusId = virusId;
         console.error("Assigning Teams for " + this.players.size + " Clients");
+        
         this.players.forEach((value: CharacterController, key: string) => {
             let cc = value;
-            
             console.error("Assigning team " + (cc.playerInfo.userId == virusId) + " to " + cc.playerInfo.userId);
-            //Set as virus is id matches character. Otherwise, set survivor if ready, and ghost otherwise.
-            if (cc.playerInfo.userId == virusId)
-                cc.SetTeam(PlayerTeam.VIRUS);
-            else
-                cc.SetTeam(cc.IsReady() ? PlayerTeam.SURVIVOR : PlayerTeam.GHOST);
+            cc.SetTeam((cc.playerInfo.userId == virusId) ? PlayerTeam.VIRUS : PlayerTeam.SURVIVOR);
         });
         
+        if (this.bodyParent != undefined)
+        {
+            GameObject.Destroy(this.bodyParent.gameObject);
+        }
         
-        
+        this.bodyParent = new GameObject("BodyParent").transform;
+
         //LoadPlayer Profiles
-        Main.instance.uiMgr.uiVotingWinController.LoadProfiles(Array.from(this.players.values()));
+        Main.instance.uiMgr.GetVotingWin().LoadProfiles(Array.from(this.players.values()));
+
+        Main.instance.uiMgr.ShowFullScreenUI((WorldService.userId == virusId) ? "You are the virus" : "You are the survivor");
     }
     
     public UpdateTeam(userId: string, teamId: number)
@@ -106,23 +131,11 @@ export default class GameManager extends ZepetoScriptBehaviour {
         }
         
         let cc = this.players.get(userId);
-        Main.instance.client.SendMessageUpdateTeam(userId, PlayerTeam.GHOST);
-        //cc.SetTeam(PlayerTeam.GHOST);
+        ClientScript.GetInstance().SendMessageUpdateTeam(userId, PlayerTeam.GHOST);
         
         let body: GameObject = GameObject.Instantiate<GameObject>(this.bodyPrefab, cc.transform.position, Quaternion.identity);
         body.gameObject.name = cc.playerInfo.userId;
-    }
-    
-    public ReportBody(userId: string)
-    {
-        let body = this.bodies.get(userId);
-        if (body != null)
-        {
-            GameObject.Destroy(body);
-        }
-        
-        //Show Hall Meeting UI
-        Main.instance.uiMgr.ShowVotingWin();
+        body.transform.SetParent(this.bodyParent, true);
     }
     
     //Despawn character without removing user from the world server.
@@ -133,6 +146,7 @@ export default class GameManager extends ZepetoScriptBehaviour {
             console.error("Cannot Remove Local User!");
             return;
         }
+        //ZepetoPlayers.instance.GetPlayer(userId).character.gameObject.SetActive(false);
         ZepetoPlayers.instance.RemovePlayer(userId);
         this.spawnCount--;
         this.players.delete(userId);
@@ -141,25 +155,7 @@ export default class GameManager extends ZepetoScriptBehaviour {
     //Respawn a player that already exists in the world.
     public RespawnPlayer(userId: string)
     {
-        let isLocal : boolean = (WorldService.userId === userId);
-        
-        //Don't Create another character controller if local
-        if (isLocal)
-        {
-            let cc: CharacterController = this.players.get(userId);
-            let spawnTrans = Main.instance.GetSpawnTransform(cc.playerInfo.spawnIndex);
-            cc.zptPlayer.character.Teleport(spawnTrans.position, spawnTrans.rotation);
-            return;
-        }
-        
-        const player: Player = Main.instance.client.GetPlayer(userId);
-        const spawnInfo = new SpawnInfo();
-        const transformInfo : Transform = Main.instance.GetSpawnTransform(player.spawnIndex);
-        console.log(transformInfo.gameObject.name);
-        spawnInfo.position = transformInfo.position;
-        spawnInfo.rotation = transformInfo.rotation;
-
-        ZepetoPlayers.instance.CreatePlayerWithUserId(userId, userId, spawnInfo, isLocal);
+        ClientScript.GetInstance().RespawnPlayer(userId);
     }
     
     //Voting Win Functions
@@ -167,5 +163,6 @@ export default class GameManager extends ZepetoScriptBehaviour {
     {
         //TODO: Send Message to Server to Vote for player
         console.log(`Voting for User: ${userId}`);
+        ClientScript.GetInstance().SendMessageVoteForVirus(userId);
     }
 }

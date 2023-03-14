@@ -1,5 +1,5 @@
 import { Sandbox, SandboxOptions, SandboxPlayer } from "ZEPETO.Multiplay";
-import { Player, Vector3Schema } from "ZEPETO.Multiplay.Schema";
+import { Player, Vector3Schema, Vote } from "ZEPETO.Multiplay.Schema";
 
 enum MultiplayMessageType {
 
@@ -13,10 +13,17 @@ enum MultiplayMessageType {
     
     // Set Team
     UpdateTeam = "SetTeam",
+
     //Call Meeting
     CallMeeting = "CallMeeting",
     //Meeting Finished
     MeetingFinished = "MeetingFinished",
+    //Vote For Virus
+    VoteForVirus = "VoteForVirus",
+    
+    // Room Lock/Unlock States
+    LockRoom = "LockRoom",
+    UnlockRoom = "UnlockRoom",
 
     //Game States
     Waiting = "Waiting",
@@ -27,7 +34,7 @@ enum MultiplayMessageType {
 
     GameFinish = "GameFinish",
 
-    Result = "Result",
+    Result = "Result"
 };
 
 //Transform position data
@@ -71,7 +78,7 @@ type MultiplayMessageGameFinish = {
 
 
 type MultiplayMessageResult = {
-
+    winningTeam : number
 }
 
 type MultiplayMessageClientReady = {
@@ -82,8 +89,13 @@ type MultiplayMessageCallMeeting = {
 
 }
 
-type MultiplayMessageMeetingFinished = {
+type MultiplayMessageVoteForVirus = {
+    userId: string,
+    count: number
+}
 
+type MultiplayMessageMeetingFinished = {
+    userId: string
 }
 
 enum GameState {
@@ -99,7 +111,6 @@ enum GameState {
 
     //Winner has been decided. Game is over
     GameFinish,
-    
     MeetingTimer,
 
     //Game has finished and the results are shown. 
@@ -110,7 +121,7 @@ export default class extends Sandbox {
     private gameState = GameState.Wait;
     
     //The minimum number of players required to begin the game. 
-    private readonly gameStartCount = 3;
+    private readonly gameStartCount = 2;
 
     //To track the current connected players
     private currentPlayerCount: number = 0;
@@ -125,8 +136,6 @@ export default class extends Sandbox {
 
     //The time since game start. 
     private resultTime: number = 0;
-    
-    private virusID: string = "";
     
     private openSpawnIndices: boolean[];
     onCreate(options: SandboxOptions) {
@@ -161,23 +170,80 @@ export default class extends Sandbox {
         });
         
         this.onMessage<MultiplayMessageCharacterTeam>(MultiplayMessageType.UpdateTeam, (client, message: MultiplayMessageCharacterTeam) => {
-            // let info : MultiplayMessageCharacterTeam = {
-            //     userId: client.userId,
-            //     teamId: message.teamId
-            // }
-
             const player = this.state.players.get(message.userId);
             player.team.teamId = message.teamId;
             
             console.log(`Updated team for user ${message.userId} to ${message.userId}`);
             
-            //Send Change team message to all client except original sender.
-            //this.broadcast(MultiplayMessageType.UpdateTeam, info, {except : client});
+            if (this.GetWinner() == 0)
+            {
+                this.gameTime = this.timerDuration;
+            }
+        });
+
+        this.onMessage<MultiplayMessageCallMeeting>(MultiplayMessageType.LockRoom, (client, message: MultiplayMessageCallMeeting) => {
+            this.lock();
+        });
+
+        this.onMessage<MultiplayMessageCallMeeting>(MultiplayMessageType.UnlockRoom, (client, message: MultiplayMessageCallMeeting) => {
+            this.unlock();
         });
 
         this.onMessage<MultiplayMessageCallMeeting>(MultiplayMessageType.CallMeeting, (client, message: MultiplayMessageCallMeeting) => {
             console.log("Calling Town Meeting");
             this.SetGameState(GameState.MeetingTimer);
+        });
+
+        this.onMessage<MultiplayMessageVoteForVirus>(MultiplayMessageType.VoteForVirus, (client, message: MultiplayMessageVoteForVirus) => {
+            console.log("Vote For Virus: " + message.userId);
+            message.count = 0;
+            if (this.state.votes.has(message.userId))
+            {
+                message.count = this.state.votes.get(message.userId).value;
+            }
+            
+            let vote: Vote = new Vote();
+            vote.value = message.count + 1;
+            message.count = vote.value;
+            this.state.votes.set(message.userId, vote);
+            this.broadcast(MultiplayMessageType.VoteForVirus, message);
+        });
+    }
+    
+    GetWinner(): number
+    {
+        let virusCount : number = 0;
+        let survivorCount : number = 0;
+        
+        this.state.players.forEach((value: Player, key: string) =>{
+            if (value.team.teamId == 0)
+                virusCount++;
+            else if (value.team.teamId == 1)
+                survivorCount++;
+        });
+        
+        return virusCount > survivorCount ? 0 : 1;
+    }
+    
+    GetHighestVotes(): string
+    {
+        //Make sure at least half of the players vote this person out. 
+        let highestVoteCount : number = this.currentPlayerCount / 2; 
+        let finalId: string = "NONE";
+        this.state.votes.forEach((value: Vote, key: string) =>{
+            if (value.value >= highestVoteCount)
+            {
+                finalId = key;
+            }
+        });
+        
+        return finalId;
+    }
+    
+    ResetRoles()
+    {
+        this.state.players.forEach((value: Player, key: string) =>{
+            value.team.teamId = 3;
         });
     }
 
@@ -195,12 +261,20 @@ export default class extends Sandbox {
         return spawnIndex;
     }
     
+    AssignVirus(virusId: string)
+    {
+        this.state.players.forEach((value: Player, key: string) => {
+            value.team.teamId = (value.userId == virusId) ? 0 : 1;
+        });
+    }
+    
     onJoin(client: SandboxPlayer) {
         const userId = client.userId;
         const player = new Player();
         
         // Apply the schema userID value to the player object. 
         player.userId = userId;
+        player.team.teamId = 3; //Set to Chost Team
 
         // Apply the schema's position data to our copy
         player.position = new Vector3Schema();
@@ -216,7 +290,6 @@ export default class extends Sandbox {
         //Cache our player to the map. 
         this.state.players.set(userId, player);
         console.log(`Began Waiting.. ${this.state.players.size}/${this.gameStartCount}`);
-        
     }
 
     onLeave(client: SandboxPlayer, consented?: boolean) {
@@ -225,8 +298,7 @@ export default class extends Sandbox {
         
         // Delete the player data
         this.state.players.delete(client.userId);
-        
-        //TODO: Check if the player that left is a virus. If yes, trigger survivor victory.
+        console.log("Players Deleted: " + client.userId);
     }
 
     onTick(deltaTime: number): void {
@@ -239,6 +311,7 @@ export default class extends Sandbox {
     {
         // Elapsed Time since start
         this.gameTime = 0;
+        this.ResetRoles();
         // Send Waiting state message to clients
         this.SendMessageWaiting();
     }
@@ -246,15 +319,18 @@ export default class extends Sandbox {
     InitializeGame()
     {
         this.gameTime = 0;
+        this.state.gameTimer.value = 0;
+        
         
         //Send a message to the clients that the game is beginning. 
         this.SendMessageGameStart();
     }
-    
+
     InitializeMeetingTimer()
     {
-        this.state.gameTimer.value = 0;
-        
+        this.gameTime = 0;
+        this.state.gameTimer.value = this.timerDuration;
+        this.state.votes.clear();
         this.SendMessageMeetingTimer();
     }
 
@@ -267,10 +343,7 @@ export default class extends Sandbox {
     UpdateWait(deltaTime: number) {
         // Don't perform any actions if the game state isn't wait. 
         if (this.gameState != GameState.Wait) return;
-
-        // cache the current player count. 
-        //this.currentPlayerCount = this.state.players.size;
-
+        
         // Check if there are enough players to start the game. 
         if (this.currentPlayerCount >= this.gameStartCount) {
             // If the game hasn't yet started, send the gameready state to the clients. 
@@ -298,14 +371,14 @@ export default class extends Sandbox {
         // decrease 1 by 0.1 (Math.floor(0.9) == 0). We add 1000 ms to start the count from duration + 1 for this reason. 
         // Why we multiply by .001: To convert milliseconds to seconds. 
         this.state.gameTimer.value = Math.floor(((this.timerDuration + 1000) - this.gameTime) * 0.001);
-
+        console.log(this.state.gameTimer.value);
         // Check if the timer reached 0. 
         if (this.state.gameTimer.value == 0) this.SendMessageMeetingFinished();
 
         //After sending the finish message, wait 3 seconds, and show the result. 
-        if (this.gameTime >= this.timerDuration + (3 * 1000)) this.SetGameState(GameState.GameStart);
+        if (this.gameTime >= this.timerDuration + (3 * 1000)) this.gameState = GameState.GameStart; //this.SetGameState(GameState.GameStart);
     }
-
+    
     UpdateResult(deltaTime: number) {
         if (this.gameState != GameState.Result) return;
         this.resultTime += deltaTime;
@@ -341,11 +414,13 @@ export default class extends Sandbox {
         //Assign the virus player
         let randIndex: number = Math.floor(Math.random() * this.state.players.size);
         let userID = Array.from(this.state.players.keys())[randIndex];
-        this.virusID = this.state.players.get(userID).userId;
+        this.state.virusId = this.state.players.get(userID).userId;
         
         const message: MultiplayMessageGameReady = {
-            virusId: this.virusID
+            virusId: this.state.virusId
         };
+        
+        this.AssignVirus(this.state.virusId);
 
         console.log("Game Ready..");
         console.log(`Player ${message.virusId} is the virus`);
@@ -358,12 +433,6 @@ export default class extends Sandbox {
         this.broadcast(MultiplayMessageType.GameStart, message);
     }
 
-    SendMessageMeetingTimer() {
-        const message: MultiplayMessageCallMeeting = {};
-        console.log("Game Start..");
-        this.broadcast(MultiplayMessageType.CallMeeting, message);
-    }
-
     SendMessageGameFinish() {
         const message: MultiplayMessageGameFinish = {};
         console.log("Game Finish..");
@@ -371,12 +440,25 @@ export default class extends Sandbox {
     }
 
     SendMessageResult() {
-        const message: MultiplayMessageResult = {};
+        const message: MultiplayMessageResult = 
+        {
+            winningTeam: this.GetWinner()
+        };
         this.broadcast(MultiplayMessageType.Result, message);
     }
 
+    SendMessageMeetingTimer() {
+        const message: MultiplayMessageCallMeeting = {};
+        console.log("Game Start..");
+        this.broadcast(MultiplayMessageType.CallMeeting, message);
+    }
+
     SendMessageMeetingFinished() {
-        const message: MultiplayMessageMeetingFinished = {};
+        const message: MultiplayMessageMeetingFinished = 
+        {
+            userId : this.GetHighestVotes()
+        };
+        
         this.broadcast(MultiplayMessageType.MeetingFinished, message);
     }
 }

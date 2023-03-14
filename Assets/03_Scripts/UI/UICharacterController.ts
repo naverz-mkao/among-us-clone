@@ -12,7 +12,7 @@ export default class UICharacterController extends ZepetoScriptBehaviour {
     public killButton: Button;
     
     public Start()
-    {   
+    {
         this.useButton.gameObject.SetActive(false);
         this.useButton.onClick.AddListener(() => { Main.instance.characterController.Use(); });
         this.sabotageButton.gameObject.SetActive(false);
@@ -30,7 +30,7 @@ export default class UICharacterController extends ZepetoScriptBehaviour {
             case PlayerTeam.VIRUS:
                 this.reportButton.gameObject.SetActive(true);
                 this.killButton.gameObject.SetActive(true);
-                
+
                 this.EnableSabotage(false);
                 this.EnableUse(false);
                 this.EnableKill(false);
@@ -50,7 +50,7 @@ export default class UICharacterController extends ZepetoScriptBehaviour {
                 break;
         }
     }
-    
+
     public EnableUse(b: bool)
     {
         if (b)
@@ -74,13 +74,13 @@ export default class UICharacterController extends ZepetoScriptBehaviour {
     {
         this.sabotageButton.interactable = b;
     }
-    
+
     public ActivateUse()
     {
         this.useButton.gameObject.SetActive(true);
         this.sabotageButton.gameObject.SetActive(false);
     }
-    
+
     public ActivateSabotage()
     {
         this.useButton.gameObject.SetActive(false);

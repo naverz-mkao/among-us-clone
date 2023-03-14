@@ -3,9 +3,9 @@ import { GameObject, Transform } from 'UnityEngine';
 import CharacterController from './Character/CharacterController';
 import GameManager from './Game Management/GameManager';
 import UIManager from './UI/UIManager';
-import LobbySystem from './Game Management/LobbySystem';
 import {ZepetoPlayer, ZepetoPlayers } from 'ZEPETO.Character.Controller';
 import ClientScript from './Game Management/Multiplay/ClientScript';
+import {LoadSceneMode, SceneManager } from 'UnityEngine.SceneManagement';
 
 export default class Main extends ZepetoScriptBehaviour {
     public static instance: Main;
@@ -13,8 +13,6 @@ export default class Main extends ZepetoScriptBehaviour {
     public characterController: CharacterController;
     public gameMgr: GameManager;
     public uiMgr: UIManager;
-    public lobby: LobbySystem;
-    public client: ClientScript;
     
     public hasEnteredLobby : boolean = false;
 
@@ -32,10 +30,8 @@ export default class Main extends ZepetoScriptBehaviour {
     public Awake()
     {
         Main.instance = this;
-        this.gameMgr = this.GetComponentInChildren<GameManager>();
-        this.uiMgr = this.GetComponentInChildren<UIManager>();
-        this.client = this.GetComponentInChildren<ClientScript>();
-        this.lobby = this.GetComponentInChildren<LobbySystem>();
+        this.gameMgr = this.transform.Find("GameManager").GetComponent<GameManager>();
+        this.uiMgr = this.transform.Find("UIManager").GetComponent<UIManager>();
     }
 
     public Start()
@@ -43,10 +39,14 @@ export default class Main extends ZepetoScriptBehaviour {
         this.spawnedIds = new Array<string>();
         this.StartCoroutine(this.InitializeAll());
     }
+    
+    public GetLocalCC()
+    {
+        return this.characterController;
+    }
 
     public *InitializeAll()  
     {
-        this.client?.Init();
         this.gameMgr?.Init();
         this.uiMgr?.Init();
         this.InitializePlayers();
@@ -58,26 +58,22 @@ export default class Main extends ZepetoScriptBehaviour {
             this.AddSpawn(userId);
         });
     }
+    
+    public LocalCharacter(): CharacterController
+    {
+        return this.characterController;
+    }
 
     public AddSpawn(userId: string)
     {
         if (this.spawnedIds.includes(userId)) { return; }
-        console.log("Initializing ID " + userId);
         this.spawnedIds.push(userId);
-        if (this.gameMgr)
-            this.gameMgr.AddSpawn(userId);
+        this.gameMgr?.AddSpawn(userId);
     }
 
     public RemoveSpawn(userId: string)
     {
-        if (!this.spawnedIds.includes(userId)) { return; }
-
-        let index = this.spawnedIds.indexOf(userId);
-        this.spawnedIds.splice(index, 1);
-        if (this.gameMgr)
-            this.gameMgr.RemoveSpawn();
-        if (this.lobby)
-            this.lobby.RemoveSpawn();
+        this.gameMgr?.RemoveSpawn();
     }
 
     public GetSpawnTransform(spawnIndex: number): Transform
@@ -89,6 +85,7 @@ export default class Main extends ZepetoScriptBehaviour {
     {
         if (this.gameMgr == undefined) { return; }
         console.log(`Setting Virus with id ${virusId}`);
+        this.gameMgr.RespawnPlayers(ClientScript.GetInstance().GetPlayerIDs());
         this.StartCoroutine(this.gameMgr.InitializeWithVirus(virusId));
     }
 }

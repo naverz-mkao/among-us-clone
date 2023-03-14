@@ -4,6 +4,7 @@ import { Room } from 'ZEPETO.Multiplay';
 import { Player, State } from 'ZEPETO.Multiplay.Schema';
 import { ZepetoScriptBehaviour } from 'ZEPETO.Script'
 import { WorldService, ZepetoWorldMultiplay } from 'ZEPETO.World';
+import CharacterController from '../../Character/CharacterController';
 import Main from '../../Main';
 import ClientMessageSender from './ClientMessageSender';
 
@@ -25,6 +26,8 @@ export enum MultiplayMessageType {
     CallMeeting = "CallMeeting",
     //Meeting Finished
     MeetingFinished = "MeetingFinished",
+    //Vote For Virus
+    VoteForVirus = "VoteForVirus",
 
     //Game States
     Waiting = "Waiting",
@@ -79,7 +82,7 @@ type MultiplayMessageGameFinish = {
 
 
 type MultiplayMessageResult = {
-
+    winningTeam : number
 }
 
 type MultiplayMessageClientReady = {
@@ -90,9 +93,16 @@ type MultiplayMessageCallMeeting = {
 
 }
 
+export type MultiplayMessageVoteForVirus = {
+    userId: string,
+    count: number
+}
 
+export type MultiplayMessageMeetingFinished = {
+    userId: string
+}
 
-enum GameState {
+export enum GameState {
 
     //Waiting for enough users to begin the game
     Wait,
@@ -114,18 +124,23 @@ export default class ClientScript extends ZepetoScriptBehaviour {
     private static instance: ClientScript;
     public static isInitializing: boolean = true;
     static GetInstance(): ClientScript {
-        if (!ClientScript.instance) {
+        if (ClientScript.instance == undefined) {
             const targetObj = GameObject.Find("Client");
             if (targetObj) ClientScript.instance = targetObj.GetComponent<ClientScript>();
         }
         return ClientScript.instance;
+    }
+    
+    GetPlayerIDs() : string[]
+    {
+        return Array.from<string>(ClientScript.GetInstance().multiplayPlayers.keys());
     }
 
     public multiplay: ZepetoWorldMultiplay;
 
     public multiplayRoom: Room;
 
-    private minClients: number = 3;
+    private minClients: number = 2;
 
     //Map of the players coming from the multiplay server. 
     public multiplayPlayers: Map<string, Player> = new Map<string, Player>();
@@ -146,7 +161,7 @@ export default class ClientScript extends ZepetoScriptBehaviour {
         //Cache the room in the Callback when the server creates a room object. 
         this.multiplay.RoomCreated += (room: Room) => {
             this.multiplayRoom = room;
-            
+            console.error(this.multiplayRoom.SessionId);
         };
 
         //Callback for when the room is joined. 
@@ -163,44 +178,71 @@ export default class ClientScript extends ZepetoScriptBehaviour {
     public InitializeMessages()
     {
         this.multiplayRoom.AddMessageHandler(MultiplayMessageType.Waiting, (message: MultiplayMessageWaiting) => {
-            console.log("Waiting..");
             this.minClients = message.minClients;
             this.gameState = GameState.Wait;
+            Main.instance.uiMgr.SetUIState(this.gameState);
+            
+            console.error("Waiting..");
             Main.instance.uiMgr.UpdateUIConsole(`Waiting For ${this.multiplayPlayers.size}/${this.minClients} Clients to connect`);
         });
 
         this.multiplayRoom.AddMessageHandler(MultiplayMessageType.GameReady, (message: MultiplayMessageGameReady) => {
+            this.gameState = GameState.GameReady;
+            Main.instance.uiMgr.SetUIState(this.gameState);
+            
             console.log(`Initialized Game with virus ${message.virusId}`);
             Main.instance.uiMgr.UpdateUIConsole("Game is Ready. Assigning the Virus");
             console.error("Recieved Game Ready Message");
             Main.instance.InitializeWithVirus(message.virusId);
-            this.gameState = GameState.GameReady;
+            
         });
 
         this.multiplayRoom.AddMessageHandler(MultiplayMessageType.GameStart, (message => {
             this.gameState = GameState.GameStart;
+            Main.instance.uiMgr.SetUIState(this.gameState);
+            Main.instance.uiMgr.SetTeam(Main.instance.LocalCharacter().GetTeam());
         }));
 
         this.multiplayRoom.AddMessageHandler(MultiplayMessageType.GameFinish, (message => {
             this.gameState = GameState.GameFinish;
+            Main.instance.uiMgr.SetUIState(this.gameState);
+            Main.instance.uiMgr.UpdateUIConsole("Game Finished! Analyzing Systems for failure...");
+            
         }));
 
-        this.multiplayRoom.AddMessageHandler(MultiplayMessageType.Result, (message => {
+        this.multiplayRoom.AddMessageHandler(MultiplayMessageType.Result, (message: MultiplayMessageResult) => {
             this.gameState = GameState.Result;
-        }));
+            Main.instance.uiMgr.SetUIState(this.gameState);
+            let cc : CharacterController = Main.instance.gameMgr.GetPlayerCC(WorldService.userId);
+
+            if (cc.IsVirus())
+            {
+                if (message.winningTeam == 0)
+                    Main.instance.uiMgr.UpdateUIConsole("Well done. We've taken down the system.");
+                if (message.winningTeam == 1)
+                    Main.instance.uiMgr.UpdateUIConsole("You've failed me.. time to find a new host..");
+            }
+            else
+            {
+                if (message.winningTeam == 0)
+                    Main.instance.uiMgr.UpdateUIConsole("oh no!! Our systems our down!!");
+                if (message.winningTeam == 1)
+                    Main.instance.uiMgr.UpdateUIConsole("Great job!! We've prevented the virus from causing harm!");
+            }
+        });
 
         this.multiplayRoom.AddMessageHandler(MultiplayMessageType.CallMeeting, (message => {
             Main.instance.uiMgr.ShowVotingWin();
         }));
 
-        this.multiplayRoom.AddMessageHandler(MultiplayMessageType.MeetingFinished, (message => {
-            Main.instance.uiMgr.HideVotingWin();
+        this.multiplayRoom.AddMessageHandler(MultiplayMessageType.MeetingFinished, ((message: MultiplayMessageMeetingFinished) => {
+            Main.instance.uiMgr.HideVotingWin(message.userId);
         }));
-    }
 
-    public Init()
-    {
-        
+        this.multiplayRoom.AddMessageHandler(MultiplayMessageType.VoteForVirus, ((message: MultiplayMessageVoteForVirus) => {
+            console.error("Voted For User: " + message.userId + " Coutn: " + message.count);
+            Main.instance.uiMgr.VoteForUser(message.userId, message.count);
+        }));
     }
     
     public IsReady() : boolean
@@ -217,22 +259,30 @@ export default class ClientScript extends ZepetoScriptBehaviour {
         // Called for the first state change only
         if (isFirst) {
             // Apply sync logic for player if they already exist. 
-            state.players.ForEach((userId, player) => { this.OnPlayerAdd(player, userId) });
+            state.players.ForEach((userId, player) => { this.OnPlayerAdd(player, userId, false) });
 
             // Register Player Add/Remove events 
-            state.players.add_OnAdd((player, userId) => { this.OnPlayerAdd(player, userId) });
+            state.players.add_OnAdd((player, userId) => { this.OnPlayerAdd(player, userId, false) });  
             state.players.add_OnRemove((player, userId) => { this.OnPlayerRemove(player, userId) });
             state.gameTimer.add_OnChange(() => { Main.instance.uiMgr.UpdateMeetingTimer(state.gameTimer.value)});
 
             this.InitializeCharacter(state);
         }
     }
+    
+    public RespawnPlayer(userId: string)
+    {
+        console.log("Respawning Player");
+        let player: Player = this.GetPlayer(userId);
+        this.OnPlayerAdd(player, player.userId, true);
+    }
 
-    private OnPlayerAdd(player: Player, userId: string) {
-        if (this.multiplayPlayers.has(userId)) return;
+    private OnPlayerAdd(player: Player, userId: string, isRespawn: boolean) {
+        if (this.multiplayPlayers.has(userId) && !isRespawn) return;
 
         // Cache the player to our map 
-        this.multiplayPlayers.set(userId, player);
+        if (!this.multiplayPlayers.has(userId))
+            this.multiplayPlayers.set(userId, player);
 
         //Create spawn info for our new character. 
         const spawnInfo = new SpawnInfo();
@@ -265,7 +315,8 @@ export default class ClientScript extends ZepetoScriptBehaviour {
         ZepetoPlayers.instance.RemovePlayer(userId);
         Main.instance.RemoveSpawn(userId);
         this.multiplayPlayers.delete(userId);
-
+        
+        console.log("Player Removed!");
         if (this.gameState == GameState.Wait)
         {
             Main.instance.uiMgr.UpdateUIConsole(`Waiting For ${this.multiplayPlayers.size}/${this.minClients} Clients to connect`);
@@ -308,7 +359,7 @@ export default class ClientScript extends ZepetoScriptBehaviour {
             player.position.OnChange += () => {
 
                 // Only sync for everyone but the local player
-                if (zepetoPlayer.isLocalPlayer == false) {
+                if (zepetoPlayer.isLocalPlayer == false && zepetoPlayer.character != undefined) {
 
                     // Cache the postion values. 
                     const x = player.position.x;
@@ -331,10 +382,7 @@ export default class ClientScript extends ZepetoScriptBehaviour {
             }
             
             player.team.OnChange += () => {
-                // Only sync for everyone but the local player
-                //if (zepetoPlayer.isLocalPlayer == false) {
-                    Main.instance.gameMgr.UpdateTeam(player.userId, player.team.teamId);
-                //}
+                Main.instance.gameMgr.UpdateTeam(player.userId, player.team.teamId);
             }
         });
     }
@@ -369,7 +417,7 @@ export default class ClientScript extends ZepetoScriptBehaviour {
                     const character = ZepetoPlayers.instance.GetPlayer(userId).character;
 
                     // Send the character transform update message if not idling. (Send when character moves/jumps)
-                    if (character.CurrentState != CharacterState.Idle)
+                    if (character.CurrentState != CharacterState.Idle && character != undefined)
                         this.SendMessageCharacterTransform(character.transform);
                 }
             }
@@ -391,29 +439,58 @@ export default class ClientScript extends ZepetoScriptBehaviour {
         this.multiplayRoom.Send(MultiplayMessageType.CharacterTransform, message);
     }
 
-    public SendMessageClientReady()
-    {
+    // function to send a message indicating that the client is ready
+    public SendMessageClientReady() {
+        // get the number of clients
         const clientCount = this.multiplayPlayers.size;
-        let message : MultiplayMessageClientReady = {}
 
+        // define an object of type MultiplayMessageClientReady to hold the message
+        let message: MultiplayMessageClientReady = {};
+
+        // send the message with type ClientReady using the multiplayRoom object
+        console.error(this.gameObject.name);
+        console.error("Sending CLient Ready: ");
+        console.error(this.multiplayRoom.SessionId);
         this.multiplayRoom.Send(MultiplayMessageType.ClientReady, message);
     }
 
-    public SendMessageCallMeeting()
-    {
+    // function to send a message calling a meeting
+    public SendMessageCallMeeting() {
+        // get the number of clients
         const clientCount = this.multiplayPlayers.size;
-        let message : MultiplayMessageCallMeeting = {}
 
+        // define an object of type MultiplayMessageCallMeeting to hold the message
+        let message: MultiplayMessageCallMeeting = {};
+
+        // send the message with type CallMeeting using the multiplayRoom object
         this.multiplayRoom.Send(MultiplayMessageType.CallMeeting, message);
     }
-    
-    public SendMessageUpdateTeam(userId: string, teamId: number)
-    {
-        let message : MultiplayMessageCharacterTeam = {
-            userId : userId,
-            teamId : teamId
-        }
 
+    // function to send a message to vote for a virus during meeting.
+    public SendMessageVoteForVirus(userId: string) {
+        // get the number of clients
+        const clientCount = this.multiplayPlayers.size;
+
+        // define an object of type MultiplayMessageCallMeeting to hold the message
+        let message: MultiplayMessageVoteForVirus = {
+            userId: userId,
+            count: 1
+        };
+
+        // send the message with type CallMeeting using the multiplayRoom object
+        this.multiplayRoom.Send(MultiplayMessageType.VoteForVirus, message);
+    }
+
+    // function to send a message updating the team for a specific user
+    public SendMessageUpdateTeam(userId: string, teamId: number) {
+        // define an object of type MultiplayMessageCharacterTeam to hold the message
+        let message: MultiplayMessageCharacterTeam = {
+            userId: userId,
+            teamId: teamId
+        };
+
+        // send the message with type UpdateTeam using the multiplayRoom object
         this.multiplayRoom.Send(MultiplayMessageType.UpdateTeam, message);
     }
+
 }

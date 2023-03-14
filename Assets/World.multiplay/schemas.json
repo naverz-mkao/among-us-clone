@@ -1,8 +1,9 @@
 {
-"State" : {"players" : {"map" : "Player"},"virusId" : "number","gameTimer" : "Timer"},
+"State" : {"players" : {"map" : "Player"},"virusId" : "string","gameTimer" : "Timer","votes" : {"map" : "Vote"}},
 "Vector3Schema" : {"x" : "number","y" : "number","z" : "number"},
 "Player" : {"userId" : "string","characterState" : "number","position" : "Vector3Schema","sessionId" : "string","team" : "Team","spawnIndex" : "number"},
 "Team" : {"teamId" : "number"},
 "GameState" : {"stateId" : "number"},
-"Timer" : {"value" : "number"}
+"Timer" : {"value" : "number"},
+"Vote" : {"value" : "number"}
 }

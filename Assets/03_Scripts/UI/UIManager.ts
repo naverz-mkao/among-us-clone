@@ -1,32 +1,83 @@
 import { TextMeshProUGUI } from 'TMPro';
-import {GameObject, Vector2 } from 'UnityEngine';
+import {Color, GameObject, Time, Vector2, WaitForEndOfFrame, WaitForFixedUpdate, WaitForSecondsRealtime} from 'UnityEngine';
+import { Button, Image } from 'UnityEngine.UI';
 import { ZepetoScriptBehaviour } from 'ZEPETO.Script'
 import { PlayerTeam } from '../Game Management/GameManager';
+import ClientScript, { GameState } from '../Game Management/Multiplay/ClientScript';
+import Main from '../Main';
 import UICharacterController from './UICharacterController';
 import UIVotingWinController from './UIVotingWinController';
 
 export default class UIManager extends ZepetoScriptBehaviour {
+    public fullScreenTimerDuration: number = 5;
+    
     public uicontroller: UICharacterController;
-    public uiVotingWinController: UIVotingWinController;
+    public fullScreenBG: Image;
     public messageText: TextMeshProUGUI;
+    
+    public fullScreenText: TextMeshProUGUI;
     public timerText: TextMeshProUGUI;
     
     public votingWin: GameObject;
+    public titleUI: GameObject;
+    public titleFX: GameObject;
+    
+    public fullScreenMessageWin: GameObject;
+    
+    private uiVotingWinController: UIVotingWinController;
+    
+    private fullScreenTimer: number;
+    private isShowingFullScreen: boolean;
+    private fullScreenBGColor : Color;
+    private fullScreenTextColor : Color;
+    
+    public Start()
+    {
+        this.fullScreenBGColor = this.fullScreenBG.color;
+        this.fullScreenTextColor = this.fullScreenText.color;
+    }
+    
     public Init()
     {
         this.uiVotingWinController = this.votingWin.GetComponent<UIVotingWinController>();
     }
-    
-    public InitUI(uicontroller: UICharacterController)
-    {
-        this.uicontroller = uicontroller;
-    }
-    
+
     public GetVotingWin(): UIVotingWinController
     {
         return this.uiVotingWinController;
     }
     
+    public InitUI(uicontroller: UICharacterController)
+    {
+        this.uicontroller = uicontroller;
+        this.SetUIState(GameState.Wait);
+    }
+    
+    public SetUIState(state: GameState)
+    {
+        console.log("Setting State: " + state);
+        if (state == GameState.Wait)
+        {
+            this.titleUI.SetActive(true);
+            this.titleFX.SetActive(true);
+        }
+        else if (state == GameState.GameReady)
+        {
+            this.titleUI.SetActive(false);
+            this.titleFX.SetActive(false);
+        }
+        else if (state == GameState.GameStart)
+        {
+            this.titleUI.SetActive(false);
+            this.titleFX.SetActive(false);
+        }
+        else if (state == GameState.GameFinish)
+        {
+            this.titleUI.SetActive(false);
+            this.titleFX.SetActive(false);
+        }
+    }
+
     ShowVotingWin()
     {
         this.votingWin.SetActive(true);
@@ -34,17 +85,31 @@ export default class UIManager extends ZepetoScriptBehaviour {
         this.uicontroller.gameObject.SetActive(false);
         this.messageText.transform.parent.gameObject.SetActive(false);
     }
-    
-    HideVotingWin()
+
+    HideVotingWin(votedUser: string)
     {
+        if (votedUser == "NONE")
+        {
+            this.ShowFullScreenUI("No users were deleted this time");
+        }else
+        {
+            let username: string = Main.instance.gameMgr.GetPlayerCC(votedUser).username;
+            ClientScript.GetInstance().SendMessageUpdateTeam(votedUser, PlayerTeam.GHOST);
+            this.ShowFullScreenUI(`Player ${username} has been deleted`);
+        }
         this.votingWin.SetActive(false);
         this.uicontroller.gameObject.SetActive(true);
         this.messageText.transform.parent.gameObject.SetActive(true);
     }
-    
+
     UpdateMeetingTimer(timer: number)
     {
-        this.timerText.text = timer.toString();
+        this.timerText.text = Math.max(0,timer).toString();
+    }
+
+    VoteForUser(userId: string, count: number)
+    {
+        this.uiVotingWinController.SetVoteCount(userId, count);
     }
     
     public SetTeam(team: PlayerTeam)
@@ -61,6 +126,35 @@ export default class UIManager extends ZepetoScriptBehaviour {
         {
             this.UpdateUIConsole("You died... You can still help though, by completing missions!");
         }
+    }
+    
+    public ShowFullScreenUI(msg: string)
+    {
+        this.fullScreenTimer = this.fullScreenTimerDuration;
+        this.fullScreenText.text = msg;
+        if (!this.isShowingFullScreen) { this.StartCoroutine(this.FullScreenUI()); }
+    }
+    
+    public *FullScreenUI()
+    {
+        this.fullScreenMessageWin.SetActive(true);
+
+        while (this.fullScreenTimer > 0)
+        {
+            let a: number = this.fullScreenTimer / this.fullScreenTimerDuration;
+            this.fullScreenTimer -= Time.fixedUnscaledDeltaTime;
+            
+            let c = this.fullScreenBGColor;
+            c.a = a;
+            this.fullScreenBG.color = c;
+
+            c = this.fullScreenTextColor;
+            c.a = a;
+            this.fullScreenText.color = c;
+            yield WaitForFixedUpdate;
+        }
+        
+        this.fullScreenMessageWin.SetActive(false);
     }
     
     public UpdateUIConsole(message: string)

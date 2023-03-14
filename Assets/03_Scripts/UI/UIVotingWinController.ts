@@ -83,7 +83,6 @@ export default class UIVotingWinController extends ZepetoScriptBehaviour {
                     highlight.gameObject.SetActive(!highlight.gameObject.activeSelf);
                     this.lastHighlight = highlight.gameObject;
                     this.currentVote = cc.playerInfo.userId;
-                    
                 });
             }, (error) => {
                 console.error(error);

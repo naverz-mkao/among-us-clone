@@ -19,14 +19,14 @@ ScriptedImporter:
   WrapperFilters: []
   wrapperOutputDirectory: Generated
   compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
-    { value: true });\r\nconst ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nclass
-    LobbySystem extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    constructor()
-    {\r\n        super(...arguments);\r\n        this.spawnCount = 0;\r\n    }\r\n   
-    Start() {\r\n    }\r\n    Init() {\r\n    }\r\n    GetSpawnTransform() {\r\n       
-    console.log(`${this.spawnCount}`);\r\n        return this.spawnLocations[this.spawnCount];\r\n   
+    { value: true });\r\nconst UnityEngine_1 = require(\"UnityEngine\");\r\nconst
+    ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nclass LobbySystem extends ZEPETO_Script_1.ZepetoScriptBehaviour
+    {\r\n    constructor() {\r\n        super(...arguments);\r\n        this.spawnCount
+    = 0;\r\n    }\r\n    Start() {\r\n    }\r\n    Init() {\r\n    }\r\n    GetSpawnTransform()
+    {\r\n        console.log(`${this.spawnCount}`);\r\n        return this.spawnLocations[this.spawnCount];\r\n   
     }\r\n    AddSpawn() {\r\n        this.spawnCount++;\r\n    }\r\n    RemoveSpawn()
     {\r\n        this.spawnCount--;\r\n    }\r\n}\r\nexports.default = LobbySystem;\r\n//#
-    sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiTG9iYnlTeXN0ZW0uanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJMb2JieVN5c3RlbS50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOztBQUNBLGlEQUFxRDtBQUVyRCxNQUFxQixXQUFZLFNBQVEscUNBQXFCO0lBQTlEOztRQUdZLGVBQVUsR0FBVyxDQUFDLENBQUM7SUEwQm5DLENBQUM7SUF4QkcsS0FBSztJQUVMLENBQUM7SUFFTSxJQUFJO0lBR1gsQ0FBQztJQUVNLGlCQUFpQjtRQUVwQixPQUFPLENBQUMsR0FBRyxDQUFDLEdBQUcsSUFBSSxDQUFDLFVBQVUsRUFBRSxDQUFDLENBQUM7UUFDbEMsT0FBTyxJQUFJLENBQUMsY0FBYyxDQUFDLElBQUksQ0FBQyxVQUFVLENBQUMsQ0FBQztJQUNoRCxDQUFDO0lBRU0sUUFBUTtRQUVYLElBQUksQ0FBQyxVQUFVLEVBQUUsQ0FBQztJQUN0QixDQUFDO0lBRU0sV0FBVztRQUVkLElBQUksQ0FBQyxVQUFVLEVBQUUsQ0FBQztJQUN0QixDQUFDO0NBQ0o7QUE3QkQsOEJBNkJDIn0=","assetPath":"Assets/03_Scripts/Game
+    sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiTG9iYnlTeXN0ZW0uanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJMb2JieVN5c3RlbS50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOztBQUFBLDZDQUFvRDtBQUNwRCxpREFBcUQ7QUFFckQsTUFBcUIsV0FBWSxTQUFRLHFDQUFxQjtJQUE5RDs7UUFHWSxlQUFVLEdBQVcsQ0FBQyxDQUFDO0lBMEJuQyxDQUFDO0lBeEJHLEtBQUs7SUFFTCxDQUFDO0lBRU0sSUFBSTtJQUdYLENBQUM7SUFFTSxpQkFBaUI7UUFFcEIsT0FBTyxDQUFDLEdBQUcsQ0FBQyxHQUFHLElBQUksQ0FBQyxVQUFVLEVBQUUsQ0FBQyxDQUFDO1FBQ2xDLE9BQU8sSUFBSSxDQUFDLGNBQWMsQ0FBQyxJQUFJLENBQUMsVUFBVSxDQUFDLENBQUM7SUFDaEQsQ0FBQztJQUVNLFFBQVE7UUFFWCxJQUFJLENBQUMsVUFBVSxFQUFFLENBQUM7SUFDdEIsQ0FBQztJQUVNLFdBQVc7UUFFZCxJQUFJLENBQUMsVUFBVSxFQUFFLENBQUM7SUFDdEIsQ0FBQztDQUNKO0FBN0JELDhCQTZCQyJ9","assetPath":"Assets/03_Scripts/Game
     Management/LobbySystem.ts","manifest":{"properties":[{"assembly":"UnityEngine.CoreModule","name":"spawnLocations","type":"UnityEngine.Transform[]","isArray":true,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]}],"name":"LobbySystem","description":""},"isCompiled":true}'
   typescriptHash: 70f0d299554c30a3cdf195db1410228d
   onlyWriteTrigger: 0
