@@ -93,7 +93,7 @@ export default class UIManager extends ZepetoScriptBehaviour {
             this.ShowFullScreenUI("No users were deleted this time");
         }else
         {
-            let username: string = Main.instance.gameMgr.GetPlayerCC(votedUser).username;
+            let username: string = ClientScript.GetInstance().GetUsername(votedUser);
             ClientScript.GetInstance().SendMessageUpdateTeam(votedUser, PlayerTeam.GHOST);
             this.ShowFullScreenUI(`Player ${username} has been deleted`);
         }
@@ -107,6 +107,11 @@ export default class UIManager extends ZepetoScriptBehaviour {
         this.timerText.text = Math.max(0,timer).toString();
     }
 
+    SetVoteStatus()
+    {
+        
+    }
+    
     VoteForUser(userId: string, count: number)
     {
         this.uiVotingWinController.SetVoteCount(userId, count);

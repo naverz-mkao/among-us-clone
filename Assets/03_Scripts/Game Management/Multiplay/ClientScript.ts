@@ -3,7 +3,7 @@ import { CharacterState, SpawnInfo, ZepetoCharacter, ZepetoPlayers } from 'ZEPET
 import { Room } from 'ZEPETO.Multiplay';
 import { Player, State } from 'ZEPETO.Multiplay.Schema';
 import { ZepetoScriptBehaviour } from 'ZEPETO.Script'
-import { WorldService, ZepetoWorldMultiplay } from 'ZEPETO.World';
+import {Users, WorldService, ZepetoWorldHelper, ZepetoWorldMultiplay} from 'ZEPETO.World';
 import CharacterController from '../../Character/CharacterController';
 import Main from '../../Main';
 import ClientMessageSender from './ClientMessageSender';
@@ -144,6 +144,7 @@ export default class ClientScript extends ZepetoScriptBehaviour {
 
     //Map of the players coming from the multiplay server. 
     public multiplayPlayers: Map<string, Player> = new Map<string, Player>();
+    private playerUsernames: Map<string, string> = new Map<string, string>();
 
     public objZepetoPlayers: ZepetoPlayers;
     
@@ -254,7 +255,7 @@ export default class ClientScript extends ZepetoScriptBehaviour {
     {
         return this.multiplayRoom.State.players.get_Item(userId);
     }
-
+    
     private OnStateChange(state: State, isFirst: boolean) {
         // Called for the first state change only
         if (isFirst) {
@@ -272,9 +273,21 @@ export default class ClientScript extends ZepetoScriptBehaviour {
     
     public RespawnPlayer(userId: string)
     {
-        console.log("Respawning Player");
         let player: Player = this.GetPlayer(userId);
         this.OnPlayerAdd(player, player.userId, true);
+    }
+    
+    public GetUsername(userId: string): string
+    {
+        if (!this.playerUsernames.has(userId)) { return ""; }
+        return this.playerUsernames.get(userId);   
+    }
+    
+    public SetUsername(userId: string, username: string)
+    {
+        if (this.playerUsernames.has(userId)) { return; }
+
+        this.playerUsernames.set(userId, username);
     }
 
     private OnPlayerAdd(player: Player, userId: string, isRespawn: boolean) {
@@ -282,7 +295,10 @@ export default class ClientScript extends ZepetoScriptBehaviour {
 
         // Cache the player to our map 
         if (!this.multiplayPlayers.has(userId))
+        {
             this.multiplayPlayers.set(userId, player);
+        }
+            
 
         //Create spawn info for our new character. 
         const spawnInfo = new SpawnInfo();
@@ -308,7 +324,6 @@ export default class ClientScript extends ZepetoScriptBehaviour {
         ZepetoPlayers.instance.CreatePlayerWithUserId(userId, userId, spawnInfo, isLocal);
         //ZepetoPlayers.instance.GetPlayer(userId.toString());
     }
-
     
     private OnPlayerRemove(player: Player, userId: string) {
         if (!this.multiplayPlayers.has(userId)) return;
@@ -448,9 +463,6 @@ export default class ClientScript extends ZepetoScriptBehaviour {
         let message: MultiplayMessageClientReady = {};
 
         // send the message with type ClientReady using the multiplayRoom object
-        console.error(this.gameObject.name);
-        console.error("Sending CLient Ready: ");
-        console.error(this.multiplayRoom.SessionId);
         this.multiplayRoom.Send(MultiplayMessageType.ClientReady, message);
     }
 

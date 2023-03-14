@@ -6,21 +6,16 @@
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Amongus_Clone/.idea/runConfigurations/Zepeto_Script.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Amongus_Clone/.idea/runConfigurations/Zepeto_Script.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Amongus_Clone/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Amongus_Clone/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.vscode/launch.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vscode/launch.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/01_Art/Prefabs/ProfileButton.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01_Art/Prefabs/ProfileButton.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/01_Art/Prefabs/UICanvas.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01_Art/Prefabs/UICanvas.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/01_Art/Prefabs/UIController_Touchpad_Horizontal.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01_Art/Prefabs/UIController_Touchpad_Horizontal.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03_Scripts/Art/CarScript.ts.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03_Scripts/Art/CarScript.ts.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/03_Scripts/Character/CharacterController.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03_Scripts/Character/CharacterController.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/03_Scripts/Character/CharacterController.ts.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03_Scripts/Character/CharacterController.ts.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/03_Scripts/Game Management/GameManager.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03_Scripts/Game Management/GameManager.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/03_Scripts/Game Management/GameManager.ts.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03_Scripts/Game Management/GameManager.ts.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03_Scripts/Game Management/LobbySystem.ts.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03_Scripts/Game Management/LobbySystem.ts.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03_Scripts/Game Management/Multiplay/ClientMessageSender.ts.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03_Scripts/Game Management/Multiplay/ClientMessageSender.ts.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/03_Scripts/Game Management/Multiplay/ClientScript.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03_Scripts/Game Management/Multiplay/ClientScript.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/03_Scripts/Game Management/Multiplay/ClientScript.ts.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03_Scripts/Game Management/Multiplay/ClientScript.ts.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/03_Scripts/Main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03_Scripts/Main.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/03_Scripts/Main.ts.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03_Scripts/Main.ts.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03_Scripts/UI/UICharacterController.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03_Scripts/UI/UICharacterController.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03_Scripts/UI/UICharacterController.ts.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03_Scripts/UI/UICharacterController.ts.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/03_Scripts/UI/UIManager.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03_Scripts/UI/UIManager.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/03_Scripts/UI/UIManager.ts.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03_Scripts/UI/UIManager.ts.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/03_Scripts/UI/UIVotingWinController.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03_Scripts/UI/UIVotingWinController.ts" afterDir="false" />
@@ -140,7 +135,7 @@
       <workItem from="1678463584899" duration="1216000" />
       <workItem from="1678719196081" duration="5665000" />
       <workItem from="1678725157011" duration="19131000" />
-      <workItem from="1678764351967" duration="3614000" />
+      <workItem from="1678764351967" duration="18397000" />
     </task>
     <servers />
   </component>

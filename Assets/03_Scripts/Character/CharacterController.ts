@@ -23,8 +23,7 @@ export default class CharacterController extends ZepetoScriptBehaviour {
     
     public zptPlayer: ZepetoPlayer;
     
-    @HideInInspector() public username: string;
-    private team: PlayerTeam;
+    @HideInInspector() public team: PlayerTeam;
     
     private currentEvent: InteractionEvent;
     
@@ -32,9 +31,16 @@ export default class CharacterController extends ZepetoScriptBehaviour {
 
     public localCharacterLight: GameObject;
     
+    private initializeCount: number = 0;
     public Awake()
     {
+        this.initializeCount = 0;
         this.team = PlayerTeam.NONE;
+    }
+    
+    public IsReady() : boolean
+    {
+        return this.initializeCount >= (this.IsLocal() ? 2 : 1);
     }
     
     public Init(playerInfo: Player)
@@ -45,7 +51,9 @@ export default class CharacterController extends ZepetoScriptBehaviour {
         this.zptPlayer = ZepetoPlayers.instance.GetPlayer(this.playerInfo.userId);
         
         ZepetoWorldHelper.GetUserInfo([playerInfo.userId], (info : Users[]) => {
-            this.username = info[0].zepetoId;
+            ClientScript.GetInstance().SetUsername(playerInfo.userId, info[0].zepetoId);
+            console.error("Set Username: " + ClientScript.GetInstance().GetUsername(playerInfo.userId) + " for object " + this.gameObject.name);
+            this.initializeCount++;
         },  (error) => {
             console.log(error);
         });
@@ -68,6 +76,7 @@ export default class CharacterController extends ZepetoScriptBehaviour {
             this.AddLight(this.gameObject);
 
             this.AddRenderCamera();
+            this.initializeCount++;
         });
     }
 
@@ -227,6 +236,7 @@ export default class CharacterController extends ZepetoScriptBehaviour {
         console.log("Used " + this.currentEvent);
         if (this.currentEvent == InteractionEvent.MINIGAME_BUTTONCLICKER)
         {
+            //TODO: Triger the minigame sequence. 
             console.log("Playing Button Minigame");
         }
         else if (this.currentEvent == InteractionEvent.MEETING_HALL)

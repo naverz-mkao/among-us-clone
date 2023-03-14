@@ -72,15 +72,27 @@ export default class GameManager extends ZepetoScriptBehaviour {
         
         return null;
     }
+    
+    public GetAllPlayerCCs(): CharacterController[]
+    {
+        return Array.from(this.players.values());
+    }
 
     public AddSpawn(userId: string)
     {
         this.spawnCount++;
         let player: ZepetoPlayer = ZepetoPlayers.instance.GetPlayer(userId);
         let cc : CharacterController = player.character.gameObject.AddComponent<CharacterController>();
-        console.error(ClientScript.GetInstance().GetPlayer(userId).userId);
+        
         cc.Init(ClientScript.GetInstance().GetPlayer(userId));
         this.players.set(userId, cc);
+        this.StartCoroutine(this.WaitForInit(cc));
+        console.error(ClientScript.GetInstance().GetPlayer(userId).userId + " Count: " + this.players.size);
+    }
+    
+    public *WaitForInit(cc: CharacterController)
+    {
+        while (!cc.IsReady()) {yield;}
         ClientScript.GetInstance().SendMessageClientReady();
     }
 
@@ -111,8 +123,6 @@ export default class GameManager extends ZepetoScriptBehaviour {
         this.bodyParent = new GameObject("BodyParent").transform;
 
         //LoadPlayer Profiles
-        Main.instance.uiMgr.GetVotingWin().LoadProfiles(Array.from(this.players.values()));
-
         Main.instance.uiMgr.ShowFullScreenUI((WorldService.userId == virusId) ? "You are the virus" : "You are the survivor");
     }
     

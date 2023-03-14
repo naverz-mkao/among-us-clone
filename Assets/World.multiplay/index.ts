@@ -459,6 +459,7 @@ export default class extends Sandbox {
             userId : this.GetHighestVotes()
         };
         
+        console.log(`User with Highest Votes: ${message.userId}`);
         this.broadcast(MultiplayMessageType.MeetingFinished, message);
     }
 }

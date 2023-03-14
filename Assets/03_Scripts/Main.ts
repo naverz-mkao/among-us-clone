@@ -6,6 +6,7 @@ import UIManager from './UI/UIManager';
 import {ZepetoPlayer, ZepetoPlayers } from 'ZEPETO.Character.Controller';
 import ClientScript from './Game Management/Multiplay/ClientScript';
 import {LoadSceneMode, SceneManager } from 'UnityEngine.SceneManagement';
+import {Users, ZepetoWorldHelper} from "ZEPETO.World";
 
 export default class Main extends ZepetoScriptBehaviour {
     public static instance: Main;
@@ -55,6 +56,7 @@ export default class Main extends ZepetoScriptBehaviour {
     public InitializePlayers()
     {
         ZepetoPlayers.instance.OnAddedPlayer.AddListener((userId) => {
+            console.log("Added Spawn |" + userId);
             this.AddSpawn(userId);
         });
     }
@@ -85,7 +87,10 @@ export default class Main extends ZepetoScriptBehaviour {
     {
         if (this.gameMgr == undefined) { return; }
         console.log(`Setting Virus with id ${virusId}`);
-        this.gameMgr.RespawnPlayers(ClientScript.GetInstance().GetPlayerIDs());
+        
+        let playerIds: string[] = ClientScript.GetInstance().GetPlayerIDs();
+        this.gameMgr.RespawnPlayers(playerIds);
+        
         this.StartCoroutine(this.gameMgr.InitializeWithVirus(virusId));
     }
 }

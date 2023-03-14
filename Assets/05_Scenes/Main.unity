@@ -351,6 +351,34 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eb63e54b6a5b4f44fa6a15b8a6beb78c, type: 3}
+--- !u!1 &43624274 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8203171082628752945, guid: 13e67d82a4cdbbf439f24a7a94bfdcdf, type: 3}
+  m_PrefabInstance: {fileID: 2127132446}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &43624276
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 43624274}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1673316429, guid: 921f0445823004a16a499d629dd566a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  script:
+    keys:
+    - info
+    unityValues:
+    - {fileID: 11400000, guid: 055814d8dab3c71459975e05f71e7583, type: 2}
+    values:
+    - 
+    unityArrayValues: []
+    arrayValues: []
+    script: {fileID: 4458252877524076426, guid: 424ed880e5dde484783a471a17d3a979, type: 3}
+    isExpaned: 0
 --- !u!1001 &100697541
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -616,14 +644,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 109203946, guid: 87645be3f89e0c2449f26a8d8ee43890, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1668959920, guid: 87645be3f89e0c2449f26a8d8ee43890, type: 3}
-      propertyPath: m_Color.a
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5779517450516286795, guid: 87645be3f89e0c2449f26a8d8ee43890, type: 3}
       propertyPath: m_Name
       value: UICanvas
@@ -26907,6 +26927,10 @@ PrefabInstance:
     - target: {fileID: 8203171082628752945, guid: 13e67d82a4cdbbf439f24a7a94bfdcdf, type: 3}
       propertyPath: m_Name
       value: GameTerminal (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8203171082628752945, guid: 13e67d82a4cdbbf439f24a7a94bfdcdf, type: 3}
+      propertyPath: m_TagString
+      value: Interactible
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 13e67d82a4cdbbf439f24a7a94bfdcdf, type: 3}
