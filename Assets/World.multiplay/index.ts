@@ -126,6 +126,10 @@ export default class extends Sandbox {
     //To track the current connected players
     private currentPlayerCount: number = 0;
 
+    //To track the number of players fully loaded and ready. 
+    // This should be number of players ^ 2 so all players are loaded on all clients.
+    private currentReadyCount: number = 0;
+
     //Time elapsed since game start. 
     private gameTime: number = 0;
     
@@ -165,8 +169,8 @@ export default class extends Sandbox {
         });
 
         this.onMessage<MultiplayMessageClientReady>(MultiplayMessageType.ClientReady, (client, message: MultiplayMessageClientReady) => {
-            console.log("Player " + client.userId + " is Ready");
-            this.currentPlayerCount++;
+            console.log(`Client Ready: ${client.userId}`);
+            this.currentReadyCount++;
         });
         
         this.onMessage<MultiplayMessageCharacterTeam>(MultiplayMessageType.UpdateTeam, (client, message: MultiplayMessageCharacterTeam) => {
@@ -195,7 +199,6 @@ export default class extends Sandbox {
         });
 
         this.onMessage<MultiplayMessageVoteForVirus>(MultiplayMessageType.VoteForVirus, (client, message: MultiplayMessageVoteForVirus) => {
-            console.log("Vote For Virus: " + message.userId);
             message.count = 0;
             if (this.state.votes.has(message.userId))
             {
@@ -231,6 +234,7 @@ export default class extends Sandbox {
         let highestVoteCount : number = this.currentPlayerCount / 2; 
         let finalId: string = "NONE";
         this.state.votes.forEach((value: Vote, key: string) =>{
+            console.log(`User [${key}]: ${value.value} Votes / ${this.currentPlayerCount}`);
             if (value.value >= highestVoteCount)
             {
                 finalId = key;
@@ -244,6 +248,7 @@ export default class extends Sandbox {
     {
         this.state.players.forEach((value: Player, key: string) =>{
             value.team.teamId = 3;
+            value.isReady = false;
         });
     }
 
@@ -274,7 +279,7 @@ export default class extends Sandbox {
         
         // Apply the schema userID value to the player object. 
         player.userId = userId;
-        player.team.teamId = 3; //Set to Chost Team
+        player.team.teamId = 3; //Set to Ghost Team
 
         // Apply the schema's position data to our copy
         player.position = new Vector3Schema();
@@ -289,6 +294,7 @@ export default class extends Sandbox {
         
         //Cache our player to the map. 
         this.state.players.set(userId, player);
+        this.currentPlayerCount++;
         console.log(`Began Waiting.. ${this.state.players.size}/${this.gameStartCount}`);
     }
 
@@ -345,14 +351,14 @@ export default class extends Sandbox {
         if (this.gameState != GameState.Wait) return;
         
         // Check if there are enough players to start the game. 
-        if (this.currentPlayerCount >= this.gameStartCount) {
+        if (this.currentPlayerCount >= this.gameStartCount && this.currentReadyCount >= (this.currentPlayerCount * this.currentPlayerCount)) {
             // If the game hasn't yet started, send the gameready state to the clients. 
             if (this.gameTime == 0) this.SendMessageGameReady();
 
             this.gameTime += deltaTime;
 
-            // Start the game after 4 seconds (4000 milliseconds)
-            if (this.gameTime >= 4000) this.SetGameState(GameState.GameStart);
+            // Start the game after 10 seconds (10000 milliseconds)
+            if (this.gameTime >= 10000) this.SetGameState(GameState.GameStart);
         }
     }
 
@@ -371,7 +377,6 @@ export default class extends Sandbox {
         // decrease 1 by 0.1 (Math.floor(0.9) == 0). We add 1000 ms to start the count from duration + 1 for this reason. 
         // Why we multiply by .001: To convert milliseconds to seconds. 
         this.state.gameTimer.value = Math.floor(((this.timerDuration + 1000) - this.gameTime) * 0.001);
-        console.log(this.state.gameTimer.value);
         // Check if the timer reached 0. 
         if (this.state.gameTimer.value == 0) this.SendMessageMeetingFinished();
 

@@ -17,8 +17,6 @@ export default class Main extends ZepetoScriptBehaviour {
     
     public hasEnteredLobby : boolean = false;
 
-    private spawnedIds: string[];
-
     public static GetInstance(): Main
     {
         let gameObject = GameObject.Find("Main");
@@ -37,7 +35,6 @@ export default class Main extends ZepetoScriptBehaviour {
 
     public Start()
     {
-        this.spawnedIds = new Array<string>();
         this.StartCoroutine(this.InitializeAll());
     }
     
@@ -50,27 +47,11 @@ export default class Main extends ZepetoScriptBehaviour {
     {
         this.gameMgr?.Init();
         this.uiMgr?.Init();
-        this.InitializePlayers();
-    }
-
-    public InitializePlayers()
-    {
-        ZepetoPlayers.instance.OnAddedPlayer.AddListener((userId) => {
-            console.log("Added Spawn |" + userId);
-            this.AddSpawn(userId);
-        });
     }
     
     public LocalCharacter(): CharacterController
     {
         return this.characterController;
-    }
-
-    public AddSpawn(userId: string)
-    {
-        if (this.spawnedIds.includes(userId)) { return; }
-        this.spawnedIds.push(userId);
-        this.gameMgr?.AddSpawn(userId);
     }
 
     public RemoveSpawn(userId: string)

@@ -1416,12 +1416,15 @@ MonoBehaviour:
     keys:
     - profileButtons
     - confirmBtn
+    - voteStatusText
     unityValues:
     - {fileID: 0}
     - {fileID: 8670863595024800975}
+    - {fileID: 5779517450999455683}
     values:
     - '{"type":"ZEPETO.Script.ZepetoScriptSerializer+ArrayInfo, ZEPETO.Script","value":"{\"offset\":0,\"length\":16,\"type\":\"UnityEngine.Object,
       UnityEngine.CoreModule\",\"isUnity\":true}"}'
+    - 
     - 
     unityArrayValues:
     - {fileID: 5779517452386565262}

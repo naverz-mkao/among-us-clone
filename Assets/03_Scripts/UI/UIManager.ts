@@ -97,6 +97,8 @@ export default class UIManager extends ZepetoScriptBehaviour {
             ClientScript.GetInstance().SendMessageUpdateTeam(votedUser, PlayerTeam.GHOST);
             this.ShowFullScreenUI(`Player ${username} has been deleted`);
         }
+        
+        Main.instance.gameMgr.ClearBodies();
         this.votingWin.SetActive(false);
         this.uicontroller.gameObject.SetActive(true);
         this.messageText.transform.parent.gameObject.SetActive(true);

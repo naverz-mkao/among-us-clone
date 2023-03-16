@@ -88,7 +88,7 @@ export default class UIVotingWinController extends ZepetoScriptBehaviour {
                 btn.image.sprite = Sprite.Create(texture as Texture2D, rect, new Vector2(0.5, 0.5));
                 
                 btn.onClick.AddListener(() =>{
-                    if (this.hasVoted) { return; }
+                    if (this.hasVoted || deadCover.gameObject.activeSelf) { return; }
                     
                     this.confirmBtn.gameObject.SetActive(true);
                     let highlight = btn.transform.Find("Highlight");

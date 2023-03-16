@@ -21,7 +21,7 @@ declare module "ZEPETO.Multiplay.Schema" {
 		sessionId: string;
 		team: Team;
 		spawnIndex: number;
-		username: string;
+		isReady: boolean;
 	}
 	class Team extends Schema {
 		teamId: number;

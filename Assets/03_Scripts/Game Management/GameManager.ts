@@ -1,4 +1,4 @@
-import { GameObject, ParticleSystem, Quaternion, Transform } from 'UnityEngine';
+import { GameObject, ParticleSystem, Quaternion, Resources, Transform } from 'UnityEngine';
 import {SpawnInfo, ZepetoPlayer, ZepetoPlayers} from 'ZEPETO.Character.Controller';
 import { Player } from 'ZEPETO.Multiplay.Schema';
 import { ZepetoScriptBehaviour } from 'ZEPETO.Script'
@@ -14,8 +14,8 @@ export default class GameManager extends ZepetoScriptBehaviour {
     
     @Header("Character Components")
     public detectionTrigger: GameObject;
-    public bodyPrefab: GameObject;
-    public killFX: ParticleSystem;
+    private bodyPrefab: GameObject;
+    private killFX: GameObject;
     
     private spawnCount = 0;
     private virusId : string = "";
@@ -28,7 +28,12 @@ export default class GameManager extends ZepetoScriptBehaviour {
     private bodyParent: Transform;
     public Init()
     {
-        
+        this.bodyPrefab = Resources.Load<GameObject>("PlayerBody");
+        this.killFX = Resources.Load<GameObject>("DeathFXTrail");
+
+        ZepetoPlayers.instance.OnAddedPlayer.AddListener((userId) => {
+            this.AddSpawn(userId);
+        });
     }
     
     public RespawnPlayers(userIds: Array<string>)
@@ -132,6 +137,11 @@ export default class GameManager extends ZepetoScriptBehaviour {
         cc.SetTeam(teamId as PlayerTeam);
     }
     
+    public ClearBodies()
+    {
+        GameObject.Destroy(this.bodyParent.gameObject);
+    }
+    
     public KillPlayer(userId: string)
     {
         if (!this.players.has(userId)) 
@@ -141,11 +151,15 @@ export default class GameManager extends ZepetoScriptBehaviour {
         }
         
         let cc = this.players.get(userId);
+        
+        //TODO: Change to SendMessage Kill Player
         ClientScript.GetInstance().SendMessageUpdateTeam(userId, PlayerTeam.GHOST);
         
         let body: GameObject = GameObject.Instantiate<GameObject>(this.bodyPrefab, cc.transform.position, Quaternion.identity);
         body.gameObject.name = cc.playerInfo.userId;
         body.transform.SetParent(this.bodyParent, true);
+        
+        Main.instance.uiMgr.ShowFullScreenUI(`You've deleted ${ClientScript.GetInstance().GetUsername(userId)}`);
     }
     
     //Despawn character without removing user from the world server.

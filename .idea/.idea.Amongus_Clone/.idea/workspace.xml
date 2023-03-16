@@ -2,7 +2,26 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2825c138-3be0-48b5-8a0c-a759b61eb544" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Amongus_Clone/.idea/runConfigurations/Zepeto_Multiplay_Script.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Amongus_Clone/.idea/runConfigurations/Zepeto_Multiplay_Script.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Amongus_Clone/.idea/runConfigurations/Zepeto_Script.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Amongus_Clone/.idea/runConfigurations/Zepeto_Script.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Amongus_Clone/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Amongus_Clone/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vscode/launch.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vscode/launch.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/01_Art/Prefabs/Player/PlayerBody.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/01_Art/Prefabs/Player/PlayerBody.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/01_Art/Prefabs/UICanvas.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01_Art/Prefabs/UICanvas.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/03_Scripts/Game Management/GameManager.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03_Scripts/Game Management/GameManager.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/03_Scripts/Game Management/GameManager.ts.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03_Scripts/Game Management/GameManager.ts.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/03_Scripts/Game Management/Multiplay/ClientScript.ts.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03_Scripts/Game Management/Multiplay/ClientScript.ts.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/03_Scripts/Main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03_Scripts/Main.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/03_Scripts/Main.ts.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03_Scripts/Main.ts.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/03_Scripts/UI/UIManager.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03_Scripts/UI/UIManager.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/03_Scripts/UI/UIManager.ts.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03_Scripts/UI/UIManager.ts.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/03_Scripts/UI/UIVotingWinController.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03_Scripts/UI/UIVotingWinController.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/03_Scripts/UI/UIVotingWinController.ts.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03_Scripts/UI/UIVotingWinController.ts.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/05_Scenes/Main.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/05_Scenes/Main.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/World.multiplay/SchemaTypes/index.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/World.multiplay/SchemaTypes/index.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/World.multiplay/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/World.multiplay/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/World.multiplay/schemas.json" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/World.multiplay/schemas.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -14,8 +33,17 @@
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.collab-proxy@1.3.9/Editor/UserInterface/Bootstrap.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.collab-proxy@1.3.9/Tests/Editor/Presenters/MainPresenterTests.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ide.rider@3.0.17/Rider/Editor/ProjectGeneration/AssemblyNameProvider.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ide.visualstudio@2.0.7/Editor/Messaging/Messenger.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.inputsystem@1.0.2/InputSystem/Plugins/PlayerInput/InputValue.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.inputsystem@1.0.2/InputSystem/Plugins/PlayerInput/PlayerInput.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.inputsystem@1.0.2/InputSystem/Plugins/PlayerInput/PlayerInputEditor.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.inputsystem@1.0.2/InputSystem/Plugins/PlayerInput/PlayerInputManager.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.inputsystem@1.0.2/InputSystem/Plugins/PlayerInput/PlayerInputManagerEditor.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.inputsystem@1.0.2/InputSystem/Plugins/PlayerInput/PlayerNotifications.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.probuilder@4.5.2/Editor/EditorCore/EditorSceneViewPicker.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.probuilder@4.5.2/Runtime/Core/BuiltinMaterials.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.timeline@1.5.4/Editor/Animation/AnimationPlayableAssetEditor.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.timeline@1.5.4/Editor/treeview/ItemGui/TimelineClipGUI.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -115,6 +143,8 @@
       <workItem from="1678719196081" duration="5665000" />
       <workItem from="1678725157011" duration="19131000" />
       <workItem from="1678764351967" duration="19552000" />
+      <workItem from="1678893904872" duration="8449000" />
+      <workItem from="1678931829988" duration="731000" />
     </task>
     <servers />
   </component>
