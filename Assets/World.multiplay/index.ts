@@ -10,7 +10,8 @@ enum MultiplayMessageType {
     CharacterState = "CharacterState",
     
     ClientReady = "ClientReady",
-    
+    // When the virus kills a player. 
+    KillPlayer = "KillPlayer",
     // Set Team
     UpdateTeam = "SetTeam",
 

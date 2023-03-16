@@ -32,10 +32,25 @@ export default class CharacterController extends ZepetoScriptBehaviour {
     public localCharacterLight: GameObject;
     
     private initializeCount: number = 0;
+    
+    private killFX : GameObject;
+    private bodyObject: GameObject;
+    
     public Awake()
     {
         this.initializeCount = 0;
         this.team = PlayerTeam.NONE;
+    }
+    
+    public Start()
+    {
+        let killFXPrefab: GameObject = Resources.Load<GameObject>("DeathFXTrail");
+
+        this.killFX = GameObject.Instantiate<GameObject>(killFXPrefab, this.transform.position, Quaternion.identity);
+        this.killFX.transform.SetParent(this.transform, true);
+        this.killFX.SetActive(false);
+    
+       
     }
     
     public IsReady() : boolean
@@ -74,12 +89,21 @@ export default class CharacterController extends ZepetoScriptBehaviour {
             this.localCharacterLight = Resources.Load<GameObject>("CharacterLight");
 
             this.AddLight(this.gameObject);
+            this.AddBody(this.gameObject);
 
             this.AddRenderCamera();
             this.initializeCount++;
         });
     }
 
+    public AddBody(parent: GameObject)
+    {
+        let bodyPrefab: GameObject = Resources.Load<GameObject>("PlayerBody");
+        this.bodyObject = GameObject.Instantiate<GameObject>(bodyPrefab, this.transform.position, Quaternion.identity);
+        this.bodyObject.transform.SetParent(this.transform, true);
+        this.bodyObject.SetActive(false);
+    }
+    
     public AddLight(parent: GameObject)
     {
         const characterLight: GameObject = GameObject.Instantiate(this.localCharacterLight, this.transform.position, Quaternion.identity) as GameObject;
@@ -175,21 +199,34 @@ export default class CharacterController extends ZepetoScriptBehaviour {
         if (team == PlayerTeam.VIRUS)
         {
             this.gameObject.tag = "Virus";
+            this.zptPlayer.character.Context.gameObject.SetActive(true);
+            this.killFX.SetActive(false);
+            this.bodyObject?.SetActive(false);
         }else if (team == PlayerTeam.SURVIVOR)
         {
             this.gameObject.tag = "Survivor";
+            this.zptPlayer.character.Context.gameObject.SetActive(true);
+            this.killFX.SetActive(false);
+            this.bodyObject?.SetActive(false);
         }
         else if (team == PlayerTeam.GHOST)
         {
             this.gameObject.tag = "Ghost";
-
+            
+            this.zptPlayer.character.Context.gameObject.SetActive(false);
+            
+            console.error("Setting Kill " + this.killFX.gameObject.name + " to true");
+            this.killFX.SetActive(true);
+            this.bodyObject?.SetActive(true);
+            
             //Despawn if not local
-            if (!this.IsLocal())
-            {
-                console.log("Assigning as ghost");
-                Main.instance.gameMgr.DespawnPlayer(this.playerInfo.userId);
-                return;
-            }
+            // if (!this.IsLocal())
+            // {
+                
+            //     console.log("Assigning as ghost");
+            //     Main.instance.gameMgr.DespawnPlayer(this.playerInfo.userId);
+            //     return;
+            //}
         }
         
         this.team = team;

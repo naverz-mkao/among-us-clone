@@ -18,6 +18,8 @@ export enum MultiplayMessageType {
     
     //Let Server Know Client is fully loaded
     ClientReady = "ClientReady",
+    // When the virus kills a player. 
+    KillPlayer = "KillPlayer",
     
     // Set Team
     UpdateTeam = "SetTeam",

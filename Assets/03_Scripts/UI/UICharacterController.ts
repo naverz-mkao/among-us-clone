@@ -44,7 +44,7 @@ export default class UICharacterController extends ZepetoScriptBehaviour {
                 break;
             case PlayerTeam.GHOST:
                 this.ActivateUse();
-                this.reportButton.gameObject.SetActive(true);
+                this.reportButton.gameObject.SetActive(false);
                 //this.reportButton.interactible = false;
                 this.killButton.gameObject.SetActive(false);
                 break;

@@ -15,7 +15,6 @@ export default class GameManager extends ZepetoScriptBehaviour {
     @Header("Character Components")
     public detectionTrigger: GameObject;
     private bodyPrefab: GameObject;
-    private killFX: GameObject;
     
     private spawnCount = 0;
     private virusId : string = "";
@@ -29,7 +28,6 @@ export default class GameManager extends ZepetoScriptBehaviour {
     public Init()
     {
         this.bodyPrefab = Resources.Load<GameObject>("PlayerBody");
-        this.killFX = Resources.Load<GameObject>("DeathFXTrail");
 
         ZepetoPlayers.instance.OnAddedPlayer.AddListener((userId) => {
             this.AddSpawn(userId);

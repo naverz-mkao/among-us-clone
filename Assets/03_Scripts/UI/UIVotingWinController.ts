@@ -41,6 +41,18 @@ export default class UIVotingWinController extends ZepetoScriptBehaviour {
 
         this.LoadProfiles(ClientScript.GetInstance().GetPlayerIDs());
         
+        let localCC: CharacterController = Main.instance.characterController;
+        
+        if (localCC.team == PlayerTeam.GHOST)
+        {
+            this.confirmBtn.gameObject.SetActive(false);
+            this.voteStatusText.text = "Deleted players cannot vote";
+        }else
+        {
+            this.confirmBtn.gameObject.SetActive(true);
+            this.voteStatusText.text = "Tap player icon to Vote...";
+        }
+        
         for (let i: number = 0; i < this.profileButtons.length; i++) {
             let btn = this.profileButtons[i];
             let highlight = btn.transform.Find("Highlight");
