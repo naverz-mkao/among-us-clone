@@ -59,6 +59,12 @@ type MultiplayMessageCharacterTeam = {
     teamId: number
 };
 
+type MultiplayMessageKillPlayer = {
+    virusId: string,
+    targetId: string,
+    teamId: number
+}
+
 type MultiplayMessageWaiting = {
     minClients: number
 }
@@ -184,6 +190,20 @@ export default class extends Sandbox {
             {
                 this.gameTime = this.timerDuration;
             }
+        });
+
+        this.onMessage<MultiplayMessageKillPlayer>(MultiplayMessageType.KillPlayer, (client, message: MultiplayMessageKillPlayer) => {
+            const player = this.state.players.get(message.targetId);
+            player.team.teamId = message.teamId;
+
+            console.log(`User ${message.virusId} killed ${message.targetId}. Changed to team ${message.teamId}`);
+
+            if (this.GetWinner() == 0)
+            {
+                this.gameTime = this.timerDuration;
+            }
+            
+            this.broadcast(MultiplayMessageType.KillPlayer, message);
         });
 
         this.onMessage<MultiplayMessageCallMeeting>(MultiplayMessageType.LockRoom, (client, message: MultiplayMessageCallMeeting) => {

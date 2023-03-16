@@ -174,7 +174,7 @@ export default class GameManager extends ZepetoScriptBehaviour {
         let cc = this.players.get(userId);
         
         //TODO: Change to SendMessage Kill Player
-        ClientScript.GetInstance().SendMessageUpdateTeam(userId, PlayerTeam.GHOST);
+        ClientScript.GetInstance().SendMessageKillPlayer(WorldService.userId, userId, PlayerTeam.GHOST);
         
         let body: GameObject = GameObject.Instantiate<GameObject>(this.bodyPrefab, cc.transform.position, Quaternion.identity);
         body.gameObject.name = cc.playerInfo.userId;

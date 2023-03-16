@@ -64,6 +64,12 @@ type MultiplayMessageCharacterTeam = {
     teamId: number
 };
 
+type MultiplayMessageKillPlayer = {
+    virusId: string,
+    targetId: string,
+    teamId: number
+}
+
 type MultiplayMessageWaiting = {
     minClients: number
 }
@@ -245,6 +251,14 @@ export default class ClientScript extends ZepetoScriptBehaviour {
         this.multiplayRoom.AddMessageHandler(MultiplayMessageType.VoteForVirus, ((message: MultiplayMessageVoteForVirus) => {
             console.error("Voted For User: " + message.userId + " Coutn: " + message.count);
             Main.instance.uiMgr.VoteForUser(message.userId, message.count);
+        }));
+
+        this.multiplayRoom.AddMessageHandler(MultiplayMessageType.KillPlayer, ((message: MultiplayMessageKillPlayer) => {
+            let cc: CharacterController = Main.instance.gameMgr.GetPlayerCC(message.targetId);
+            if (cc.IsLocal())
+            {
+                Main.instance.uiMgr.ShowFullScreenUI(`You've been deleted by ${ClientScript.GetInstance().GetUsername(message.virusId)}`);
+            }
         }));
     }
     
@@ -505,6 +519,18 @@ export default class ClientScript extends ZepetoScriptBehaviour {
 
         // send the message with type UpdateTeam using the multiplayRoom object
         this.multiplayRoom.Send(MultiplayMessageType.UpdateTeam, message);
+    }
+
+    public SendMessageKillPlayer(virusId: string, targetId: string, teamId: number) {
+        // define an object of type MultiplayMessageCharacterTeam to hold the message
+        let message: MultiplayMessageKillPlayer = {
+            virusId: virusId,
+            targetId: targetId,
+            teamId: teamId
+        };
+
+        // send the message with type UpdateTeam using the multiplayRoom object
+        this.multiplayRoom.Send(MultiplayMessageType.KillPlayer, message);
     }
 
 }
