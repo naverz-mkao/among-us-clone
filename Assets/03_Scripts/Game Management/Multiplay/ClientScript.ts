@@ -164,7 +164,7 @@ export default class ClientScript extends ZepetoScriptBehaviour {
     
     public messageSender: ClientMessageSender = new ClientMessageSender();
     
-    private gameState: GameState;
+    @HideInInspector() public gameState: GameState;
     public Awake() {
         this.messageSender = new ClientMessageSender();
         this.messageSender.Init(this);
@@ -196,6 +196,7 @@ export default class ClientScript extends ZepetoScriptBehaviour {
             this.minClients = message.minClients;
             this.gameState = GameState.Wait;
             Main.instance.uiMgr.SetUIState(this.gameState);
+            Main.instance.gameMgr.ResetAllTransforms();
             
             console.error("Waiting..");
             Main.instance.uiMgr.UpdateUIConsole(`Waiting For ${this.multiplayPlayers.size}/${this.minClients} Clients to connect`);
@@ -332,7 +333,7 @@ export default class ClientScript extends ZepetoScriptBehaviour {
 
         //Create spawn info for our new character. 
         const spawnInfo = new SpawnInfo();
-        const transformInfo : Transform = Main.instance.GetSpawnTransform(player.spawnIndex);
+        const transformInfo : Transform = Main.instance.GetSpawnTransform(player.spawnIndex, true);
         console.log(transformInfo.gameObject.name);
         spawnInfo.position = transformInfo.position;
         spawnInfo.rotation = transformInfo.rotation;

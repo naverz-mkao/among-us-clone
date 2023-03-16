@@ -62,9 +62,9 @@ export default class Main extends ZepetoScriptBehaviour {
         this.gameMgr?.RemoveSpawn();
     }
 
-    public GetSpawnTransform(spawnIndex: number): Transform
+    public GetSpawnTransform(spawnIndex: number, isLobby : boolean): Transform
     {
-        return this.gameMgr?.GetSpawnTransform(spawnIndex);
+        return this.gameMgr?.GetSpawnTransform(spawnIndex, isLobby);
     }
     
     public InitializeWithVirus(virusId: string)
@@ -73,6 +73,7 @@ export default class Main extends ZepetoScriptBehaviour {
         console.log(`Setting Virus with id ${virusId}`);
         
         Main.instance.terminalManager.ResetAllTerminals();
+        this.gameMgr.ResetAllTransforms();
         
         let playerIds: string[] = ClientScript.GetInstance().GetPlayerIDs();
         this.gameMgr.RespawnPlayers(playerIds);

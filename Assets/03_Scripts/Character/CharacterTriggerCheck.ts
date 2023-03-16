@@ -18,6 +18,7 @@ export default class CharacterTriggerCheck extends ZepetoScriptBehaviour {
     
     public OnTriggerEnter(other: Collider)
     {
+        console.log(other.gameObject.name + "|" + other.gameObject.tag);
         if (other.gameObject.tag == "Interactible")
         {
             let info = other.gameObject.GetComponent<InteractibleObject>();
@@ -32,6 +33,11 @@ export default class CharacterTriggerCheck extends ZepetoScriptBehaviour {
         if (other.gameObject.tag == "Virus")
         {
             
+        }
+
+        if (other.gameObject.tag == "Respawn")
+        {
+            this.myCC.ResetPosition();
         }
     }
     

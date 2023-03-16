@@ -248,6 +248,7 @@ export default class extends Sandbox {
     
     CheckWinner()
     {
+        if (this.gameState != GameState.GameStart && this.gameState != GameState.MeetingTimer) { return; }
         let virusCount : number = 0;
         let survivorCount : number = 0;
         
@@ -270,6 +271,11 @@ export default class extends Sandbox {
         if (virusCount >= survivorCount)
         {
             this.SendMessageResult(0);
+        }
+        
+        if (virusCount == 0)
+        {
+            this.SendMessageResult(1);
         }
     }
     

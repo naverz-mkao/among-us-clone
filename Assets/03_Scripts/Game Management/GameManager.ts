@@ -10,7 +10,8 @@ import ClientScript from './Multiplay/ClientScript';
 export enum PlayerTeam { VIRUS, SURVIVOR, GHOST, NONE }
 export default class GameManager extends ZepetoScriptBehaviour {
     @Header("Initialization Objects")
-    public spawnLocations : GameObject[];
+    public spawnLocationsGame : GameObject[];
+    public spawnLocationsLobby : GameObject[];
     
     @Header("Character Components")
     public detectionTrigger: GameObject;
@@ -86,9 +87,9 @@ export default class GameManager extends ZepetoScriptBehaviour {
         this.isLoadingPlayers = false;
     }
 
-    public GetSpawnTransform(spawnIndex: number): Transform
+    public GetSpawnTransform(spawnIndex: number, isLobby: boolean): Transform
     {
-        return this.spawnLocations[spawnIndex].transform;
+        return isLobby? this.spawnLocationsLobby[spawnIndex].transform : this.spawnLocationsGame[spawnIndex].transform;
     }
     
     public GetPlayerCC(userId: string) : CharacterController
@@ -102,6 +103,13 @@ export default class GameManager extends ZepetoScriptBehaviour {
     public GetAllPlayerCCs(): CharacterController[]
     {
         return Array.from(this.players.values());
+    }
+    
+    public ResetAllTransforms()
+    {
+        this.players.forEach((cc, userID) =>{
+            cc.ResetPosition();
+        })
     }
 
     public AddSpawn(userId: string)

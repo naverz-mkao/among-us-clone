@@ -5,7 +5,7 @@ import { Player } from 'ZEPETO.Multiplay.Schema';
 import { ZepetoScriptBehaviour } from 'ZEPETO.Script'
 import {Users, WorldService, ZepetoWorldHelper } from 'ZEPETO.World';
 import { PlayerTeam } from '../Game Management/GameManager';
-import ClientScript from '../Game Management/Multiplay/ClientScript';
+import ClientScript, { GameState } from '../Game Management/Multiplay/ClientScript';
 import InteractibleInfo, { InteractionEvent } from '../Interactibles/InteractibleInfo';
 import InteractibleObject from '../Interactibles/InteractibleObject';
 import Main from '../Main';
@@ -139,6 +139,12 @@ export default class CharacterController extends ZepetoScriptBehaviour {
         this.targetPlayers.set(userId, userId);
         console.error("Added Target: " + userId + " Size: " + this.targetPlayers.size);
         this.uiController.EnableKill(true);
+    }
+    
+    public ResetPosition()
+    {
+        let spawnTrans = Main.instance.GetSpawnTransform(this.playerInfo.spawnIndex, ClientScript.GetInstance().gameState == GameState.Wait);
+        this.zptPlayer.character.Teleport(spawnTrans.position, spawnTrans.rotation);
     }
     
     public RemoveTarget(userId: string)
