@@ -21,7 +21,8 @@ ScriptedImporter:
   compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
     { value: true });\r\nconst ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nclass
     InteractibleObject extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    GetEvent()
-    {\r\n        return this.info.get_Item(\"event\");\r\n    }\r\n}\r\nexports.default
-    = InteractibleObject;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiSW50ZXJhY3RpYmxlT2JqZWN0LmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiSW50ZXJhY3RpYmxlT2JqZWN0LnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBQUEsaURBQTRFO0FBRzVFLE1BQXFCLGtCQUFtQixTQUFRLHFDQUFxQjtJQUcxRCxRQUFRO1FBRVgsT0FBTyxJQUFJLENBQUMsSUFBSSxVQUFDLE9BQU8sRUFBRTtJQUM5QixDQUFDO0NBQ0o7QUFQRCxxQ0FPQyJ9","assetPath":"Assets/03_Scripts/Interactibles/InteractibleObject.ts","manifest":{"properties":[{"assembly":"ZEPETO.Script","name":"info","type":"ZEPETO.Script.ZepetoScriptableObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]}],"name":"InteractibleObject","description":""},"isCompiled":true}'
-  typescriptHash: 6b8963b06033229075a87afdbd709aaf
+    {\r\n        return this.info.get_Item(\"event\");\r\n    }\r\n    GetMessageBody()
+    {\r\n        return this.info.get_Item(\"messageBody\");\r\n    }\r\n}\r\nexports.default
+    = InteractibleObject;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiSW50ZXJhY3RpYmxlT2JqZWN0LmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiSW50ZXJhY3RpYmxlT2JqZWN0LnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBQUEsaURBQTRFO0FBRzVFLE1BQXFCLGtCQUFtQixTQUFRLHFDQUFxQjtJQUcxRCxRQUFRO1FBRVgsT0FBTyxJQUFJLENBQUMsSUFBSSxVQUFDLE9BQU8sRUFBRTtJQUM5QixDQUFDO0lBRU0sY0FBYztRQUVqQixPQUFPLElBQUksQ0FBQyxJQUFJLFVBQUMsYUFBYSxFQUFFO0lBQ3BDLENBQUM7Q0FDSjtBQVpELHFDQVlDIn0=","assetPath":"Assets/03_Scripts/Interactibles/InteractibleObject.ts","manifest":{"properties":[{"assembly":"ZEPETO.Script","name":"info","type":"ZEPETO.Script.ZepetoScriptableObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]}],"name":"InteractibleObject","description":""},"isCompiled":true}'
+  typescriptHash: 06990e5ebb0167b577970d2d825cc925
   onlyWriteTrigger: 0

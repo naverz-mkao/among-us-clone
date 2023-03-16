@@ -1,0 +1,38 @@
+fileFormatVersion: 2
+guid: 299541a297997c842bedd36975cbf71c
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst UnityEngine_1 = require(\"UnityEngine\");\r\nconst
+    ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst ClientScript_1 = require(\"./Multiplay/ClientScript\");\r\nclass
+    TerminalManager extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    Start()
+    {\r\n        this.hasInteracted = new Array(this.terminals.length);\r\n       
+    for (let i = 0; i < this.terminals.length; i++) {\r\n            this.terminals[i].gameObject.name
+    = \"Terminal_\" + i;\r\n        }\r\n        this.ResetAllTerminals();\r\n   
+    }\r\n    ResetAllTerminals() {\r\n        for (let i = 0; i < this.terminals.length;
+    i++) {\r\n            this.terminals[i].transform.Find(\"Screen\").GetComponent($typeof(UnityEngine_1.Renderer)).material
+    = this.idleMat;\r\n            this.hasInteracted[i] = false;\r\n        }\r\n   
+    }\r\n    InteractWithTerminal(index) {\r\n        if (this.hasInteracted[index])
+    {\r\n            return;\r\n        }\r\n        this.terminals[index].transform.Find(\"Screen\").GetComponent($typeof(UnityEngine_1.Renderer)).material
+    = this.interactedMat;\r\n        this.hasInteracted[index] = true;\r\n       
+    ClientScript_1.default.GetInstance().SendMessageCompleteTask();\r\n    }\r\n}\r\nexports.default
+    = TerminalManager;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiVGVybWluYWxNYW5hZ2VyLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiVGVybWluYWxNYW5hZ2VyLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBQUEsNkNBQTZEO0FBQzdELGlEQUFxRDtBQUNyRCwyREFBb0Q7QUFFcEQsTUFBcUIsZUFBZ0IsU0FBUSxxQ0FBcUI7SUFPdkQsS0FBSztRQUVSLElBQUksQ0FBQyxhQUFhLEdBQUcsSUFBSSxLQUFLLENBQUMsSUFBSSxDQUFDLFNBQVMsQ0FBQyxNQUFNLENBQUMsQ0FBQztRQUN0RCxLQUFJLElBQUksQ0FBQyxHQUFHLENBQUMsRUFBRSxDQUFDLEdBQUcsSUFBSSxDQUFDLFNBQVMsQ0FBQyxNQUFNLEVBQUUsQ0FBQyxFQUFFLEVBQzdDO1lBQ0ksSUFBSSxDQUFDLFNBQVMsQ0FBQyxDQUFDLENBQUMsQ0FBQyxVQUFVLENBQUMsSUFBSSxHQUFHLFdBQVcsR0FBRyxDQUFDLENBQUM7U0FDdkQ7UUFFRCxJQUFJLENBQUMsaUJBQWlCLEVBQUUsQ0FBQztJQUM3QixDQUFDO0lBRU0saUJBQWlCO1FBRXBCLEtBQUksSUFBSSxDQUFDLEdBQUcsQ0FBQyxFQUFFLENBQUMsR0FBRyxJQUFJLENBQUMsU0FBUyxDQUFDLE1BQU0sRUFBRSxDQUFDLEVBQUUsRUFDN0M7WUFDSSxJQUFJLENBQUMsU0FBUyxDQUFDLENBQUMsQ0FBQyxDQUFDLFNBQVMsQ0FBQyxJQUFJLENBQUMsUUFBUSxDQUFDLENBQUMsWUFBWSxTQUFDLHNCQUFRLEdBQUksUUFBUSxHQUFHLElBQUksQ0FBQyxPQUFPLENBQUM7WUFDNUYsSUFBSSxDQUFDLGFBQWEsQ0FBQyxDQUFDLENBQUMsR0FBRyxLQUFLLENBQUM7U0FDakM7SUFDTCxDQUFDO0lBRU0sb0JBQW9CLENBQUMsS0FBYTtRQUVyQyxJQUFJLElBQUksQ0FBQyxhQUFhLENBQUMsS0FBSyxDQUFDLEVBQUU7WUFBRSxPQUFPO1NBQUU7UUFFMUMsSUFBSSxDQUFDLFNBQVMsQ0FBQyxLQUFLLENBQUMsQ0FBQyxTQUFTLENBQUMsSUFBSSxDQUFDLFFBQVEsQ0FBQyxDQUFDLFlBQVksU0FBQyxzQkFBUSxHQUFJLFFBQVEsR0FBRyxJQUFJLENBQUMsYUFBYSxDQUFDO1FBQ3RHLElBQUksQ0FBQyxhQUFhLENBQUMsS0FBSyxDQUFDLEdBQUcsSUFBSSxDQUFDO1FBQ2pDLHNCQUFZLENBQUMsV0FBVyxFQUFFLENBQUMsdUJBQXVCLEVBQUUsQ0FBQztJQUN6RCxDQUFDO0NBQ0o7QUFuQ0Qsa0NBbUNDIn0=","assetPath":"Assets/03_Scripts/Game
+    Management/TerminalManager.ts","manifest":{"properties":[{"assembly":"UnityEngine.CoreModule","name":"terminals","type":"UnityEngine.GameObject[]","isArray":true,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"UnityEngine.CoreModule","name":"idleMat","type":"UnityEngine.Material","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"UnityEngine.CoreModule","name":"interactedMat","type":"UnityEngine.Material","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]}],"name":"TerminalManager","description":""},"isCompiled":true}'
+  typescriptHash: 535615c3e8d08d4c2d6d024ea6ae2743
+  onlyWriteTrigger: 0

@@ -14,10 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   keys:
   - event
+  - messageBody
   unityValues:
+  - {fileID: 0}
   - {fileID: 0}
   values:
   - '{"type":"System.String, mscorlib","value":"0"}'
+  - '{"type":"System.String, mscorlib","value":""}'
   unityArrayValues: []
   arrayValues: []
   script: {fileID: 4458252877524076426, guid: 49d28a7dc7afb9543ac5f8bc98730d44, type: 3}

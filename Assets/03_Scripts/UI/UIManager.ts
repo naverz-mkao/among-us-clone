@@ -104,6 +104,15 @@ export default class UIManager extends ZepetoScriptBehaviour {
         this.messageText.transform.parent.gameObject.SetActive(true);
     }
 
+    UpdateWaitTimer(timer: number)
+    {
+        if (timer > 0)
+        {
+            this.UpdateUIConsole("Game will begin in.. " + timer);
+        }
+        
+    }
+    
     UpdateMeetingTimer(timer: number)
     {
         this.timerText.text = Math.max(0,timer).toString();

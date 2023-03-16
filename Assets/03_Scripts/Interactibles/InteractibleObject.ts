@@ -8,4 +8,9 @@ export default class InteractibleObject extends ZepetoScriptBehaviour {
     {
         return this.info["event"];
     }
+    
+    public GetMessageBody(): string
+    {
+        return this.info["messageBody"];
+    }
 }

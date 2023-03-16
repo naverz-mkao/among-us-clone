@@ -7,5 +7,5 @@ export enum InteractionEvent
 
 export default class InteractibleInfo {
     public event: InteractionEvent;
-    
+    public messageBody: string;
 }

@@ -7,6 +7,7 @@ import {ZepetoPlayer, ZepetoPlayers } from 'ZEPETO.Character.Controller';
 import ClientScript from './Game Management/Multiplay/ClientScript';
 import {LoadSceneMode, SceneManager } from 'UnityEngine.SceneManagement';
 import {Users, ZepetoWorldHelper} from "ZEPETO.World";
+import TerminalManager from './Game Management/TerminalManager';
 
 export default class Main extends ZepetoScriptBehaviour {
     public static instance: Main;
@@ -14,6 +15,7 @@ export default class Main extends ZepetoScriptBehaviour {
     public characterController: CharacterController;
     public gameMgr: GameManager;
     public uiMgr: UIManager;
+    public terminalManager: TerminalManager;
     
     public hasEnteredLobby : boolean = false;
 
@@ -31,6 +33,7 @@ export default class Main extends ZepetoScriptBehaviour {
         Main.instance = this;
         this.gameMgr = this.transform.Find("GameManager").GetComponent<GameManager>();
         this.uiMgr = this.transform.Find("UIManager").GetComponent<UIManager>();
+        this.terminalManager = this.transform.Find("TerminalManager").GetComponent<TerminalManager>();
     }
 
     public Start()
@@ -68,6 +71,8 @@ export default class Main extends ZepetoScriptBehaviour {
     {
         if (this.gameMgr == undefined) { return; }
         console.log(`Setting Virus with id ${virusId}`);
+        
+        Main.instance.terminalManager.ResetAllTerminals();
         
         let playerIds: string[] = ClientScript.GetInstance().GetPlayerIDs();
         this.gameMgr.RespawnPlayers(playerIds);

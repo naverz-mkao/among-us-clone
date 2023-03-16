@@ -25,7 +25,7 @@ export default class CharacterController extends ZepetoScriptBehaviour {
     
     @HideInInspector() public team: PlayerTeam;
     
-    private currentEvent: InteractionEvent;
+    private currentEvent: InteractibleObject;
     
     private targetPlayers: Map<string, string> = new Map<string, string>();
 
@@ -254,36 +254,42 @@ export default class CharacterController extends ZepetoScriptBehaviour {
 
     public EnableInteraction(b: boolean, interactObject: InteractibleObject)
     {
-        this.currentEvent = interactObject.GetEvent();
-        if (this.currentEvent == InteractionEvent.MINIGAME_BUTTONCLICKER)
+        this.currentEvent = interactObject;
+        let eventInfo : InteractionEvent = interactObject.GetEvent();
+        if (eventInfo == InteractionEvent.MINIGAME_BUTTONCLICKER)
         {
+            console.error("Enabling button Clicker");
             this.uiController.EnableUse(b);
         }
-        else if (this.currentEvent == InteractionEvent.MEETING_HALL)
+        else if (eventInfo == InteractionEvent.MEETING_HALL)
         {
-            this.uiController.EnableUse(b);
+            console.error("Enabling metting hall");
+            this.uiController.EnableReport(b);
         }
-        else if (this.currentEvent == InteractionEvent.MEETING_REPORTBODY)
+        else if (eventInfo == InteractionEvent.MEETING_REPORTBODY)
         {
             this.uiController.EnableReport(b);
         }
     }
     public Use()
     {
-        console.log("Used " + this.currentEvent);
-        if (this.currentEvent == InteractionEvent.MINIGAME_BUTTONCLICKER)
+        let eventInfo : InteractionEvent = this.currentEvent.GetEvent();
+        console.log("Used " + eventInfo);
+        if (eventInfo == InteractionEvent.MINIGAME_BUTTONCLICKER)
         {
             //TODO: Triger the minigame sequence. 
-            console.log("Playing Button Minigame");
+            let terminalID: number = parseInt(this.currentEvent.gameObject.name.split("_")[1]);
+            console.log("Playing Button Minigame from " + this.currentEvent.gameObject.name + " ID: " + terminalID);
+            Main.instance.terminalManager.InteractWithTerminal(terminalID);
         }
-        else if (this.currentEvent == InteractionEvent.MEETING_HALL)
+        else if (eventInfo == InteractionEvent.MEETING_HALL)
         {
             console.log("Calling Hall Meeting");
             Main.instance.uiMgr.ShowVotingWin();
         }
-        else if (this.currentEvent == InteractionEvent.MEETING_REPORTBODY)
+        else if (eventInfo == InteractionEvent.MEETING_REPORTBODY)
         {
-            console.log("Calling Hall Meeting");
+            console.log("Calling Report Body");
             Main.instance.uiMgr.ShowVotingWin();
         }
     }
@@ -301,6 +307,6 @@ export default class CharacterController extends ZepetoScriptBehaviour {
     public Report()
     {
         console.log("Reported");
-        ClientScript.GetInstance().SendMessageCallMeeting();
+        ClientScript.GetInstance().SendMessageCallMeeting(this.currentEvent.GetMessageBody());
     }
 }

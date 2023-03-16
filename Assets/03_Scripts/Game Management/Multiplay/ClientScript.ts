@@ -30,6 +30,8 @@ export enum MultiplayMessageType {
     MeetingFinished = "MeetingFinished",
     //Vote For Virus
     VoteForVirus = "VoteForVirus",
+    //Complete Task
+    CompleteTask = "CompleteTask",
 
     //Game States
     Waiting = "Waiting",
@@ -98,7 +100,7 @@ type MultiplayMessageClientReady = {
 }
 
 type MultiplayMessageCallMeeting = {
-
+    messageBody: string;
 }
 
 export type MultiplayMessageVoteForVirus = {
@@ -108,6 +110,10 @@ export type MultiplayMessageVoteForVirus = {
 
 export type MultiplayMessageMeetingFinished = {
     userId: string
+}
+
+type MultiplayMessageCompleteTask = {
+
 }
 
 export enum GameState {
@@ -224,6 +230,7 @@ export default class ClientScript extends ZepetoScriptBehaviour {
             Main.instance.uiMgr.SetUIState(this.gameState);
             let cc : CharacterController = Main.instance.gameMgr.GetPlayerCC(WorldService.userId);
 
+            Main.instance.uiMgr.ShowFullScreenUI(message.winningTeam == 0 ? "VIRUS VICTORY" : "SURVIVOR VICTORY");
             if (cc.IsVirus())
             {
                 if (message.winningTeam == 0)
@@ -240,7 +247,8 @@ export default class ClientScript extends ZepetoScriptBehaviour {
             }
         });
 
-        this.multiplayRoom.AddMessageHandler(MultiplayMessageType.CallMeeting, (message => {
+        this.multiplayRoom.AddMessageHandler(MultiplayMessageType.CallMeeting, ((message: MultiplayMessageCallMeeting) => {
+            Main.instance.uiMgr.ShowFullScreenUI(message.messageBody);
             Main.instance.uiMgr.ShowVotingWin();
         }));
 
@@ -281,7 +289,13 @@ export default class ClientScript extends ZepetoScriptBehaviour {
             // Register Player Add/Remove events 
             state.players.add_OnAdd((player, userId) => { this.OnPlayerAdd(player, userId, false) });  
             state.players.add_OnRemove((player, userId) => { this.OnPlayerRemove(player, userId) });
-            state.gameTimer.add_OnChange(() => { Main.instance.uiMgr.UpdateMeetingTimer(state.gameTimer.value)});
+            state.gameTimer.add_OnChange(() => 
+            { 
+                if (this.gameState == GameState.Wait)
+                    Main.instance.uiMgr.UpdateWaitTimer(state.gameTimer.value);
+                else if (this.gameState == GameState.GameStart)
+                    Main.instance.uiMgr.UpdateMeetingTimer(state.gameTimer.value)
+            });
 
             this.InitializeCharacter(state);
         }
@@ -483,12 +497,15 @@ export default class ClientScript extends ZepetoScriptBehaviour {
     }
 
     // function to send a message calling a meeting
-    public SendMessageCallMeeting() {
+    public SendMessageCallMeeting(messageBody: string) {
         // get the number of clients
         const clientCount = this.multiplayPlayers.size;
 
         // define an object of type MultiplayMessageCallMeeting to hold the message
-        let message: MultiplayMessageCallMeeting = {};
+        let message: MultiplayMessageCallMeeting = 
+        {
+            messageBody: messageBody  
+        };
 
         // send the message with type CallMeeting using the multiplayRoom object
         this.multiplayRoom.Send(MultiplayMessageType.CallMeeting, message);
@@ -531,6 +548,21 @@ export default class ClientScript extends ZepetoScriptBehaviour {
 
         // send the message with type UpdateTeam using the multiplayRoom object
         this.multiplayRoom.Send(MultiplayMessageType.KillPlayer, message);
+    }
+
+    // function to send a message calling a meeting
+    public SendMessageCompleteTask() {
+        // get the number of clients
+        const clientCount = this.multiplayPlayers.size;
+
+        // define an object of type MultiplayMessageCallMeeting to hold the message
+        let message: MultiplayMessageCompleteTask =
+        {
+            
+        };
+
+        // send the message with type CallMeeting using the multiplayRoom object
+        this.multiplayRoom.Send(MultiplayMessageType.CompleteTask, message);
     }
 
 }
