@@ -1,4 +1,4 @@
-import { GameObject, ParticleSystem, Quaternion, Resources, Transform } from 'UnityEngine';
+import { Color, GameObject, ParticleSystem, Quaternion, Renderer, Resources, Transform, Vector3 } from 'UnityEngine';
 import {SpawnInfo, ZepetoPlayer, ZepetoPlayers} from 'ZEPETO.Character.Controller';
 import { Player } from 'ZEPETO.Multiplay.Schema';
 import { ZepetoScriptBehaviour } from 'ZEPETO.Script'
@@ -31,7 +31,30 @@ export default class GameManager extends ZepetoScriptBehaviour {
 
         ZepetoPlayers.instance.OnAddedPlayer.AddListener((userId) => {
             this.AddSpawn(userId);
+
+            this.AddRing(ZepetoPlayers.instance.GetPlayer(userId).character.gameObject,
+            GameObject.Find("Client").GetComponent<ClientScript>().GetPlayer(userId).spawnIndex);
         });
+    }
+
+    public AddRing(parent: GameObject, playerIndex)
+    {
+        let colors : Color[];
+        colors = [];
+
+        colors.push(Color.red);
+        colors.push(Color.blue);
+        colors.push(Color.green);
+        colors.push(Color.cyan);
+        colors.push(Color.magenta);
+        colors.push(Color.yellow);
+        colors.push(new Color(255/255, 45/255, 0/255, 1));
+        colors.push(new Color(1, 1, 1, 1));
+
+        const characterRing: GameObject = GameObject.Instantiate(Resources.Load("CharacterRing"), this.transform.position, Quaternion.identity) as GameObject;
+        characterRing.GetComponentInChildren<Renderer>().material.color = colors[playerIndex];
+        characterRing.transform.parent = parent.transform;
+        characterRing.transform.localPosition = new Vector3(0,0,0);
     }
     
     public RespawnPlayers(userIds: Array<string>)
