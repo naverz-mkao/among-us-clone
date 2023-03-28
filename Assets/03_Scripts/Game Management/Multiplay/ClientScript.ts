@@ -12,6 +12,7 @@ export enum MultiplayMessageType {
 
     // When position is synced
     CharacterTransform = "CharacterTransform",
+    CharacterTeleport = "CharacterTeleport",
 
     // For Animation states
     CharacterState = "CharacterState",
@@ -47,9 +48,14 @@ export enum MultiplayMessageType {
 
 //Transform position data
 export type MultiplayMessageCharacterTransform = {
+    userID: string,
     positionX: number,
     positionY: number,
     positionZ: number,
+    
+    rotationX: number,
+    rotationY: number,
+    rotationZ: number
 }
 
 //Character state data
@@ -196,7 +202,6 @@ export default class ClientScript extends ZepetoScriptBehaviour {
             this.minClients = message.minClients;
             this.gameState = GameState.Wait;
             Main.instance.uiMgr.SetUIState(this.gameState);
-            Main.instance.gameMgr.ResetAllTransforms();
             
             console.error("Waiting..");
             Main.instance.uiMgr.UpdateUIConsole(`Waiting For ${this.multiplayPlayers.size}/${this.minClients} Clients to connect`);
@@ -230,7 +235,7 @@ export default class ClientScript extends ZepetoScriptBehaviour {
             this.gameState = GameState.Result;
             Main.instance.uiMgr.SetUIState(this.gameState);
             let cc : CharacterController = Main.instance.gameMgr.GetPlayerCC(WorldService.userId);
-
+            cc.ResetPosition();
             Main.instance.uiMgr.ShowFullScreenUI(message.winningTeam == 0 ? "VIRUS VICTORY" : "SURVIVOR VICTORY");
             if (cc.IsVirus())
             {
@@ -260,6 +265,16 @@ export default class ClientScript extends ZepetoScriptBehaviour {
         this.multiplayRoom.AddMessageHandler(MultiplayMessageType.VoteForVirus, ((message: MultiplayMessageVoteForVirus) => {
             console.error("Voted For User: " + message.userId + " Coutn: " + message.count);
             Main.instance.uiMgr.VoteForUser(message.userId, message.count);
+        }));
+
+        this.multiplayRoom.AddMessageHandler(MultiplayMessageType.CharacterTeleport, ((message: MultiplayMessageCharacterTransform) => {
+            let pos: Vector3 = new Vector3(message.positionX, message.positionY, message.positionZ);
+            let rot: Vector3 = new Vector3(message.rotationX, message.rotationY, message.rotationZ);
+            let cc : CharacterController = Main.instance.gameMgr.GetPlayerCC(message.userID);
+            cc.transform.position = pos;
+            cc.transform.rotation = Quaternion.Euler(rot.x, rot.y, rot.z);
+            
+            console.error(`Teleporting ${ClientScript.GetInstance().GetUsername(message.userID)} to ${pos.x},${pos.y}${pos.z}`);
         }));
 
         this.multiplayRoom.AddMessageHandler(MultiplayMessageType.KillPlayer, ((message: MultiplayMessageKillPlayer) => {
@@ -472,17 +487,41 @@ export default class ClientScript extends ZepetoScriptBehaviour {
 
     public SendMessageCharacterTransform(transform: Transform) {
         //Cache the local transform position. 
-        const position = transform.localPosition;
-
+        const position = transform.position;
+        const rotation = transform.eulerAngles;
         // Create the message body 
         const message: MultiplayMessageCharacterTransform = {
-            positionX: position.x,
-            positionY: position.y,
-            positionZ: position.z
+            userID: WorldService.userId,
+            positionX: position.x + 0.0001,
+            positionY: position.y + 0.0001,
+            positionZ: position.z + 0.0001,
+            rotationX: rotation.x + 0.0001,
+            rotationY: rotation.y + 0.0001,
+            rotationZ: rotation.z + 0.0001,
         }
 
         // Send the message to the server. 
         this.multiplayRoom.Send(MultiplayMessageType.CharacterTransform, message);
+    }
+
+    public SendMessageCharacterTeleport(userId: string, transform: Transform) {
+        //Cache the local transform position. 
+        const position = transform.position;
+        const rotation = transform.eulerAngles;
+        
+        // Create the message body 
+        const message: MultiplayMessageCharacterTransform = {
+            userID: userId,
+            positionX: position.x + 0.0001,
+            positionY: position.y + 0.0001,
+            positionZ: position.z + 0.0001,
+            rotationX: rotation.x + 0.0001,
+            rotationY: rotation.y + 0.0001,
+            rotationZ: rotation.z + 0.0001,
+        }
+
+        // Send the message to the server. 
+        this.multiplayRoom.Send(MultiplayMessageType.CharacterTeleport, message);
     }
 
     // function to send a message indicating that the client is ready

@@ -105,13 +105,6 @@ export default class GameManager extends ZepetoScriptBehaviour {
         return Array.from(this.players.values());
     }
     
-    public ResetAllTransforms()
-    {
-        this.players.forEach((cc, userID) =>{
-            cc.ResetPosition();
-        })
-    }
-
     public AddSpawn(userId: string)
     {
         this.spawnCount++;

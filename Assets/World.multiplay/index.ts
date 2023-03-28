@@ -5,6 +5,7 @@ enum MultiplayMessageType {
 
     // When position is synced
     CharacterTransform = "CharacterTransform",
+    CharacterTeleport = "CharacterTeleport",
 
     // For Animation states
     CharacterState = "CharacterState",
@@ -41,11 +42,16 @@ enum MultiplayMessageType {
 };
 
 //Transform position data
-type MultiplayMessageCharacterTransform = {
+export type MultiplayMessageCharacterTransform = {
+    userID: string,
     positionX: number,
     positionY: number,
     positionZ: number,
-};
+
+    rotationX: number,
+    rotationY: number,
+    rotationZ: number
+}
 
 //Character state data
 type MultiplayMessageCharacterState = {
@@ -179,6 +185,21 @@ export default class extends Sandbox {
             position.z = message.positionZ;
 
             player.position = position;
+        });
+
+        this.onMessage(MultiplayMessageType.CharacterTeleport, (client, message: MultiplayMessageCharacterTransform) => {
+            // Grab the player based on userId
+            const player = this.state.players.get(message.userID);
+            // Sync Position Data
+            const position = new Vector3Schema();
+            position.x = message.positionX;
+            position.y = message.positionY;
+            position.z = message.positionZ;
+
+            player.position = position;
+            
+            
+            this.broadcast(MultiplayMessageType.CharacterTeleport, message);
         });
 
         // Character State (Jumping, running etc) sync message

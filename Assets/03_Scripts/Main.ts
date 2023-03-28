@@ -73,7 +73,7 @@ export default class Main extends ZepetoScriptBehaviour {
         console.log(`Setting Virus with id ${virusId}`);
         
         Main.instance.terminalManager.ResetAllTerminals();
-        this.gameMgr.ResetAllTransforms();
+        this.characterController.ResetPosition();
         
         let playerIds: string[] = ClientScript.GetInstance().GetPlayerIDs();
         this.gameMgr.RespawnPlayers(playerIds);

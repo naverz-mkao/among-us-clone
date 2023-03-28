@@ -141,10 +141,17 @@ export default class CharacterController extends ZepetoScriptBehaviour {
         this.uiController.EnableKill(true);
     }
     
+    public Teleport(pos: Vector3, rot: Vector3)
+    {
+        this.zptPlayer.character.Teleport(pos, Quaternion.Euler(rot.x, rot.y, rot.z));
+    }
+    
     public ResetPosition()
     {
         let spawnTrans = Main.instance.GetSpawnTransform(this.playerInfo.spawnIndex, ClientScript.GetInstance().gameState == GameState.Wait);
-        this.zptPlayer.character.Teleport(spawnTrans.position, spawnTrans.rotation);
+        //this.zptPlayer.character.Teleport(spawnTrans.position, spawnTrans.rotation);
+        ClientScript.GetInstance().SendMessageCharacterTeleport(this.playerInfo.userId, spawnTrans);
+        console.log("POSITION REST: Lobby? " + (ClientScript.GetInstance().gameState == GameState.Wait));
     }
     
     public RemoveTarget(userId: string)
