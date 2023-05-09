@@ -6,18 +6,51 @@
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Amongus_Clone/.idea/runConfigurations/Zepeto_Script.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Amongus_Clone/.idea/runConfigurations/Zepeto_Script.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Amongus_Clone/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Amongus_Clone/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.vscode/launch.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vscode/launch.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/01_Art/Materials/MAT_Bell.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01_Art/Materials/MAT_Bell.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/01_Art/Prefabs/ZepetoCamera.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01_Art/Prefabs/ZepetoCamera.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/03_Scripts/Character/CharacterController.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03_Scripts/Character/CharacterController.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/03_Scripts/Character/CharacterController.ts.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03_Scripts/Character/CharacterController.ts.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/03_Scripts/Character/CharacterTriggerCheck.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03_Scripts/Character/CharacterTriggerCheck.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/03_Scripts/Character/CharacterTriggerCheck.ts.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03_Scripts/Character/CharacterTriggerCheck.ts.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/03_Scripts/Game Management/GameManager.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03_Scripts/Game Management/GameManager.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/03_Scripts/Game Management/GameManager.ts.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03_Scripts/Game Management/GameManager.ts.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/03_Scripts/Game Management/Multiplay/ClientMessageSender.ts.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03_Scripts/Game Management/Multiplay/ClientMessageSender.ts.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03_Scripts/Game Management/Multiplay/ClientScript.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03_Scripts/Game Management/Multiplay/ClientScript.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/03_Scripts/Game Management/Multiplay/ClientScript.ts.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03_Scripts/Game Management/Multiplay/ClientScript.ts.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/03_Scripts/Game Management/TerminalManager.ts.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03_Scripts/Game Management/TerminalManager.ts.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/03_Scripts/Main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03_Scripts/Main.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/03_Scripts/Main.ts.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03_Scripts/Main.ts.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/03_Scripts/UI/UICharacterController.ts.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03_Scripts/UI/UICharacterController.ts.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/03_Scripts/UI/UIManager.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03_Scripts/UI/UIManager.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/03_Scripts/UI/UIManager.ts.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03_Scripts/UI/UIManager.ts.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/03_Scripts/UI/UIVotingWinController.ts.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03_Scripts/UI/UIVotingWinController.ts.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/05_Scenes/Main.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/05_Scenes/Main.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/World.multiplay/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/World.multiplay/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/CharacterRing.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/CharacterRing.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/World.multiplay/index.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/World.multiplay/index.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Packages/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Packages/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/packages-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/WorldEditorSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/WorldEditorSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/WorldPlayerSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/WorldPlayerSettings.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@jridgewell/resolve-uri/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@jridgewell/resolve-uri/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@jridgewell/sourcemap-codec/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@jridgewell/sourcemap-codec/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@jridgewell/sourcemap-codec/dist/sourcemap-codec.mjs.map" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@jridgewell/sourcemap-codec/dist/sourcemap-codec.mjs.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@jridgewell/sourcemap-codec/dist/sourcemap-codec.umd.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@jridgewell/sourcemap-codec/dist/sourcemap-codec.umd.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@jridgewell/sourcemap-codec/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@jridgewell/sourcemap-codec/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@jridgewell/sourcemap-codec/src/sourcemap-codec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@zepeto/sandbox/bootstrap.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@zepeto/sandbox/bootstrap.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@zepeto/sandbox/bootstrap.jsc" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@zepeto/sandbox/bootstrap.jsc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@zepeto/sandbox/cli.jsc" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@zepeto/sandbox/cli.jsc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@zepeto/sandbox/dist/bytenode/cli.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@zepeto/sandbox/dist/bytenode/cli.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@zepeto/sandbox/dist/bytenode/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@zepeto/sandbox/dist/bytenode/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@zepeto/sandbox/dist/setup-sandbox.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@zepeto/sandbox/dist/setup-sandbox.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@zepeto/sandbox/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@zepeto/sandbox/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@zepeto/sandbox/template/index.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@zepeto/sandbox/template/index.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/@zepeto/sandbox/template/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@zepeto/sandbox/template/tsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/zepeto-script-compiler/dist/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/zepeto-script-compiler/dist/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/zepeto-script-compiler/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/zepeto-script-compiler/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -126,6 +159,12 @@
       <workItem from="1678931829988" duration="22558000" />
       <workItem from="1678994384044" duration="628000" />
       <workItem from="1679090256866" duration="1863000" />
+      <workItem from="1681937646575" duration="6937000" />
+      <workItem from="1683238035226" duration="981000" />
+      <workItem from="1683304754065" duration="1412000" />
+      <workItem from="1683568603243" duration="2581000" />
+      <workItem from="1683668875449" duration="1240000" />
+      <workItem from="1683673126674" duration="1197000" />
     </task>
     <servers />
   </component>

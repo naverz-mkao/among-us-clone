@@ -35,6 +35,8 @@ export default class GameManager extends ZepetoScriptBehaviour {
 
             this.AddRing(ZepetoPlayers.instance.GetPlayer(userId).character.gameObject,
             GameObject.Find("Client").GetComponent<ClientScript>().GetPlayer(userId).spawnIndex);
+            
+            
         });
     }
 

@@ -1,4 +1,4 @@
-import { TextMeshProUGUI } from 'TMPro';
+import {TextMeshPro, TextMeshProUGUI } from 'TMPro';
 import {Color, GameObject, Time, Vector2, WaitForEndOfFrame, WaitForFixedUpdate, WaitForSecondsRealtime} from 'UnityEngine';
 import { Button, Image } from 'UnityEngine.UI';
 import { ZepetoScriptBehaviour } from 'ZEPETO.Script'
@@ -17,6 +17,7 @@ export default class UIManager extends ZepetoScriptBehaviour {
     
     public fullScreenText: TextMeshProUGUI;
     public timerText: TextMeshProUGUI;
+    public timer3DText: TextMeshPro;
     
     public votingWin: GameObject;
     public titleUI: GameObject;
@@ -31,10 +32,12 @@ export default class UIManager extends ZepetoScriptBehaviour {
     private fullScreenBGColor : Color;
     private fullScreenTextColor : Color;
     
+    private lastTime: number;
     public Start()
     {
         this.fullScreenBGColor = this.fullScreenBG.color;
         this.fullScreenTextColor = this.fullScreenText.color;
+        this.lastTime = -100;
     }
     
     public Init()
@@ -106,10 +109,32 @@ export default class UIManager extends ZepetoScriptBehaviour {
 
     UpdateWaitTimer(timer: number)
     {
-        if (timer > 0)
+        if (timer >= 0)
         {
+            this.timer3DText.text = timer.toString();
+            if (timer > 10)
+                this.timer3DText.color = Color.green;
+            else if (timer > 5)
+                this.timer3DText.color = Color.yellow;
+            else
+                this.timer3DText.color = Color.red;
             this.UpdateUIConsole("Game will begin in.. " + timer);
+
+            if (this.lastTime != timer)
+            {
+                this.lastTime = timer;
+
+                if (timer == 0)
+                {
+                    this.lastTime = 0
+                    Main.GetInstance().audioMgr.PlayAudio("Futuristic Sound 25");
+                }
+                else
+                    Main.GetInstance().audioMgr.PlayAudio("Futuristic Sound 05");
+            }
         }
+        
+        
         
     }
     

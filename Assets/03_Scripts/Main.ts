@@ -8,6 +8,7 @@ import ClientScript from './Game Management/Multiplay/ClientScript';
 import {LoadSceneMode, SceneManager } from 'UnityEngine.SceneManagement';
 import {Users, ZepetoWorldHelper} from "ZEPETO.World";
 import TerminalManager from './Game Management/TerminalManager';
+import AudioManager from './Game Management/AudioManager';
 
 export default class Main extends ZepetoScriptBehaviour {
     public static instance: Main;
@@ -15,6 +16,7 @@ export default class Main extends ZepetoScriptBehaviour {
     public characterController: CharacterController;
     public gameMgr: GameManager;
     public uiMgr: UIManager;
+    public audioMgr: AudioManager;
     public terminalManager: TerminalManager;
     
     public hasEnteredLobby : boolean = false;
@@ -34,6 +36,7 @@ export default class Main extends ZepetoScriptBehaviour {
         this.gameMgr = this.transform.Find("GameManager").GetComponent<GameManager>();
         this.uiMgr = this.transform.Find("UIManager").GetComponent<UIManager>();
         this.terminalManager = this.transform.Find("TerminalManager").GetComponent<TerminalManager>();
+        this.audioMgr = this.transform.Find("AudioManager").GetComponent<AudioManager>();
     }
 
     public Start()
