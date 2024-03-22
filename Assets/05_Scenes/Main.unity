@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.25
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.22920886, g: 0.25698566, b: 0.29707077, a: 0.25}
+  m_IndirectSpecularColor: {r: 0.22920886, g: 0.25698566, b: 0.2970708, a: 0.25}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -746,6 +746,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2523126994553685747, guid: 87645be3f89e0c2449f26a8d8ee43890, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2738318207116628713, guid: 87645be3f89e0c2449f26a8d8ee43890, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -768,6 +772,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2738318207116628713, guid: 87645be3f89e0c2449f26a8d8ee43890, type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2920309858954579141, guid: 87645be3f89e0c2449f26a8d8ee43890, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3392176434660115550, guid: 87645be3f89e0c2449f26a8d8ee43890, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3920984196472084197, guid: 87645be3f89e0c2449f26a8d8ee43890, type: 3}
+      propertyPath: m_RaycastTarget
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4009516912334096045, guid: 87645be3f89e0c2449f26a8d8ee43890, type: 3}
@@ -888,6 +904,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5589068312496428978, guid: 87645be3f89e0c2449f26a8d8ee43890, type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5708288478340469444, guid: 87645be3f89e0c2449f26a8d8ee43890, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5779517450473627135, guid: 87645be3f89e0c2449f26a8d8ee43890, type: 3}
+      propertyPath: m_RaycastTarget
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5779517450516286795, guid: 87645be3f89e0c2449f26a8d8ee43890, type: 3}
@@ -9722,8 +9746,8 @@ MonoBehaviour:
     - {fileID: 0}
     - {fileID: 518022858}
     values:
-    - '{"type":"ZEPETO.Script.ZepetoScriptSerializer+ArrayInfo, ZEPETO.Script","value":"{\"offset\":0,\"length\":2,\"type\":\"UnityEngine.AudioClip,
-      UnityEngine.AudioModule\",\"isUnity\":true}"}'
+    - '{"type":"ZEPETO.Script.ZepetoScriptSerializer+ArrayInfo, ZEPETO.Script","value":"{\"offset\":0,\"length\":2,\"type\":\"UnityEngine.Object,
+      UnityEngine.CoreModule\",\"isUnity\":true}"}'
     - 
     unityArrayValues:
     - {fileID: 8300000, guid: 0c6bd8ed2ee120f47a799693b12396cd, type: 3}
@@ -15425,10 +15449,10 @@ MonoBehaviour:
     cameraPrefab: {fileID: 5806182858035002866, guid: 206fb396ca21f6240a122857f1d08ace, type: 3}
     maxZoomDistance: 2
     minZoomDistance: 2
-    maxPitch: 0
-    minPitch: 0
+    maxPitch: 30
+    minPitch: -60
     offset: {x: 0, y: 1, z: 0}
-    lockXAxis: 1
+    lockXAxis: 0
     layer:
       serializedVersion: 2
       m_Bits: 0
