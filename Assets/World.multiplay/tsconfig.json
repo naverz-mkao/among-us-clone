@@ -5,7 +5,8 @@
         "moduleResolution": "node",
         "types": [
             "./",
-            "./SchemaTypes"
+            "./SchemaTypes",
+            "./index.d.ts"
         ],
         "noImplicitAny": true,
         "strictFunctionTypes": true,

@@ -352,6 +352,9 @@ export default class extends Sandbox {
     }
     
     onJoin(client: SandboxPlayer) {
+        this.CreateAIPlayer('01010_AI_PLAYER_AAAAA');
+        this.CreateAIPlayer('01010_AI_PLAYER_BBBBB');
+        
         const userId = client.userId;
         const player = new Player();
         
@@ -428,7 +431,8 @@ export default class extends Sandbox {
         if (this.gameState != GameState.Wait) return;
         
         // Check if there are enough players to start the game. 
-        if (this.currentPlayerCount >= this.gameStartCount && this.currentReadyCount >= (this.currentPlayerCount * this.currentPlayerCount)) {
+        //TODO: why (this.currentPlayerCount * this.currentPlayerCount), when will this be true? Why did this work? Commenting out for now.
+        if (this.currentPlayerCount >= this.gameStartCount) {//} && this.currentReadyCount >= (this.currentPlayerCount * this.currentPlayerCount)) {
             this.gameTime += deltaTime;
             this.state.gameTimer.value = Math.floor(((this.waitTimerDuration + 1000) - this.gameTime) * 0.001);
             if (this.state.gameTimer.value == 0)
@@ -550,5 +554,31 @@ export default class extends Sandbox {
         
         console.log(`User with Highest Votes: ${message.userId}`);
         this.broadcast(MultiplayMessageType.MeetingFinished, message);
+    }
+
+    CreateAIPlayer(id: string) {
+        const userId = id;
+        const player = new Player();
+        
+        // Apply the schema userID value to the player object. 
+        player.userId = userId;
+        player.team.teamId = 3; //Set to Ghost Team
+
+        // Apply the schema's position data to our copy
+        player.position = new Vector3Schema();
+
+        // Reset position to (0,0,0)
+        player.position.x = 0;
+        player.position.y = 0;
+        player.position.z = 0;
+        
+        //Get the next available spawn transform index
+        player.spawnIndex = this.GetOpenSpawnIndex(this.state.players.size);
+        
+        //Cache our player to the map. 
+        this.state.players.set(userId, player);
+        this.currentPlayerCount++;
+        this.currentReadyCount++;
+        console.log(`Began Waiting.. ${this.state.players.size}/${this.gameStartCount}`);
     }
 }
